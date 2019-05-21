@@ -1,0 +1,18 @@
+#Ressources  
+#domain.cdn=//cdn.goldwind.com.cn
+#domain index
+#domain.www=http://goldwind.com.cn
+
+BASE_SERVER_URL = http://127.0.0.1:5000
+
+API_SEARCH=/sdl/v1.0/search
+
+API_TOKEN=/sdl/v1.0/token
+
+TOKEN_USERNAME=Kevin
+TOKEN_PASSWORD=123456
+
+#管理员权限类型
+ADMIN_ROLE_TYPE=888888
+#采购权限类型
+PURCHASER_ROLE_TYPE=666666

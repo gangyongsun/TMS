@@ -1,0 +1,112 @@
+<%@ include file="../common/header.jsp"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8" />
+<title>订单列表</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+<link rel="icon" href="<%=basePath%>/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="<%=basePath%>/favicon.ico" />
+<link href="<%=basePath%>/js/common/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="<%=basePath%>/css/common/base.css" rel="stylesheet" />
+<script src="<%=basePath%>/js/common/jquery/jquery1.8.3.min.js"></script>
+<script src="<%=basePath%>/js/common/layer/layer.js"></script>
+<script src="<%=basePath%>/js/common/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="<%=basePath%>/js/shiro.demo.js"></script>
+<script src="<%=basePath%>/js/order.index.js"></script>
+</head>
+<body data-target="#one" data-spy="scroll" id="content">
+	<div  id="terminology_index_page">
+		<%--引入头部--%>
+		<jsp:include page="../common/config/top.jsp"></jsp:include>
+		<div class="container" style="padding-bottom: 15px; min-height: 300px; margin-top: 40px;">
+			<div class="row">
+				<%--引入左侧菜单--%>
+				<jsp:include page="../common/config/user.left.jsp"></jsp:include>
+				<div class="col-md-10">
+					<h2 align="center">订单或清单列表</h2>
+					<hr>
+					<form method="post" action="" id="formId" class="form-inline">
+						<div class="well">
+							<div class="form-group">
+								<input type="text" class="form-control" style="width: 300px;" value="${findContent}" name="findContent" id="findContent" placeholder="输入订单号">
+							</div>
+							<span class="">
+								<button type="submit" class="btn btn-primary">查询</button>
+							</span>
+						</div>
+						<hr>
+						<table class="table table-bordered">
+							<tr>
+								<th>订单号</th>
+								<th>下单时间</th>
+								<th>状态</th>
+								<th>操作</th>
+							</tr>
+							<c:choose>
+								<c:when test="${page != null && fn:length(page.list) gt 0}">
+									<c:forEach items="${page.list}" var="order">
+										<tr>
+											<td>${order.order_id}</td>
+											<td><fmt:formatDate value="${order.create_time}" pattern="yyyy年MM月dd日HH点mm分ss秒" /></td>
+											<c:if test="${order.order_status==3}">
+												<td>待采购</td>
+											</c:if>
+											<c:if test="${order.order_status==4}">
+												<td>采购中</td>
+											</c:if>
+											<c:if test="${order.order_status==5}">
+												<td>采购完成</td>
+											</c:if>
+											<c:if test="${order.order_status==6}">
+												<td>待发货</td>
+											</c:if>
+											<c:if test="${order.order_status==7}">
+												<td>已发货</td>
+											</c:if>
+											<c:if test="${order.order_status==8}">
+												<td>交易成功</td>
+											</c:if>
+											<c:if test="${order.order_status==9}">
+												<td>交易关闭</td>
+											</c:if>
+											<td>
+												<i class="glyphicon glyphicon-info-sign"></i>
+												<a href="javascript:orderDetail('${order.order_id}');">订单详情</a>
+												<c:if test="${order.order_status==3}">
+													<i class="glyphicon glyphicon-trash"></i>
+													<a href="javascript:cancelOrder('${order.order_id}');">取消订单</a>
+												</c:if>
+												<c:if test="${order.order_status==7||order.order_status==8}">
+													<i class="glyphicon glyphicon-plane"></i>
+													<a href="javascript:shippingDetail('${order.order_id}');">物流跟踪</a>
+												</c:if>
+											</td>
+										</tr>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<tr>
+										<td class="text-center danger" colspan="9">没有订单信息</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
+						</table>
+						<c:if test="${page != null && fn:length(page.list) gt 0}">
+							<div class="pagination pull-right">${page.pageHtml}</div>
+						</c:if>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function(){
+		  	$("#personalCenter").addClass("active");
+		  	$("#orderlist").addClass("active");
+		});	
+	</script>
+</body>
+</html>
