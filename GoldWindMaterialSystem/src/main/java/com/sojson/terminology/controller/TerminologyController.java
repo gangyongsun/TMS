@@ -213,6 +213,15 @@ public class TerminologyController extends BaseController {
 		modelMap.put("page", page);
 		return new ModelAndView("terminology/collection");
 	}
+	/**
+	 * 术语物资自定义
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "termcustom")
+	public ModelAndView termcustom(ModelMap modelMap) {
+		return new ModelAndView("terminology/termcustom");
+	}
 
 	/**
 	 * 根据主键ID数组删除收藏物资或术语

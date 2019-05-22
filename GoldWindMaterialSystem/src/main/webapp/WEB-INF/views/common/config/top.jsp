@@ -57,6 +57,7 @@
 						<ul class="dropdown-menu">
 							<li><a href="<%=basePath%>/terminology/index.shtml">术语搜索</a></li>
 							<li><a href="<%=basePath%>/terminology/collection.shtml">术语收藏</a></li>
+							<li><a href="<%=basePath%>/terminology/termcustom.shtml">术语自定义</a></li>
 						</ul>
 					</li>
 				</shiro:hasAnyRoles>

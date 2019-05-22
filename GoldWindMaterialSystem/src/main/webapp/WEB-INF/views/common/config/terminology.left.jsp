@@ -23,6 +23,14 @@
 					</a>
 				</li>
 			</shiro:hasPermission>
+			<shiro:hasPermission name="/terminology/termcustom.shtml">
+				<li id="termcustom" class="dropdown">
+					<a href="<%=basePath%>/terminology/termcustom.shtml">
+						<i class="glyphicon glyphicon-chevron-right"></i>
+						术语自定义
+					</a>
+				</li>
+			</shiro:hasPermission>
 		</ul>
 	</div>
 </shiro:hasAnyRoles>

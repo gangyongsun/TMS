@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<!-- Mobile Specific Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="shortcut icon" th:href="@{/img/fav.png}">
+	<meta name="author" content="yonggang">
+	<meta name="description" content="">
+	<meta name="keywords" content="terminology">
+	<meta charset="UTF-8">
+	<title>金风术语系统</title>
+	<!--Google Font============================================= -->
+	<link rel="stylesheet" th:href="@{/css/google.montserrat.css}">
+	<link rel="stylesheet" th:href="@{/css/google.roboto.css}">
+
+	<!--CSS============================================= -->
+	<link rel="stylesheet" th:href="@{/css/themify-icons.css}">
+	<link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+	<link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+	<link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+
+<body>
+<div id="terminologies_main_div" class="main-content">
+	<!-- Start Header Area -->
+	<header id="header">
+		<div class="container">
+			<div class="row align-items-center justify-content-between d-flex">
+				<div id="logo">
+					<a href="#"><img th:src="@{/img/logo.png}" alt="" title="" /></a>
+				</div>
+				<nav id="nav-menu-container">
+					<ul class="nav-menu">
+						<li><a id="logout" href="#" th:text="${username}"></a></li>
+						<li><a id="logout" href="/logout">Logout</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
+	<!-- End Header Area -->
+	
+	<!-- Start Banner Area -->
+	<section class="home-banner-area relative">
+		<div class="container">
+			<div class="row d-flex align-items-center justify-content-center">
+				<div class="banner-content col-lg-12 col-md-12">
+					<h1 class="wow fadeIn" data-wow-duration="4s">金风术语系统查询功能</h1>
+					<p class="text-white">
+						金风科技高度重视科研投入，不断开发和完善各产品系列，提高其性能表现，力求覆盖更广泛多元的使用需求，把握更前端的技术趋势。
+						金风科技拥有50余台世界最先进的激光测风雷达应用于风电场宏观选址、微观选址咨询，结合精准流场仿真耦合模型和大数据，帮助客户降低或消除投资风险，提高实际投资受益20%以上。
+					</p>
+					<div class="input-wrap">
+						<form id="searchForm" class="form-box d-flex justify-content-between" onsubmit="return false">
+							<select id="languageId" class="form-control" style = "width:150px;">
+	                            <option value="1" selected="selected">中文</option>
+	                            <option value="2">English</option>
+	                        	</select>
+							<input id="terminologyWord" type="text" placeholder="术语输入..." class="form-control">
+							<button id="searchTerminology" class="btn search-btn">查询</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Banner Area -->
+
+	<!-- Start About Area -->
+	<section class="about-area section-gap">
+		<div class="container">
+			<div class="row align-items-center justify-content-center">
+				<div class="section-title text-center">
+					<h1>查询结果</h1>
+				</div>
+				<div class="offset-lg-1 col-lg-10 offset-md-0 col-md-12 about-right">
+					<div class="wow fadeIn" data-wow-duration="1s">
+						<p>
+						 	术语编号：<label th:text="${termlist[0].entryId.id}"></label><br>
+						    术语名称：<label th:text="${termlist[0].term}"></label><br>
+						    术语定义：<label th:text="${termlist[0].term}"></label><br>
+						</p>
+					</div>
+					<div class="link-nav">
+						<span class="box">
+							<a th:href="@{/terminologyController/terminologyDetail}">术语详情</a>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-lg-12">
+					<div class="section-title text-center">
+						<h1>相关术语</h1>
+					</div>
+				</div>
+			</div>
+			<div class="feature-inner row">
+				<div class="col-lg-4 col-md-6" th:each="term:${termlist}">
+					<div class="feature-item">
+						<i class="ti-medall-alt"></i>
+						<h4><span th:text="${term.term}"></span></h4>
+						<div class="wow fadeIn" data-wow-duration="1s" data-wow-delay=".1s">
+							<p>
+								<span th:text="${term.term}"></span>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End About Area -->
+	
+	<!-- ####################### Start Scroll to Top Area ####################### -->
+	<div id="back-top">
+		<a title="Go to Top" href="#"></a>
+	</div>
+	<!-- ####################### End Scroll to Top Area ####################### -->
+</div>
+	<script th:src="@{/js/vendor/jquery-2.2.4.min.js}"></script>
+	<script th:src="@{/js/vendor/bootstrap.min.js}"></script>
+	<script th:src="@{/js/goldwind/search.js}"></script>
+</body>
+
+</html>
