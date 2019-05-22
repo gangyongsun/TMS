@@ -35,15 +35,17 @@ function searchTerm(){
  * @returns
  */
 function add2cart(name){
-	var load = layer.load();
-	$.post('add2cart.shtml',{item_name:name,item_id:'1004'},function(result){
-		layer.close(load);
-		if(result && result.status != 200){
-			return layer.msg(result.message),!0;
-		}else{
-			layer.msg(result.message);
-		}
-	},'json');
+	if(name!=null&&name!=''){
+		$.post('add2cart.shtml',{item_name:name,item_id:'1004'},function(result){
+			if(result && result.status != 200){
+				return layer.msg(result.message),!0;
+			}else{
+				layer.msg(result.message);
+			}
+		},'json');
+	}else{
+		layer.msg("内容为空，加入购物清单失败!");
+	}
 }
 
 /**
@@ -53,19 +55,21 @@ function add2cart(name){
  * @returns
  */
 function add2collection(name){
-	var load = layer.load();
-	$.post('add2collection.shtml',{material_name:name,material_id:'1004'},function(result){
-		layer.close(load);
-		if(result && result.status != 200){
-			return layer.msg(result.message),!0;
-		}else{
-			layer.msg(result.resultMsg);
-//			$("#"+name+"_li").removeClass("glyphicon-star-empty");
-//			$("#"+name+"_li").addClass("glyphicon-star");
-//			$("#"+name+"__collect").text("已收藏");
-//			$("#"+name+"__collect").attr('href',"javascript:removeFromCollection("+name+");");
-		}
-	},'json');
+	if(name!=null&&name!=''){
+		$.post('add2collection.shtml',{material_name:name,material_id:'1004'},function(result){
+			if(result && result.status != 200){
+				return layer.msg(result.message),!0;
+			}else{
+				layer.msg(result.resultMsg);
+	//			$("#"+name+"_li").removeClass("glyphicon-star-empty");
+	//			$("#"+name+"_li").addClass("glyphicon-star");
+	//			$("#"+name+"__collect").text("已收藏");
+	//			$("#"+name+"__collect").attr('href',"javascript:removeFromCollection("+name+");");
+			}
+		},'json');
+	}else{
+		layer.msg("内容为空，术语加入收藏失败!");
+	}
 }
 
 /**

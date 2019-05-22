@@ -36,8 +36,8 @@
 					<span class="label label-info">新术语</span>
 					<h4><span id="customTerm" class="label label-success"></span></h4>
 					<br><br>
-					<a class="btn btn-info btn-sm" href="javascript:add2cart();"><span class="glyphicon glyphicon-plus"></span> 加入清单</a>
-					<a class="btn btn-info btn-sm" href="javascript:add2collection();"><span class="glyphicon glyphicon-star-empty"></span> 加入收藏</a>
+					<button type="button" class="btn btn-success" onclick="addCustomTerm2Cart();"><span class="glyphicon glyphicon-plus"></span> 加入清单</button>
+					<button type="button" class="btn btn-success" onclick="addCustomTerm2Collection();"><span class="glyphicon glyphicon-star-empty"></span> 加入收藏</button>
 				</div>
 			</div>
 		</div>
@@ -58,6 +58,12 @@
 				}
 			});
 		});
+		function addCustomTerm2Cart(){
+			add2cart($('#customTerm').text());
+		}
+		function addCustomTerm2Collection(){
+			add2collection($('#customTerm').text());
+		}
 	</script>
 </body>
 </html>
