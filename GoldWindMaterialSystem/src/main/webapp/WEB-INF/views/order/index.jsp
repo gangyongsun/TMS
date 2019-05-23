@@ -31,30 +31,30 @@
 						<div class="form-group well">
 							<input type="text" class="form-control" style="width: 300px;" value="${findContent}" name="findContent" id="findContent" placeholder="输入订单号">
 							<button type="submit" class="btn btn-info btn-md"><span class="glyphicon glyphicon-search"></span> 查询</button>
+							<div class="btn-group">
+								<button class="btn btn-success">订单状态</button>
+								<button class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+							    	<span class="caret"></span>
+							  	</button>
+								<ul class="dropdown-menu" role="menu">
+									<li id="li_3"><a href="javascript:orderStatusFilter(3);">待采购</a></li>
+									<li id="li_4"><a href="javascript:orderStatusFilter(4);">采购中</a></li>
+									<li id="li_5"><a href="javascript:orderStatusFilter(5);">采购完成</a></li>
+									<li id="li_6"><a href="javascript:orderStatusFilter(6);">待发货</a></li>
+									<li id="li_7"><a href="javascript:orderStatusFilter(7);">已发货</a></li>
+									<li id="li_8"><a href="javascript:orderStatusFilter(8);">交易成功</a></li>
+									<li id="li_9"><a href="javascript:orderStatusFilter(9);">交易关闭</a></li>
+									<li class="divider"></li>
+									<li id="li_0"><a href="javascript:orderStatusFilter();">所有状态</a></li>
+								</ul>
+							</div>
 						</div>
 						<hr>
 						<table class="table table-bordered">
 							<tr>
 								<th width="30%">订单号</th>
 								<th width="30%">下单时间</th>
-								<th width="10%">
-									<div class="btn-group">
-										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">订单状态 
-											<span class="caret"></span>
-										</button>
-										<ul class="dropdown-menu" role="menu">
-											<li id="li_3"><a href="javascript:orderStatusFilter(3);">待采购</a></li>
-											<li id="li_4"><a href="javascript:orderStatusFilter(4);">采购中</a></li>
-											<li id="li_5"><a href="javascript:orderStatusFilter(5);">采购完成</a></li>
-											<li id="li_6"><a href="javascript:orderStatusFilter(6);">待发货</a></li>
-											<li id="li_7"><a href="javascript:orderStatusFilter(7);">已发货</a></li>
-											<li id="li_8"><a href="javascript:orderStatusFilter(8);">交易成功</a></li>
-											<li id="li_9"><a href="javascript:orderStatusFilter(9);">交易关闭</a></li>
-											<li class="divider"></li>
-											<li id="li_0"><a href="javascript:orderStatusFilter();">所有状态</a></li>
-										</ul>
-									</div>
-								</th>
+								<th width="10%">订单状态</th>
 								<th width="30%">操作</th>
 							</tr>
 							<c:choose>
