@@ -32,8 +32,8 @@
 						<form method="post" action="" id="formId" class="form-inline">
 							<div class="form-group well">
 								<select id="languageId" class="form-control" style="width: 100px;">
-									<option value="1" selected="selected">中文</option>
-									<option value="2">English</option>
+									<option value="LANGUAGE_ZH" selected="selected">中文</option>
+									<option value="LANGUAGE_EN">English</option>
 								</select>
 								<input type="text" class="form-control" style="width: 600px;" value="${findContent}" name="findContent" id="findContent" placeholder="请输入...">
 								<a class="btn btn-info btn-md" onclick="searchTerm();">

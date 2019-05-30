@@ -19,6 +19,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.sojson.common.controller.BaseController;
 import com.sojson.common.utils.LoggerUtils;
+import com.sojson.common.utils.PropertiesUtil;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.core.shiro.token.manager.TokenManager;
 import com.sojson.terminology.bo.EntryId;
@@ -78,16 +79,18 @@ public class TerminologyController extends BaseController {
 	public ModelAndView search(ModelMap modelMap, String findContent, String languageId) {
 		List<Hit> hitlist = new ArrayList<Hit>();
 		try {
-			JSONArray hitsArray = termService.search(generateSdlToken(), findContent, Integer.parseInt(languageId));
-			if (null!=hitsArray) {
+			int languageCode = Integer.parseInt(PropertiesUtil.getValueByKey(languageId, "config.properties"));
+
+			JSONArray hitsArray = termService.search(generateSdlToken(), findContent, languageCode);
+			if (null != hitsArray) {
 				for (Iterator<Object> iterator = hitsArray.iterator(); iterator.hasNext();) {
 					JSONObject jsonObj = (JSONObject) iterator.next();
-	
+
 					JSONObject entryIdObject = (JSONObject) jsonObj.get("entryId");
 					EntryId entryId = new EntryId();
 					entryId.setId(entryIdObject.getIntValue("id"));
 					entryId.setUuid(entryIdObject.getString("uuid"));
-	
+
 					Hit hit = new Hit();
 					hit.setLanguageId(jsonObj.getIntValue("languageId"));
 					hit.setScore(jsonObj.getBigDecimal("score"));
@@ -95,7 +98,7 @@ public class TerminologyController extends BaseController {
 					hit.setTerm(jsonObj.getString("term"));
 					hit.setTermbaseId(jsonObj.getIntValue("termbaseId"));
 					hit.setEntryId(entryId);
-	
+
 					/**
 					 * 判断该术语或物资是否已经被收藏
 					 */
@@ -126,11 +129,11 @@ public class TerminologyController extends BaseController {
 	@ResponseBody
 	public Map<String, Object> add2cart(OrderItem orderItem) {
 		try {
-			OrderItem entity=orderItemService.searchByNameAndUid(orderItem.getItem_name(), TokenManager.getUserId());
-			if (null!=entity) {
-				entity.setNum(entity.getNum()+1);
+			OrderItem entity = orderItemService.searchByNameAndUid(orderItem.getItem_name(), TokenManager.getUserId());
+			if (null != entity) {
+				entity.setNum(entity.getNum() + 1);
 				orderItemService.updateByPrimaryKey(entity);
-			}else {
+			} else {
 				orderItem.setUser_id(TokenManager.getUserId());
 				orderItem.setNum(1);
 				int count = orderItemService.insertSelective(orderItem);
@@ -213,6 +216,7 @@ public class TerminologyController extends BaseController {
 		modelMap.put("page", page);
 		return new ModelAndView("terminology/collection");
 	}
+
 	/**
 	 * 术语物资自定义
 	 * 
