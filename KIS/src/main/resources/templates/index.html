@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>GoldWind Key Information Search Engine</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+<link rel="stylesheet" th:src="@{/js/jquery-3.1.1.min.js}">
+</head>
+<body class="container">
+	<img th:src="@{/img/logo.png}">
+	<br>
+	<h1 align="center">
+		GoldWind Key Information Search Engine
+	</h1>
+	<br>
+	<div class="alert alert-danger  alert-dismissible" role="alert">
+		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> <span class="sr-only">Error:</span> 分页功能待开发...
+	</div>
+	<br>
+	<form class="form-inline" action="/kis/searchAll" method="post">
+		<div class="form-group">
+			<input class="form-control input-xxlarge" type="text" style="width: 1000px;" id="findContent" name="findContent" placeholder="请输入...">
+			<button type="submit" class="btn btn-info btn-md"><span class="glyphicon glyphicon-search"></span>查询</button>
+		</div>
+	</form>
+	<hr>
+	<div class="panel panel-default">
+		<div class="panel-heading">Key Information</div>
+		<table class="table table-bordered">
+			<THEAD>
+				<tr>
+					<th>ID</th>
+					<th>中文</th>
+					<th>英文</th>
+					<th>主题分类</th>
+					<th>功能分类</th>
+					<th>位置分类</th>
+					<th>备注</th>
+				</tr>
+			</THEAD>
+			<TBODY>
+				<tr th:each="keyInfo:${keyInfoList}">
+					<td th:text="${keyInfo.id}"></td>
+					<td th:text="${keyInfo.chinese}"></td>
+					<td th:text="${keyInfo.english}"></td>
+					<td th:text="${keyInfo.subject}"></td>
+					<td th:text="${keyInfo.function}"></td>
+					<td th:text="${keyInfo.position}"></td>
+					<td th:text="${keyInfo.remark}"></td>
+				</tr>
+			</TBODY>
+		</table>
+	</div>
+</body>
+</html>

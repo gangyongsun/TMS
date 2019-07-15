@@ -19,7 +19,7 @@ import com.sojson.terminology.dao.MaterialCollectedMapper;
 import com.sojson.terminology.service.TerminologyService;
 
 /**
- * 术语或物资服务实现类
+ * 关键词或物资服务实现类
  * 
  * @author alvin
  *

@@ -5,7 +5,7 @@
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8" />
-<title>术语自定义</title>
+<title>关键词自定义</title>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 <link rel="icon" href="<%=basePath%>/favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="<%=basePath%>/favicon.ico" />
@@ -27,13 +27,13 @@
 				<%--引入左侧菜单--%>
 				<jsp:include page="../common/config/terminology.left.jsp"></jsp:include>
 				<div class="col-md-10 col-xs-10">
-					<h2>术语自定义</h2>
+					<h2>关键词自定义</h2>
 					<hr>
-					<span class="label label-info">术语自定义编辑</span>
+					<span class="label label-info">关键词自定义编辑</span>
 					<input id="termCustomTag" type="text" class="tags"/>
 					<hr>
 					
-					<span class="label label-info">新术语</span>
+					<span class="label label-info">新关键词</span>
 					<h4><span id="customTerm" class="label label-success"></span></h4>
 					<br><br>
 					<button type="button" class="btn btn-success" onclick="addCustomTerm2Cart();"><span class="glyphicon glyphicon-plus"></span> 加入清单</button>

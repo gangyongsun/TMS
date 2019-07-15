@@ -11,7 +11,7 @@
 				<li id="termsearch" class="dropdown">
 					<a href="<%=basePath%>/terminology/index.shtml">
 						<i class="glyphicon glyphicon-chevron-right"></i>
-						术语搜索
+						关键词搜索
 					</a>
 				</li>
 			</shiro:hasPermission>
@@ -19,7 +19,7 @@
 				<li id="termcollection" class="dropdown">
 					<a href="<%=basePath%>/terminology/collection.shtml">
 						<i class="glyphicon glyphicon-chevron-right"></i>
-						术语收藏
+						关键词收藏
 					</a>
 				</li>
 			</shiro:hasPermission>
@@ -27,7 +27,7 @@
 				<li id="termcustom" class="dropdown">
 					<a href="<%=basePath%>/terminology/termcustom.shtml">
 						<i class="glyphicon glyphicon-chevron-right"></i>
-						术语自定义
+						关键词自定义
 					</a>
 				</li>
 			</shiro:hasPermission>

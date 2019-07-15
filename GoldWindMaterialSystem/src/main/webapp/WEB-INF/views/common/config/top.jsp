@@ -17,7 +17,7 @@
 			</button>
 		</div>
 		<div role="navigation" class="navbar-collapse collapse">
-			<a id="_logo" href="<%=basePath%>" style="color: #fff; font-size: 24px;" class="navbar-brand hidden-sm">GoldWind物资系统</a>
+			<a id="_logo" href="<%=basePath%>" style="color: #fff; font-size: 24px;" class="navbar-brand hidden-sm">GoldWind Search Engine</a>
 			<ul class="nav navbar-nav" id="topMenu">
 				<%--拥有 角色100001(管理员)||100003(用户中心)--%>
 				<shiro:hasAnyRoles name='100001,100003'>
@@ -52,12 +52,12 @@
 				<shiro:hasAnyRoles name='100001,100005'>
 					<li id="terminologyCenter" class="dropdown">
 						<a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="/terminology/index.shtml">
-							<span class="glyphicon glyphicon-search"> 术语查询</span>
+							<span class="glyphicon glyphicon-search"> 关键词查询</span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="<%=basePath%>/terminology/index.shtml">术语搜索</a></li>
-							<li><a href="<%=basePath%>/terminology/collection.shtml">术语收藏</a></li>
-							<li><a href="<%=basePath%>/terminology/termcustom.shtml">术语自定义</a></li>
+							<li><a href="<%=basePath%>/terminology/index.shtml">关键词搜索</a></li>
+							<li><a href="<%=basePath%>/terminology/collection.shtml">关键词收藏</a></li>
+							<li><a href="<%=basePath%>/terminology/termcustom.shtml">关键词自定义</a></li>
 						</ul>
 					</li>
 				</shiro:hasAnyRoles>

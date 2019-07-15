@@ -8,14 +8,14 @@ import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.terminology.bo.MaterialCollected;
 
 /**
- * 术语查询相关服务
+ * 关键词查询相关服务
  * 
  * @author alvin
  *
  */
 public interface TerminologyService {
 	/**
-	 * 查询术语
+	 * 查询关键词
 	 * 
 	 * @param token
 	 * @param terminologyWord
@@ -37,14 +37,14 @@ public interface TerminologyService {
 	int deleteByPrimaryKey(Long id);
 	
 	/**
-	 * 根据UID+Material Name，取消收藏物资或术语
+	 * 根据UID+Material Name，取消收藏物资或关键词
 	 * 
 	 * @return
 	 */
 	int deleteCollect(MaterialCollected materialCollected);
 	
 	/**
-	 * 根据主键id 删除收藏的物资或术语
+	 * 根据主键id 删除收藏的物资或关键词
 	 * @param ids
 	 * @return
 	 */
@@ -57,7 +57,7 @@ public interface TerminologyService {
 	MaterialCollected selectByPrimaryKey(Long id);
 	
 	/**
-	 * 根据收藏的术语(物资)Name和用户ID查询
+	 * 根据收藏的关键词(物资)Name和用户ID查询
 	 * 
 	 * @param materialName
 	 * @param uid
@@ -66,7 +66,7 @@ public interface TerminologyService {
 	MaterialCollected searchByNameAndUid(String materialName,Long uid);
 	
 	/**
-	 * 根据收藏的术语(物资)ID和用户ID查询
+	 * 根据收藏的关键词(物资)ID和用户ID查询
 	 * 
 	 * @param materialId
 	 * @param uid

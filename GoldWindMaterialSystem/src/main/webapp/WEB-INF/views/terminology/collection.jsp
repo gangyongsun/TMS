@@ -5,7 +5,7 @@
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8" />
-<title>术语收藏列表</title>
+<title>关键词收藏列表</title>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 <link rel="icon" href="<%=basePath%>/favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="<%=basePath%>/favicon.ico" />
@@ -25,7 +25,7 @@
 				<%--引入左侧菜单--%>
 				<jsp:include page="../common/config/terminology.left.jsp"></jsp:include>
 				<div class="col-md-10 col-xs-10">
-					<h2>术语收藏列表</h2>
+					<h2>关键词收藏列表</h2>
 					<hr>
 					<form method="post" action="" id="formId" class="form-inline">
 					</form>
@@ -66,7 +66,7 @@
 							</c:when>
 							<c:otherwise>
 								<tr>
-									<td class="text-center danger" colspan="5">没有收藏的术语信息</td>
+									<td class="text-center danger" colspan="5">没有收藏的关键词信息</td>
 								</tr>
 							</c:otherwise>
 						</c:choose>

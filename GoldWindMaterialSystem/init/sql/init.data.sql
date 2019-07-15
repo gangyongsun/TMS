@@ -29,13 +29,13 @@ insert  into `u_permission`(`id`,`url`,`name`) values
 (22,'/member/changeSessionStatus.shtml','在线用户踢出'),
 
 
-(23,'/terminology/index.shtml','术语搜索'),
-(24,'/terminology/add2cart.shtml','术语加入到购物清单'),
-(25,'/terminology/add2collection.shtml','收藏术语'),
-(26,'/terminology/removeFromCollection.shtml','取消术语收藏'),
+(23,'/terminology/index.shtml','关键词搜索'),
+(24,'/terminology/add2cart.shtml','关键词加入到购物清单'),
+(25,'/terminology/add2collection.shtml','收藏关键词'),
+(26,'/terminology/removeFromCollection.shtml','取消关键词收藏'),
 (27,'/order/shoppingCart.shtml','goto购物清单'),
-(28,'/terminology/collection.shtml','术语收藏列表'),
-(29,'/terminology/deleteTerm.shtml','删除收藏术语'),
+(28,'/terminology/collection.shtml','关键词收藏列表'),
+(29,'/terminology/deleteTerm.shtml','删除收藏关键词'),
 
 (30,'/order/deleteItem.shtml','购物清单物资删除'),
 (31,'/order/gotoCreateOrder.shtml','去创建订单'),

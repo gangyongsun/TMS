@@ -1,5 +1,5 @@
 /**
- * 查询术语
+ * 查询关键词
  * 
  * @returns
  */
@@ -49,7 +49,7 @@ function add2cart(name){
 }
 
 /**
- * 术语加入收藏
+ * 关键词加入收藏
  * 
  * @param ids
  * @returns
@@ -68,12 +68,12 @@ function add2collection(name){
 			}
 		},'json');
 	}else{
-		layer.msg("内容为空，术语加入收藏失败!");
+		layer.msg("内容为空，关键词加入收藏失败!");
 	}
 }
 
 /**
- * 术语取消收藏
+ * 关键词取消收藏
  * 
  * @param ids
  * @returns

@@ -30,7 +30,7 @@ import com.sojson.terminology.service.OrderItemService;
 import com.sojson.terminology.service.TerminologyService;
 
 /**
- * 查询术语
+ * 查询关键词
  * 
  * @author alvin
  *
@@ -47,7 +47,7 @@ public class TerminologyController extends BaseController {
 	public OrderItemService orderItemService;
 
 	/**
-	 * 跳转到术语门户首页,包含search
+	 * 跳转到关键词门户首页,包含search
 	 * 
 	 * @param model
 	 * @return
@@ -58,7 +58,7 @@ public class TerminologyController extends BaseController {
 	}
 
 	/**
-	 * 跳转到术语详情页
+	 * 跳转到关键词详情页
 	 * 
 	 * @return
 	 */
@@ -68,7 +68,7 @@ public class TerminologyController extends BaseController {
 	}
 
 	/**
-	 * 搜索术语
+	 * 搜索关键词
 	 * 
 	 * @param terminologyWord 关键词
 	 * @param languageId      语言编号
@@ -100,7 +100,7 @@ public class TerminologyController extends BaseController {
 					hit.setEntryId(entryId);
 
 					/**
-					 * 判断该术语或物资是否已经被收藏
+					 * 判断该关键词或物资是否已经被收藏
 					 */
 					Long uid = TokenManager.getUserId();
 					MaterialCollected result = termService.searchByNameAndUid(hit.getTerm(), uid);
@@ -113,7 +113,7 @@ public class TerminologyController extends BaseController {
 				}
 			}
 		} catch (Exception e) {
-			LoggerUtils.fmtError(getClass(), e, "查询术语失败！source[%s]", findContent);
+			LoggerUtils.fmtError(getClass(), e, "查询关键词失败！source[%s]", findContent);
 		}
 		modelMap.put("termlist", hitlist);
 		return new ModelAndView("terminology/index");
@@ -150,7 +150,7 @@ public class TerminologyController extends BaseController {
 	}
 
 	/**
-	 * 收藏术语
+	 * 收藏关键词
 	 * 
 	 * @param materialCollected
 	 * @return
@@ -176,13 +176,13 @@ public class TerminologyController extends BaseController {
 		} catch (Exception e) {
 			resultMap.put("status", 500);
 			resultMap.put("message", "收藏失败！");
-			LoggerUtils.fmtError(getClass(), e, "收藏术语失败：source[%s]", materialCollected.toString());
+			LoggerUtils.fmtError(getClass(), e, "收藏关键词失败：source[%s]", materialCollected.toString());
 		}
 		return resultMap;
 	}
 
 	/**
-	 * 取消收藏术语
+	 * 取消收藏关键词
 	 * 
 	 * @param materialCollected
 	 * @return
@@ -218,7 +218,7 @@ public class TerminologyController extends BaseController {
 	}
 
 	/**
-	 * 术语物资自定义
+	 * 关键词物资自定义
 	 * 
 	 * @return
 	 */
@@ -228,7 +228,7 @@ public class TerminologyController extends BaseController {
 	}
 
 	/**
-	 * 根据主键ID数组删除收藏物资或术语
+	 * 根据主键ID数组删除收藏物资或关键词
 	 * 
 	 * @param ids 如果有多个，以“,”间隔
 	 * @return

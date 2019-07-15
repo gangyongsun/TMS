@@ -3,7 +3,7 @@ package com.sojson.terminology.bo;
 import lombok.Data;
 
 /**
- * 术语实体类
+ * 关键词实体类
  * 
  * @author alvin
  *
@@ -21,36 +21,36 @@ public class Terminology {
 	public String entryClass;
 
 	/**
-	 * 术语名
+	 * 关键词名
 	 */
 	public String termName;
 
 	/**
-	 * 术语定义
+	 * 关键词定义
 	 */
 	public String termDefination;
 	/**
-	 * 术语定义来源
+	 * 关键词定义来源
 	 */
 	public String termDefinationSource;
 
 	/**
-	 * 术语例句
+	 * 关键词例句
 	 */
 	public String termExampleSentence;
 
 	/**
-	 * 术语例句来源
+	 * 关键词例句来源
 	 */
 	public String termExampleSentenceSource;
 
 	/**
-	 * 所在的术语库
+	 * 所在的关键词库
 	 */
 	public String termbaseId;
 
 	/**
-	 * 术语语言
+	 * 关键词语言
 	 */
 	public String languageId;
 
