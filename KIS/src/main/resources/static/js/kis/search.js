@@ -6,7 +6,6 @@ jQuery(document).ready(function() {
 		console.log(event);
 		var e = event || window.event || arguments.callee.caller.arguments[0];
 		if (e && e.keyCode == 13) {
-			console.log(13);
 			searchKeyInfo();
 		}
 	}
