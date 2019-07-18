@@ -1,3 +1,17 @@
+jQuery(document).ready(function() {
+	/**
+	 * 回车事件绑定
+	 */
+	document.onkeydown = function(event) {
+		console.log(event);
+		var e = event || window.event || arguments.callee.caller.arguments[0];
+		if (e && e.keyCode == 13) {
+			console.log(13);
+			searchKeyInfo();
+		}
+	}
+});
+
 function searchKeyInfo() {
 	var findContentVal = $("#findContent").val();
 	$.ajax({

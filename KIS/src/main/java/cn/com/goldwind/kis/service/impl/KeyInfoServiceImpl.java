@@ -1,8 +1,10 @@
 package cn.com.goldwind.kis.service.impl;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import cn.com.goldwind.kis.entity.KeyInfo;
@@ -21,8 +23,18 @@ public class KeyInfoServiceImpl implements KeyInfoService {
 	}
 
 	@Override
-	public List<KeyInfo> search(String findContent) {
-		return keyInforRepository.search(findContent);
+	public List<KeyInfo> findByKeyInfo(String keyInfo) {
+		return keyInforRepository.findByKeyInfo(keyInfo);
+	}
+
+	@Override
+	public Page<KeyInfo> findAll(Pageable pageable) {
+		return keyInforRepository.findAll(pageable);
+	}
+
+	@Override
+	public Page<KeyInfo> findByKeyInfo(String keyInfo, Pageable pageable) {
+		return keyInforRepository.findByKeyInfo(keyInfo, pageable);
 	}
 
 }

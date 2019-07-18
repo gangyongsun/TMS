@@ -51,7 +51,7 @@ public class KeyInfoController {
 	 */
 	@RequestMapping(value = "searchAll", method = RequestMethod.POST)
 	public String search(ModelMap modelMap, String findContent) {
-		List<KeyInfo> keyInfoList = keyInfoService.search(findContent);
+		List<KeyInfo> keyInfoList = keyInfoService.findByKeyInfo(findContent);
 		modelMap.put("keyInfoList", keyInfoList);
 		return "index::keyInfoContentFragment";
 	}
