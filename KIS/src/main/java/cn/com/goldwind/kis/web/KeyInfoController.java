@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import cn.com.goldwind.kis.entity.KeyInfo;
 import cn.com.goldwind.kis.service.KeyInfoService;
@@ -21,9 +24,8 @@ public class KeyInfoController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String index() {
-//		return "redirect:/kis/list";
 		return "index";
 	}
 
@@ -41,18 +43,17 @@ public class KeyInfoController {
 	}
 
 	/**
-	 * 根据给出的中英文进行模糊查询
+	 * 搜索关键词
 	 * 
-	 * @param keyInfoDto
-	 * @param model
+	 * @param modelMap
+	 * @param findContent 关键词
 	 * @return
 	 */
-	@RequestMapping("/searchAll")
-	public String searchAll(String findContent, Model model) {
-		System.out.println(findContent);
+	@RequestMapping(value = "searchAll", method = RequestMethod.POST)
+	public String search(ModelMap modelMap, String findContent) {
 		List<KeyInfo> keyInfoList = keyInfoService.search(findContent);
-		model.addAttribute("keyInfoList", keyInfoList);
-		model.addAttribute("findContent", findContent);
-		return "index";
+		modelMap.put("keyInfoList", keyInfoList);
+		return "index::keyInfoContentFragment";
 	}
+
 }

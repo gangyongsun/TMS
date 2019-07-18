@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <title>GoldWind Key Information Search Engine</title>
-<link rel="stylesheet" th:href="@{/css/bootstrap.css}">
-<link rel="stylesheet" th:src="@{/js/jquery-3.1.1.min.js}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}">
+<script type="text/javascript" th:src="@{/js/jquery-3.1.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/kis/search.js}"></script>
 </head>
-<body class="container">
+<body class="container" th:fragment="keyInfoContentFragment" id="keyInfoMain">
 	<img th:src="@{/img/logo.png}">
 	<br>
 	<h1 align="center">
@@ -20,12 +21,12 @@
 	<form class="form-inline" action="/kis/searchAll" method="post">
 		<div class="form-group">
 			<input class="form-control input-xxlarge" type="text" style="width: 1000px;" id="findContent" name="findContent" placeholder="请输入...">
-			<button type="submit" class="btn btn-info btn-md"><span class="glyphicon glyphicon-search"></span>查询</button>
+			<button type="button" class="btn btn-info btn-md" onclick="searchKeyInfo()"><span class="glyphicon glyphicon-search">查询</span></button>
 		</div>
 	</form>
 	<hr>
 	<div class="panel panel-default">
-		<div class="panel-heading">Key Information</div>
+		<div class="panel-heading" align="center">Key Information</div>
 		<table class="table table-bordered">
 			<THEAD>
 				<tr>
