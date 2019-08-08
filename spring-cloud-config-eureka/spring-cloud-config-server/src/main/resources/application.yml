@@ -1,0 +1,17 @@
+server:
+  port: 8003
+spring:
+  application:
+    name: spring-cloud-config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/gangyongsun/spring-config
+          search-paths: config-repo
+          username: gangyongsun@163.com
+          password: sun515801610
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/   ## 注册中心eurka地址

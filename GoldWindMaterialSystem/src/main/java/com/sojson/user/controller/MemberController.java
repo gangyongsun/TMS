@@ -57,7 +57,7 @@ public class MemberController extends BaseController {
 		map.put("findContent", findContent);
 		Pagination<UUser> page = userService.findByPage(map, pageNo, pageSize);
 		map.put("page", page);
-		return new ModelAndView("member/list");
+		return new ModelAndView("keyinfo/list");
 	}
 
 	/**

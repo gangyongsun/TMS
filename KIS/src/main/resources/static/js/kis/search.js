@@ -20,7 +20,7 @@ function searchKeyInfo() {
 			findContent : findContentVal
 		},
 		success : function(data) {
-			$('#keyInfoMain').html(data);
+			$("#keyInfoMain").html(data);
 			$("#findContent").val(findContentVal);
 			$("#findContent").focus();
 		},
