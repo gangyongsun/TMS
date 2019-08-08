@@ -3,10 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <title>GoldWind Key Information Search Engine</title>
-<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}">
-<script type="text/javascript" th:src="@{/js/jquery-3.1.1.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/kis/search.js}"></script>
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+<link rel="stylesheet" th:href="@{/css/font-awesome.css?v=4.4.0}">
+
+<!-- Data Tables -->
+<link rel="stylesheet" th:href="@{/css/dataTables/dataTables.bootstrap.css}" >
+<link rel="stylesheet" th:href="@{/css/animate.css}">
+
+<link rel="stylesheet" th:href="@{/css/style.css?v=4.1.0}">
 </head>
 <body class="container" id="keyInfoMain">
 	<img th:src="@{/img/logo.png}">
@@ -15,50 +19,67 @@
 		GoldWind Key Information Search Engine
 	</h1>
 	<br>
-	<!-- <div class="alert alert-danger  alert-dismissible" role="alert">
-		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> <span class="sr-only">Error:</span> 分页功能待开发...
-	</div> -->
-	<br>
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="input-group">
-				<input type="text" class="form-control" id="findContent" name="findContent" placeholder="请输入...">
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="button" onclick="searchKeyInfo()"><span class="glyphicon glyphicon-search">搜索</span></button>
-				</span>
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="input-group">
+					<input type="text" class="form-control" id="findContent" name="findContent" placeholder="请输入...">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button" onclick="searchKeyInfo()"><span class="glyphicon glyphicon-search">搜索</span></button>
+					</span>
+				</div>
 			</div>
 		</div>
+		<hr>
+		<div class="row">
+		    <div class="col-lg-12">
+		        <div class="ibox float-e-margins">
+		            <div class="ibox-title">
+		                <h5>关键词信息列表</h5>
+		            </div>
+		            <div class="ibox-content">
+		                <table class="table table-striped table-bordered table-hover dataTables-example">
+		                    <thead>
+		                        <tr>
+									<th>ID</th>
+									<th>中文</th>
+									<th>英文</th>
+									<th>主题分类</th>
+									<th>功能分类</th>
+									<th>位置分类</th>
+		                        </tr>
+		                    </thead>
+							<TBODY>
+								<tr class="gradeA" th:each="keyInfo:${keyInfoList}">
+									<td th:text="${keyInfo.id}"></td>
+									<td th:text="${keyInfo.chinese}"></td>
+									<td th:text="${keyInfo.english}"></td>
+									<td th:text="${keyInfo.subject}"></td>
+									<td th:text="${keyInfo.function}"></td>
+									<td th:text="${keyInfo.position}"></td>
+								</tr>
+							</TBODY>
+		                </table>
+		            </div>
+		        </div>
+		    </div>
+		</div>
 	</div>
-	<hr>
-	<div class="panel panel-default">
-		<div class="panel-heading" align="center">Key Information List</div>
-		<!-- <div class=" pre-scrollable"> -->
-			<table class="table table-bordered">
-				<THEAD>
-					<tr>
-						<th>ID</th>
-						<th>中文</th>
-						<th>英文</th>
-						<th>主题分类</th>
-						<th>功能分类</th>
-						<th>位置分类</th>
-					</tr>
-				</THEAD>
-				<TBODY>
-					<tr th:each="keyInfo:${keyInfoList}">
-						<td th:text="${keyInfo.id}"></td>
-						<td th:text="${keyInfo.chinese}"></td>
-						<td th:text="${keyInfo.english}"></td>
-						<td th:text="${keyInfo.subject}"></td>
-						<td th:text="${keyInfo.function}"></td>
-						<td th:text="${keyInfo.position}"></td>
-					</tr>
-					<tr th:if="${keyInfoList==null}">
-						<td align="center" colspan="6">请输入关键词进行查询...</td>
-					</tr>
-				</TBODY>
-			</table>
-		<!-- </div> -->
-	</div>
+		
+	<script type="text/javascript" th:src="@{/js/jquery-3.1.1.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+	
+	<!-- Data Tables -->
+	<script type="text/javascript" th:src="@{/js/dataTables/jquery.dataTables.js}"></script>
+	<script type="text/javascript" th:src="@{/js/plugins/dataTables/dataTables.bootstrap.js}"></script>
+
+	<script type="text/javascript" th:src="@{/js/content.js}"></script>
+
+	<script type="text/javascript" th:src="@{/js/kis/search.js}"></script>
+	<script>
+        $(document).ready(function () {
+            $('.dataTables-example').dataTable();
+        });
+    </script>
 </body>
 </html>
