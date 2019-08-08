@@ -42,7 +42,6 @@
 						<th>主题分类</th>
 						<th>功能分类</th>
 						<th>位置分类</th>
-						<th>备注</th>
 					</tr>
 				</THEAD>
 				<TBODY>
@@ -53,10 +52,9 @@
 						<td th:text="${keyInfo.subject}"></td>
 						<td th:text="${keyInfo.function}"></td>
 						<td th:text="${keyInfo.position}"></td>
-						<td th:text="${keyInfo.remark}"></td>
 					</tr>
 					<tr th:if="${keyInfoList==null}">
-						<td align="center" colspan="7">请输入关键词进行查询...</td>
+						<td align="center" colspan="6">请输入关键词进行查询...</td>
 					</tr>
 				</TBODY>
 			</table>

@@ -20,6 +20,7 @@ function searchKeyInfo() {
 			findContent : findContentVal
 		},
 		success : function(data) {
+			console.log(data);
 			$("#keyInfoMain").html(data);
 			$("#findContent").val(findContentVal);
 			$("#findContent").focus();
@@ -28,4 +29,8 @@ function searchKeyInfo() {
 			console.log("搜索失败");
 		}
 	});
+}
+
+function detail(id){
+	console.log(id);
 }
