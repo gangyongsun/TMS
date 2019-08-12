@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://shiro.apache.org/tags">
+<link rel="icon" href="../../../favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../../../favicon.ico" />
+<link href="../../../../js/common/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="../../../../css/common/base.css" rel="stylesheet"/>
+<script src="../../../../js/common/jquery/jquery1.8.3.min.js"></script>
+<script src="../../../../js/common/layer/layer.js"></script>
+<script src="../../../../js/common/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="../../../../../js/user.login.js"></script>
+
+<link rel="icon" href="../../../favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../../../favicon.ico" />
+<link th:href="@{js/common/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+<link th:href="@{css/common/base.css" rel="stylesheet"/>
+<script th:src="@{js/common/jquery/jquery1.8.3.min.js}"></script>
+<script th:src="@{js/common/layer/layer.js}"></script>
+<script th:src="@{js/common/bootstrap/3.3.5/js/bootstrap.min.js}"></script>
+<script th:src="@{../js/user.login.js}"></script>
+<div class="navbar navbar-inverse navbar-fixed-top animated fadeInDown" style="z-index: 101; height: 41px;">
+	<div class="container" style="padding-left: 0px; padding-right: 0px;">
+		<div class="navbar-header">
+			<button data-target=".navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle collapsed">
+				<span class="sr-only">导航</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+		<div role="navigation" class="navbar-collapse collapse">
+			<a id="_logo" style="color: #fff; font-size: 24px;" class="navbar-brand hidden-sm">GoldWind Search Engine</a>
+			<ul class="nav navbar-nav" id="topMenu">
+				<!-- 拥有 角色100001(管理员)||100003(用户中心) -->
+				<shiro:hasAnyRoles name='100001,100003'>
+					<li id="usersCenter" class="dropdown ">
+						<a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" th:href="@{member/list.shtml}">
+							<span class="glyphicon glyphicon-user"> 用户中心</span>
+						</a>
+						<ul class="dropdown-menu">
+							<shiro:hasPermission name="/member/list.shtml}">
+								<li><a th:href="@{member/list.shtml}">用户列表</a></li>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="/member/online.shtml}">
+								<li><a th:href="@{member/online.shtml}">在线用户</a></li>
+							</shiro:hasPermission>
+						</ul>
+					</li>
+				</shiro:hasAnyRoles>
+				<!--拥有 100001（管理员）|| 100002（权限频道）-->
+				<shiro:hasAnyRoles name='100001,100002'>
+					<li id="rolesPermissionsCenter" class="dropdown">
+						<a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="/permission/index.shtml}">
+							<span class="glyphicon glyphicon-filter"> 权限管理</span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a th:href="@{role/index.shtml}">角色列表</a></li>
+							<li><a th:href="@{role/allocation.shtml}">角色分配</a></li>
+							<li><a th:href="@{permission/index.shtml}">权限列表</a></li>
+							<li><a th:href="@{permission/allocation.shtml}">权限分配</a></li>
+						</ul>
+					</li>
+				</shiro:hasAnyRoles>
+				<shiro:hasAnyRoles name='100001,100005'>
+					<li id="terminologyCenter" class="dropdown">
+						<a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="/terminology/index.shtml}">
+							<span class="glyphicon glyphicon-search"> 关键词查询</span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a th:href="@{terminology/index.shtml}">关键词搜索</a></li>
+							<li><a th:href="@{terminology/collection.shtml}">关键词收藏</a></li>
+							<li><a th:href="@{terminology/termcustom.shtml}">关键词自定义</a></li>
+						</ul>
+					</li>
+				</shiro:hasAnyRoles>
+				<shiro:hasAnyRoles name='100001,100005'>
+					<li id="orderCenter" class="">
+						<a aria-expanded="false" aria-haspopup="true" role="button" th:href="@{order/shopping_cart.shtml}">
+							<span class="glyphicon glyphicon-shopping-cart"> 购物清单</span>
+						</a>
+					</li>
+				</shiro:hasAnyRoles>
+				<shiro:hasAnyRoles name='100004'>
+					<li id="orderCenter" class="">
+						<a aria-expanded="false" aria-haspopup="true" role="button" th:href="@{order/index.shtml}">
+							<span class="glyphicon glyphicon-shopping-cart"> 订单列表</span>
+						</a>
+					</li>
+				</shiro:hasAnyRoles>
+			</ul>
+			<ul class="nav navbar-nav  pull-right">
+				<li class="dropdown" style="color: #fff;">
+					<!--已经登录（包括记住我的）--> 
+					<shiro:user>
+						<a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" onclick="location.href='../../../../user/index.shtml'" th:href="@{user/index.shtml}"
+							class="dropdown-toggle qqlogin">
+							<span class="glyphicon glyphicon-user"><shiro:principal property="nickname" /></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a th:href="@{user/index.shtml}">个人资料</a></li>
+							<li><a th:href="@{user/updateSelf.shtml}">资料修改</a></li>
+							<li><a th:href="@{user/updatePswd.shtml}">密码修改</a></li>
+							<li><a th:href="@{role/mypermission.shtml}">我的权限</a></li>
+							<shiro:hasPermission name="/address/index.shtml}">
+								<li><a th:href="@{address/index.shtml}">我的地址</a></li>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="/order/index.shtml}">
+								<shiro:hasAnyRoles name='100001,100004'>
+									<li><a th:href="@{order/index.shtml}">用户订单</a></li>
+								</shiro:hasAnyRoles>
+								<shiro:hasAnyRoles name='100005'>
+									<li><a th:href="@{order/index.shtml}">用户订单</a></li>
+								</shiro:hasAnyRoles>
+							</shiro:hasPermission>
+							<li><a href="javascript:void(0);" onclick="logout();">退出登录</a></li>
+						</ul>
+					</shiro:user>
+					
+					<!--没有登录(游客)--> 
+					<shiro:guest>
+						<a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" href="javascript:void(0);" class="dropdown-toggle qqlogin">
+							<img src="//qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_1.png">&nbsp;登录
+						</a>
+					</shiro:guest>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+</html>
