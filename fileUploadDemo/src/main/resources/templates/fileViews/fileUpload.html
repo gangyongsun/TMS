@@ -45,7 +45,7 @@
 			language : 'zh', // 多语言设置，需要引入local中相应的js，例如locales/zh.js
 			theme : "explorer-fa", // 主题
 			uploadUrl : '#', // you must set a valid URL here else you will get an error
-			allowedFileExtensions : [ 'jpg', 'png', 'gif', 'pdf', 'docx', 'doc', 'xlsx', 'txt' ],
+			allowedFileExtensions : [ 'jpg', 'png', 'gif', 'pdf', 'docx', 'doc', 'xlsx', 'txt','dmg' ],
 			minFileCount : 1, // 最小上传数量
 			maxFileCount : 10, // 最大上传数量
 			overwriteInitial : false, // 覆盖初始预览内容和标题设置
@@ -55,7 +55,7 @@
 			layoutTemplates : {
 				actionUpload : ''
 			},
-			maxFileSize : 10240,
+			maxFileSize : 1024000,
 			slugCallback : function(filename) {
 				return filename.replace('(', '_').replace(']', '_');
 			}
