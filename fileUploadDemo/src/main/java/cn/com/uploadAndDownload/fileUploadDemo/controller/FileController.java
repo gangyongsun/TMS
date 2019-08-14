@@ -105,7 +105,7 @@ public class FileController {
 				MultipartFile file = files[i];
 				// 保存文件
 				System.out.println("True&False : " + saveFile(fileUploadPath, file));
-				fileNames.add(fileUploadPath + file.getOriginalFilename());
+				fileNames.add(file.getOriginalFilename());
 			}
 		}
 		log.info("2UserName:" + username);
