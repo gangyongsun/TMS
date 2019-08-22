@@ -17,3 +17,24 @@ spring:
     mode: HTML5
     servlet:
       content-type: text/html
+      
+  datasource:
+    url: jdbc:mysql://localhost:3306/tms?characterEncoding=UTF-8&useUnicode=true&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+
+  redis:
+    host: localhost
+    port: 6379
+    jedis:
+      pool:
+        max-idle: 8
+        min-idle: 0
+        max-active: 8
+        max-wait: -1
+    timeout: 0
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.chaoqi.springboot_mybatisplus.domain

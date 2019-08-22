@@ -38,7 +38,7 @@ public class FileController {
 	/**
 	 * 文件上传路径，以后换成文件服务器路径
 	 */
-	private static final String fileUploadPath = "/Users/alvin/Downloads/fileUploadFolder/";
+	private static final String fileUploadPath = "/Users/alvin/Downloads/ProjectUploadFolder/";
 
 	/**
 	 * 初始页面
