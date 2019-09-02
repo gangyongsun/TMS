@@ -9,9 +9,6 @@ import java.io.Serializable;
 @Table(name = "sys_user_role")
 @Data
 public class SysUserRole implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id

@@ -9,9 +9,6 @@ import java.io.Serializable;
 @Table(name = "sys_user")
 @Data
 public class SysUser implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id

@@ -16,7 +16,6 @@ public class ResourcesServiceImpl implements ResourcesService {
 
     @Override
     public List<SysResources> selectAll() {
-        List<SysResources> resourcesList = sysResourcesMapper.selectAll();
-        return resourcesList;
+        return sysResourcesMapper.selectAll();
     }
 }

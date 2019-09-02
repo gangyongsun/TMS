@@ -13,9 +13,6 @@ import lombok.Data;
 @Table(name = "sys_resources")
 @Data
 public class SysResources implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id

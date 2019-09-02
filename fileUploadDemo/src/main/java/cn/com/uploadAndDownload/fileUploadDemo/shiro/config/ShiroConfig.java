@@ -26,10 +26,8 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.secutity.MyShiroRealm;
 public class ShiroConfig {
 
 	@Bean(name = "shiroDialect")
-
 	public ShiroDialect shiroDialect() {
 		return new ShiroDialect();
-
 	}
 
 	@Bean
@@ -53,6 +51,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/js/**", "anon");
 		filterChainDefinitionMap.put("/img/**", "anon");
 		filterChainDefinitionMap.put("/auth/login", "anon");
+		filterChainDefinitionMap.put("/auth/submitLogin", "anon");
 		filterChainDefinitionMap.put("/auth/logout", "logout");
 		filterChainDefinitionMap.put("/auth/kickout", "anon");
 		filterChainDefinitionMap.put("/**", "authc,kickout");

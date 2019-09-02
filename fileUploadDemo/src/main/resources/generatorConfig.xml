@@ -5,7 +5,7 @@
 
 <generatorConfiguration>
 	<properties resource="application.yml" />
-	<classPathEntry location="D:/mysql/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46.jar" />
+	<classPathEntry location="/Users/alvin/.m2/repository/mysql/mysql-connector-java/8.0.17/mysql-connector-java-8.0.17.jar" />
 	<context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
 		<property name="beginningDelimiter" value="`" />
 		<property name="endingDelimiter" value="`" />
@@ -21,8 +21,7 @@
 			<property name="suppressAllComments" value="false" />
 		</commentGenerator>
 		<!-- JDBC连接 -->
-		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/tms?characterEncoding=UTF-8" userId="root"
-			password="root">
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/tms?characterEncoding=UTF-8" userId="root" password="root">
 		</jdbcConnection>
 		<!-- 生成实体类地址 -->
 		<javaModelGenerator targetPackage="cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.domain" targetProject="src/main/java" />

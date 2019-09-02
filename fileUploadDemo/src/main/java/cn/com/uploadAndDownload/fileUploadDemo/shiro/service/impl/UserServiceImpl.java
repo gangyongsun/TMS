@@ -23,8 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public SysUser getUser(SysUser user) {
-        SysUser info = userMapper.selectOne(user);
-        return info;
+        return userMapper.selectOne(user);
     }
 
     @Override
