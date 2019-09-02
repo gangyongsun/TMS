@@ -47,7 +47,7 @@ public class FileController {
 	 */
 	@RequestMapping(value = "index")
 	public ModelAndView index() {
-		return new ModelAndView("index");
+		return new ModelAndView("fileViews/filesViews_index");
 	}
 
 	/**
