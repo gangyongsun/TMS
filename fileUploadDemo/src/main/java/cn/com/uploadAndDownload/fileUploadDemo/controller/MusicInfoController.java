@@ -25,7 +25,7 @@ public class MusicInfoController {
     @ResponseBody
     public String login(){
         SysUser user = RequestUtils.currentLoginUser();
-        Set<String> authorization = userService.findPermissionsByUserId(user.getId());
+        Set<String> authorization = userService.findResourcesByUserId(user.getId());
         return "该用户有如下权限" + authorization;
     }
 

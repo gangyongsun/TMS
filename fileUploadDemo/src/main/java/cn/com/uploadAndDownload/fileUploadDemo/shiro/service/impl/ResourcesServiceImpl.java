@@ -1,10 +1,13 @@
 package cn.com.uploadAndDownload.fileUploadDemo.shiro.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysResourcesBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysResourcesMapper;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysResources;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.ResourcesService;
@@ -18,4 +21,34 @@ public class ResourcesServiceImpl implements ResourcesService {
     public List<SysResources> selectAll() {
         return sysResourcesMapper.selectAll();
     }
+
+	@Override
+	public Pagination<SysResources> findPage(Map<String, Object> modelMap, Integer pageNo, int pageSize) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SysResources insertSelective(SysResources psermission) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> deleteResourceById(String ids) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> addResource2Role(Long roleId, String ids) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<SysResourcesBo> selectResourceById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

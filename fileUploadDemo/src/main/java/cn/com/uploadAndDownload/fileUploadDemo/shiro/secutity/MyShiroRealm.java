@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.SysRoleService;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.RoleService;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.UserService;
 
 public class MyShiroRealm extends AuthorizingRealm {
@@ -26,7 +26,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 
 	// 如果项目中用到了事物，@Autowired注解会使事物失效，可以自己用get方法获取值
 	@Autowired
-	private SysRoleService roleService;
+	private RoleService roleService;
 
 	@Autowired
 	private UserService userService;
@@ -74,7 +74,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 			Set<String> roles = roleService.findRoleNameByUserId(userLogin.getId());
 			authorizationInfo.addRoles(roles);
 
-			Set<String> permissions = userService.findPermissionsByUserId(userLogin.getId());
+			Set<String> permissions = userService.findResourcesByUserId(userLogin.getId());
 			authorizationInfo.addStringPermissions(permissions);
 		}
 		logger.info("---- 获取到以下权限 ----");

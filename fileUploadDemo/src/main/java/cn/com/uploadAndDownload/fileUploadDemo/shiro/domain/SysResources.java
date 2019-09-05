@@ -22,20 +22,20 @@ public class SysResources implements Serializable {
 	/**
 	 * 资源名称
 	 */
-	@Column(name = "user_name")
-	private String userName;
+	@Column(name = "resource_name")
+	private String resourceName;
 
 	/**
 	 * 资源url
 	 */
-	@Column(name = "res_url")
-	private String resUrl;
+	@Column(name = "resource_url")
+	private String resourceUrl;
 
 	/**
 	 * 资源类型 1:菜单 2：按钮
 	 */
-	@Column(name = "user_type")
-	private Integer userType;
+	@Column(name = "resource_type")
+	private Integer resourceType;
 
 	/**
 	 * 父资源
@@ -46,7 +46,7 @@ public class SysResources implements Serializable {
 	/**
 	 * 排序
 	 */
-	@Column(name = "user_sort")
-	private Integer userSort;
+	@Column(name = "resource_sort")
+	private Integer resourceSort;
 
 }

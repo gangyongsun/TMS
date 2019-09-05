@@ -1,10 +1,16 @@
 package cn.com.uploadAndDownload.fileUploadDemo.shiro.domain;
 
-import javax.persistence.*;
+import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.Data;
-
-import java.io.Serializable;
 
 @Table(name = "sys_role")
 @Data
@@ -17,5 +23,10 @@ public class SysRole implements Serializable {
 
 	@Column(name = "role_desc")
 	private String roleDesc;
+	
+	/**
+	 * 一个role对多个resources，一对多处理
+	 */
+	private List<SysResources> resources = new LinkedList<SysResources>();
 
 }
