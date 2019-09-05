@@ -2,7 +2,7 @@ package cn.com.uploadAndDownload.fileUploadDemo.shiro.service;
 
 import java.util.Set;
 
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.domain.SysUser;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 
 public interface UserService {
     /***

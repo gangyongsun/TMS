@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.domain.SysUser;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.UserService;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.utils.RequestUtils;
 

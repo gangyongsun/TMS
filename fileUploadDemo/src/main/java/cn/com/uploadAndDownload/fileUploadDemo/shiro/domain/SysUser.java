@@ -1,4 +1,4 @@
-package cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.domain;
+package cn.com.uploadAndDownload.fileUploadDemo.shiro.domain;
 
 import javax.persistence.*;
 

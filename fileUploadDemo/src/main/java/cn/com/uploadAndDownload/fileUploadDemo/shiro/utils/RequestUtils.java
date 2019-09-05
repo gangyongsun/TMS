@@ -3,7 +3,7 @@ package cn.com.uploadAndDownload.fileUploadDemo.shiro.utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.domain.SysUser;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 
 public class RequestUtils {
 

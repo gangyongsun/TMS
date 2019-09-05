@@ -1,4 +1,4 @@
-package cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.mapper;
+package cn.com.uploadAndDownload.fileUploadDemo.shiro.dao;
 
 import java.util.List;
 import java.util.Set;
@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.domain.SysResources;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysResources;
 import tk.mybatis.mapper.common.Mapper;
 
 public interface SysResourcesMapper extends Mapper<SysResources> {

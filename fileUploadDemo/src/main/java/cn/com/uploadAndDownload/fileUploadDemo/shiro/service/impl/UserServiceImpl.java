@@ -8,9 +8,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.domain.SysUser;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.mapper.SysResourcesMapper;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.mapper.SysUserMapper;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysResourcesMapper;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysUserMapper;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.UserService;
 
 @Service

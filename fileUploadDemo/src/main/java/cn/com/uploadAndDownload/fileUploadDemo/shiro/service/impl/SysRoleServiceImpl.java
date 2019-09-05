@@ -5,7 +5,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.mapper.SysRoleMapper;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysRoleMapper;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.SysRoleService;
 
 @Service

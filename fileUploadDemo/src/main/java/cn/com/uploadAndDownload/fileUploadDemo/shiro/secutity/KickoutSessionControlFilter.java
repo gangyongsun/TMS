@@ -23,7 +23,7 @@ import org.apache.shiro.web.util.WebUtils;
 
 import com.alibaba.fastjson.JSON;
 
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.domain.SysUser;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 
 public class KickoutSessionControlFilter extends AccessControlFilter {
 

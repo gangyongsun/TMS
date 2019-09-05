@@ -1,11 +1,11 @@
-package cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.mapper;
+package cn.com.uploadAndDownload.fileUploadDemo.shiro.dao;
 
 import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.domain.SysRole;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysRole;
 import tk.mybatis.mapper.common.Mapper;
 
 public interface SysRoleMapper extends Mapper<SysRole> {

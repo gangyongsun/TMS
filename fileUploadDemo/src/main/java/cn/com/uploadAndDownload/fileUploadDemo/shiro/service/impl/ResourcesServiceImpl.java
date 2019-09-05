@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.domain.SysResources;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.mapper.SysResourcesMapper;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysResourcesMapper;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysResources;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.ResourcesService;
 
 @Service
