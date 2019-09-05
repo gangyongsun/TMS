@@ -4,15 +4,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.OutputStream;
 
-import lombok.Data;
-
 /**
  * 验证码抽象类,暂时不支持中文
  * 
  * @author alvin
  *
  */
-@Data
 public abstract class Captcha extends Randoms {
 	protected Font font = new Font("Verdana", Font.ITALIC | Font.BOLD, 28); // 字体
 	protected int len = 5; // 验证码随机字符长度
