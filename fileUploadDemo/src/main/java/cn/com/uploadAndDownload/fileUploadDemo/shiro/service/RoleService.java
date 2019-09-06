@@ -28,4 +28,6 @@ public interface RoleService {
 	List<SysRole> findNowAllPermission();
 
 	Pagination<RoleResourceAllocationBo> findRoleAndResourcePage(ModelMap modelMap, Integer pageNo, int pageSize);
+
+	Set<String> findRoleByUserId(Integer userId);
 }

@@ -30,10 +30,14 @@ public interface UserService {
 
 	Pagination<UserRoleAllocationBo> findUserAndRole(ModelMap modelMap, Integer pageNo, int pageSize);
 
-	List<SysRoleBo> selectRoleByUserId(Long id);
+	List<SysRoleBo> selectRoleByUserId(int id);
 
-	Map<String, Object> addRole2User(Long userId, String ids);
+	Map<String, Object> addRole2User(int userId, String ids);
 
 	Map<String, Object> deleteRoleByUserIds(String userIds);
+
+	SysUser login(String username, String pswd);
+
+	void updateByPrimaryKeySelective(SysUser user);
 
 }

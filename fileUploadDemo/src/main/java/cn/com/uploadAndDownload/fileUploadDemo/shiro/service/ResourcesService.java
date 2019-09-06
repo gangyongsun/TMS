@@ -2,6 +2,7 @@ package cn.com.uploadAndDownload.fileUploadDemo.shiro.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysResourcesBo;
@@ -24,4 +25,6 @@ public interface ResourcesService {
 	Map<String, Object> addResource2Role(Long roleId, String ids);
 
 	List<SysResourcesBo> selectResourceById(Long id);
+
+	Set<String> findResourceByUserId(Integer userId);
 }

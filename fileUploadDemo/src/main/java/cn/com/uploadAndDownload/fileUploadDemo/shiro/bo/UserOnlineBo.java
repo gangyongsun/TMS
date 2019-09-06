@@ -47,4 +47,8 @@ public class UserOnlineBo extends SysUser implements Serializable {
 	 */
 	private boolean sessionStatus = Boolean.TRUE;
 
+	public UserOnlineBo(SysUser user) {
+		super(user);
+	}
+
 }

@@ -54,4 +54,10 @@ public class SysRoleServiceImpl implements RoleService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Set<String> findRoleByUserId(Integer userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

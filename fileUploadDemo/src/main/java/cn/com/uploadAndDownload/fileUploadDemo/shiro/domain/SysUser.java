@@ -3,12 +3,14 @@ package cn.com.uploadAndDownload.fileUploadDemo.shiro.domain;
 import javax.persistence.*;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
 
 @Table(name = "sys_user")
 @Data
+@NoArgsConstructor
 public class SysUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/**
@@ -36,23 +38,23 @@ public class SysUser implements Serializable {
 	 */
 	@Column(name = "pass_word")
 	private String passWord;
-	
+
 	/**
 	 * 用户昵称
 	 */
-	@Column(name="nick_name")
+	@Column(name = "nick_name")
 	private String nickname;
-	
+
 	/**
 	 * 创建时间
 	 */
-	@Column(name="create_time")
+	@Column(name = "create_time")
 	private Date createTime;
 
 	/**
 	 * 最后登录时间
 	 */
-	@Column(name="lastLogin_time")
+	@Column(name = "lastLogin_time")
 	private Date lastLoginTime;
 
 	/**
@@ -60,5 +62,14 @@ public class SysUser implements Serializable {
 	 */
 	@Column(name = "user_enable")
 	private Integer userEnable;
+
+	public SysUser(SysUser user) {
+		this.userName = user.userName;
+		this.passWord = user.passWord;
+		this.nickname = user.nickname;
+		this.createTime = user.createTime;
+		this.lastLoginTime = user.lastLoginTime;
+		this.userEnable = user.userEnable;
+	}
 
 }

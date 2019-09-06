@@ -21,4 +21,10 @@ public class SysUserRole implements Serializable {
 	@Column(name = "role_id")
 	private Integer roleId;
 
+	public SysUserRole(Integer userId, Integer roleId) {
+		super();
+		this.userId = userId;
+		this.roleId = roleId;
+	}
+
 }

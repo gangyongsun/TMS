@@ -57,7 +57,7 @@ public class UserRoleAllocationController extends BaseController {
 	 */
 	@RequestMapping(value = "selectRoleByUserId")
 	@ResponseBody
-	public List<SysRoleBo> selectRoleByUserId(Long id) {
+	public List<SysRoleBo> selectRoleByUserId(int id) {
 		List<SysRoleBo> sysRoleBoList = userService.selectRoleByUserId(id);
 		return sysRoleBoList;
 	}
@@ -71,7 +71,7 @@ public class UserRoleAllocationController extends BaseController {
 	 */
 	@RequestMapping(value = "addRole2User")
 	@ResponseBody
-	public Map<String, Object> addRole2User(Long userId, String ids) {
+	public Map<String, Object> addRole2User(int userId, String ids) {
 		return userService.addRole2User(userId, ids);
 	}
 
