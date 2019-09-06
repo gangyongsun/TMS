@@ -9,11 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.MysqlDialect;
@@ -23,6 +26,7 @@ import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;
 
 public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 	private String NAMESPACE;
+
 	final static Class<? extends Object> SELF = BaseMybatisDao.class;
 
 	protected final Log logger = LogFactory.getLog(BaseMybatisDao.class);
@@ -47,6 +51,11 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 		} catch (RuntimeException e) {
 			LoggerUtils.error(SELF, "初始化失败，继承BaseMybatisDao，没有泛型！");
 		}
+	}
+
+	@Resource
+	public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+		super.setSqlSessionFactory(sqlSessionFactory);
 	}
 
 	/**
@@ -78,7 +87,7 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 		LoggerUtils.fmtDebug(SELF, "findByPageBySqlId sql : %s", sqlcode);
 		String countCode = "", countId = "";
 		BoundSql countSql = null;
-		//sql id 和 count id 用同一个
+		// sql id 和 count id 用同一个
 		if (StringUtils.isBlank(sqlId)) {
 			countCode = sqlcode;
 			countSql = boundSql;
@@ -146,10 +155,10 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 
 	/**
 	 * 
-	 * @param sqlId 主语句
-	 * @param countId Count语句
-	 * @param params 参数
-	 * @param pageNo 第几页
+	 * @param sqlId    主语句
+	 * @param countId  Count语句
+	 * @param params   参数
+	 * @param pageNo   第几页
 	 * @param pageSize 每页显示多少条
 	 * @return
 	 */
@@ -184,7 +193,7 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 			List resultList = this.getSqlSession().selectList(sqlId, params);
 			page.setList(resultList);
 
-			//处理Count
+			// 处理Count
 			PreparedStatement ps = getPreparedStatement4Count(countCode, countSql.getParameterMappings(), params, conn);
 			ps.execute();
 			ResultSet set = ps.getResultSet();
@@ -221,7 +230,7 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 	 * @throws SQLException
 	 */
 	private PreparedStatement getPreparedStatement(String sql, List<ParameterMapping> parameterMappingList, Map<String, Object> params, Connection conn) throws SQLException {
-		//分页根据数据库分页
+		// 分页根据数据库分页
 		MysqlDialect mysqlDialect = new MysqlDialect();
 
 		PreparedStatement ps = conn.prepareStatement(mysqlDialect.getCountSqlString(sql));

@@ -158,10 +158,10 @@ public class CustomSessionManager {
 			}
 			for (String sessionId : sessionIdArray) {
 				Session session = shiroSessionRepository.getSession(sessionId);
-				
+
 				SessionStatus sessionStatus = new SessionStatus();
 				sessionStatus.setOnlineStatus(status);
-				
+
 				session.setAttribute(SESSION_STATUS, sessionStatus);
 				customShiroSessionDAO.update(session);
 			}

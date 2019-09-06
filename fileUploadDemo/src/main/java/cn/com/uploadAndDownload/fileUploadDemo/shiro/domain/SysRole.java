@@ -23,7 +23,7 @@ public class SysRole implements Serializable {
 
 	@Column(name = "role_desc")
 	private String roleDesc;
-	
+
 	/**
 	 * 一个role对多个resources，一对多处理
 	 */

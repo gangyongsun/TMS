@@ -27,41 +27,40 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.manager.TokenManager;
 
 @Service
 public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements UserService {
-	
+
 	/***
 	 * 用户手动操作Session
 	 */
 	@Autowired
 	CustomSessionManager customSessionManager;
-	
-	
+
 	@Autowired
 	SysUserRoleMapper userRoleMapper;
-	
-    @Autowired
-    private SysUserMapper userMapper;
 
-    @Autowired
-    private SysResourcesMapper sysResourcesMapper;
+	@Autowired
+	private SysUserMapper userMapper;
 
-    @Override
-    public SysUser getUser(SysUser user) {
-        return userMapper.selectOne(user);
-    }
+	@Autowired
+	private SysResourcesMapper sysResourcesMapper;
 
-    @Override
-    public Set<String> findResourcesByUserId(int userId) {
-        Set<String> permissions = sysResourcesMapper.findRoleNameByUserId(userId);
-        Set<String> result = new HashSet<>();
-        for (String permission : permissions) {
-            if (StringUtils.isBlank(permission)) {
-                continue;
-            }
-            permission = StringUtils.trim(permission);
-            result.addAll(Arrays.asList(permission.split("\\s*;\\s*")));
-        }
-        return result;
-    }
+	@Override
+	public SysUser getUser(SysUser user) {
+		return userMapper.selectOne(user);
+	}
+
+	@Override
+	public Set<String> findResourcesByUserId(int userId) {
+		Set<String> permissions = sysResourcesMapper.findRoleNameByUserId(userId);
+		Set<String> result = new HashSet<>();
+		for (String permission : permissions) {
+			if (StringUtils.isBlank(permission)) {
+				continue;
+			}
+			permission = StringUtils.trim(permission);
+			result.addAll(Arrays.asList(permission.split("\\s*;\\s*")));
+		}
+		return result;
+	}
 
 	@Override
 	public Pagination<UserRoleAllocationBo> findUserAndRole(ModelMap modelMap, Integer pageNo, int pageSize) {
@@ -135,6 +134,6 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	@Override
 	public void updateByPrimaryKeySelective(SysUser user) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
