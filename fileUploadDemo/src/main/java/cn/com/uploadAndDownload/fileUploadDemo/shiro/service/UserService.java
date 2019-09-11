@@ -40,4 +40,12 @@ public interface UserService {
 
 	void updateByPrimaryKeySelective(SysUser user);
 
+	Pagination<SysUser> findByPage(ModelMap map, Integer pageNo, int pageSize);
+
+	Map<String, Object> deleteUserById(String ids);
+
+	Map<String, Object> updateForbidUserById(Long id, Long status);
+
+	SysUser findUserById(Integer userId);
+
 }

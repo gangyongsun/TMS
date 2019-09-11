@@ -43,7 +43,7 @@ public class ResourcesController extends BaseController {
 	public ModelAndView index(String findContent, ModelMap modelMap, Integer pageNo) {
 		modelMap.put("findContent", findContent);
 		Pagination<SysResources> resources = resourcesService.findPage(modelMap, pageNo, pageSize);
-		return new ModelAndView("resource/index", "page", resources);
+		return new ModelAndView("system/resource/index", "page", resources);
 	}
 
 	/**

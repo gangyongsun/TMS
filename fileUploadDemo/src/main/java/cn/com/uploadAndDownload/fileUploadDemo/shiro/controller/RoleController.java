@@ -41,7 +41,7 @@ public class RoleController extends BaseController {
 	public ModelAndView index(String findContent, ModelMap modelMap) {
 		modelMap.put("findContent", findContent);
 		Pagination<SysRole> role = roleService.findPage(modelMap, pageNo, pageSize);
-		return new ModelAndView("role/index", "page", role);
+		return new ModelAndView("system/role/index", "page", role);
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class RoleController extends BaseController {
 		} catch (Exception e) {
 			resultMap.put("status", 500);
 			resultMap.put("message", "添加失败，请刷新后再试！");
-			LoggerUtils.fmtError(getClass(), e, "添加角色报错。source[%s]", role.toString());
+			LoggerUtils.fmtError(getClass(), e, "添加角色报错!source[%s]", role.toString());
 		}
 		return resultMap;
 	}
@@ -85,7 +85,7 @@ public class RoleController extends BaseController {
 	 */
 	@RequestMapping(value = "mypermission", method = RequestMethod.GET)
 	public ModelAndView mypermission() {
-		return new ModelAndView("permission/mypermission");
+		return new ModelAndView("system/permission/mypermission");
 	}
 
 	/**

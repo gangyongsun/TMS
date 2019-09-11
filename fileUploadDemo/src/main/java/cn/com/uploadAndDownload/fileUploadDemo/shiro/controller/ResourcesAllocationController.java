@@ -45,10 +45,10 @@ public class ResourcesAllocationController extends BaseController {
 	 */
 	@RequestMapping(value = "allocation")
 	public ModelAndView allocation(ModelMap modelMap, Integer pageNo, String findContent) {
-		modelMap.put("findContent", findContent);
-		Pagination<RoleResourceAllocationBo> roleResourceBoPage = roleService.findRoleAndResourcePage(modelMap, pageNo, pageSize);
-		modelMap.put("page", roleResourceBoPage);
-		return new ModelAndView("resource/allocation");
+//		modelMap.put("findContent", findContent);
+//		Pagination<RoleResourceAllocationBo> roleResourceBoPage = roleService.findRoleAndResourcePage(modelMap, pageNo, pageSize);
+//		modelMap.put("page", roleResourceBoPage);
+		return new ModelAndView("system/resource/allocation");
 	}
 
 	/**

@@ -136,4 +136,28 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public Pagination<SysUser> findByPage(ModelMap map, Integer pageNo, int pageSize) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> deleteUserById(String ids) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> updateForbidUserById(Long id, Long status) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SysUser findUserById(Integer userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

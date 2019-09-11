@@ -5,7 +5,7 @@
 2、进入/usr/local/etc/文件夹，创建redis文件夹，并创建redis.conf配置文件，也可以把安装目录下（即之前解压缩的/usr/local/redis-3.2.4/redis.conf）复制过来，再进行修改；
 3、修改redis.conf配置文件，主要注意的是配置一下ip地址（如果配成127.0.0.1，那么默认只能本机访问redis服务器，如果需要其他局域网内机器或外网机器进行访问时，请配置成当前机器的ip地址），超时时间，日志文件位置等等。具体内容可以在网上搜索redis配置文件每一个含义，这里就不一一解释了。
 4、保存文件退出，进入/usr/local/bin/目录下，启动redis
-　　sudo ./redis-server /usr/local/etc/redis/redis.conf
+　　nohup ./redis-server /usr/local/etc/redis/redis.conf &
 5、启动之后，实时查看启动日志
 　　tail -f /usr/local/etc/redis/log-redis.log
 　　至此，redis完成搭建，默认端口是6379
