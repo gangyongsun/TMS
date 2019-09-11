@@ -11,8 +11,8 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
 
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.CustomShiroSessionDAO;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.UserOnlineBo;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.shiroSession.CustomShiroSessionDAO;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;

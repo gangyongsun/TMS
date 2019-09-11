@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication()
-@MapperScan({"cn.com.uploadAndDownload.fileUploadDemo.shiro.dao","cn.com.uploadAndDownload.fileUploadDemo.shiro"})
+@MapperScan({"cn.com.uploadAndDownload.fileUploadDemo.shiro.dao"})
 public class FileUploadDemoApplication {
 
 	public static void main(String[] args) {

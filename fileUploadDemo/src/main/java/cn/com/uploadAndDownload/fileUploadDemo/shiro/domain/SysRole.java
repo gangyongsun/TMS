@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -27,6 +28,7 @@ public class SysRole implements Serializable {
 	/**
 	 * 一个role对多个resources，一对多处理
 	 */
+	@Transient
 	private List<SysResources> resources = new LinkedList<SysResources>();
 
 }
