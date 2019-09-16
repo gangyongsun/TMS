@@ -138,9 +138,8 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	}
 
 	@Override
-	public Pagination<SysUser> findByPage(ModelMap map, Integer pageNo, int pageSize) {
-		// TODO Auto-generated method stub
-		return null;
+	public Pagination<SysUser> findByPage(Map<String, Object> map, Integer pageNo, int pageSize) {
+		return super.findPage(map, pageNo, pageSize);
 	}
 
 	@Override

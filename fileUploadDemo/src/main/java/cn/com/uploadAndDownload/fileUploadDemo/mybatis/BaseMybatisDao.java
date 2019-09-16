@@ -17,6 +17,8 @@ import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.mybatis.spring.SqlSessionUtils;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.MysqlDialect;
@@ -189,7 +191,13 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 			countCode = countSql.getSql();
 		}
 		try {
-			Connection conn = this.getSqlSession().getConnection();
+//			Connection conn = this.getSqlSession().getConnection();
+
+			SqlSessionTemplate st = (SqlSessionTemplate) getSqlSession();
+			Connection conn = SqlSessionUtils.getSqlSession(st.getSqlSessionFactory(), st.getExecutorType(), st.getPersistenceExceptionTranslator()).getConnection();
+
+//			System.out.println(conn.isClosed());
+
 			List resultList = this.getSqlSession().selectList(sqlId, params);
 			page.setList(resultList);
 
@@ -202,6 +210,7 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 				page.setTotalCount(set.getInt(1));
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			LoggerUtils.error(SELF, "jdbc.error.code.findByPageBySqlId", e);
 		}
 		return page;

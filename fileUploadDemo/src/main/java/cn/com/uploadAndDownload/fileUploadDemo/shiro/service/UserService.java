@@ -40,7 +40,7 @@ public interface UserService {
 
 	void updateByPrimaryKeySelective(SysUser user);
 
-	Pagination<SysUser> findByPage(ModelMap map, Integer pageNo, int pageSize);
+	Pagination<SysUser> findByPage(Map<String, Object> map, Integer pageNo, int pageSize);
 
 	Map<String, Object> deleteUserById(String ids);
 
