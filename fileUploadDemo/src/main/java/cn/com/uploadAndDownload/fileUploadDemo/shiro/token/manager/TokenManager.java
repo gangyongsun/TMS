@@ -9,7 +9,7 @@ import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
 
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.session.CustomSessionManager;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.impl.CustomSessionManager;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.SampleRealm;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.ShiroToken;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.SpringContextUtil;

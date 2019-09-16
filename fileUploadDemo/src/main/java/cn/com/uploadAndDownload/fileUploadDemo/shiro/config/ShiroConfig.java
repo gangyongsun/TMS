@@ -21,15 +21,14 @@ import org.springframework.context.annotation.Configuration;
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.secutity.KickoutSessionControlFilter;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.secutity.MyShiroRealm;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.session.CustomSessionManager;
 
 @Configuration
 public class ShiroConfig {
 	
-	@Bean
-	public CustomSessionManager customSessionManager() {
-		return new CustomSessionManager();
-	}
+//	@Bean
+//	public CustomSessionManager customSessionManager() {
+//		return new CustomSessionManager();
+//	}
 
 	@Bean(name = "shiroDialect")
 	public ShiroDialect shiroDialect() {

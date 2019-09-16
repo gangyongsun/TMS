@@ -1,4 +1,4 @@
-package cn.com.uploadAndDownload.fileUploadDemo.shiro.session;
+package cn.com.uploadAndDownload.fileUploadDemo.shiro.vo;
 
 import java.io.Serializable;
 

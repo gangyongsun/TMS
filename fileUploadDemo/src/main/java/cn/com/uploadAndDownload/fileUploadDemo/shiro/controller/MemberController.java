@@ -20,7 +20,7 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.UserOnlineBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.RoleService;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.UserService;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.session.CustomSessionManager;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.impl.CustomSessionManager;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.utils.UserManager;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.PropertiesUtil;
 
@@ -66,10 +66,10 @@ public class MemberController extends BaseController {
 	 */
 	@RequestMapping(value = "online")
 	public ModelAndView online(ModelMap map) {
-//		Pagination<UserOnlineBo> page = new Pagination<UserOnlineBo>();
-//		List<UserOnlineBo> list = customSessionManager.getAllUser();
-//		page.setList(list);
-//		map.put("page", page);
+		Pagination<UserOnlineBo> page = new Pagination<UserOnlineBo>();
+		List<UserOnlineBo> list = customSessionManager.getAllUser();
+		page.setList(list);
+		map.put("page", page);
 		return new ModelAndView("system/member/online");
 	}
 

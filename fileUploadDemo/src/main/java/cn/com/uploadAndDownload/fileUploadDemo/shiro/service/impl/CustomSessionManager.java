@@ -1,4 +1,4 @@
-package cn.com.uploadAndDownload.fileUploadDemo.shiro.session;
+package cn.com.uploadAndDownload.fileUploadDemo.shiro.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,12 +8,16 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.UserOnlineBo;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.shiroSession.CustomShiroSessionDAO;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.ShiroSessionRepository;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.vo.SessionStatus;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;
 
@@ -23,16 +27,19 @@ import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;
  * @author alvin
  *
  */
+@Service
 public class CustomSessionManager {
 
 	/**
 	 * session status
 	 */
-	public static final String SESSION_STATUS = "sojson-online-status";
+	public static final String SESSION_STATUS = "tms-online-status";
 
+	@Autowired
 	ShiroSessionRepository shiroSessionRepository;
 
-	CustomShiroSessionDAO customShiroSessionDAO;
+	@Autowired
+	AbstractSessionDAO customShiroSessionDAO;
 
 	/**
 	 * 获取所有的有效Session用户
@@ -201,11 +208,11 @@ public class CustomSessionManager {
 		}
 	}
 
-	public void setShiroSessionRepository(ShiroSessionRepository shiroSessionRepository) {
-		this.shiroSessionRepository = shiroSessionRepository;
-	}
-
-	public void setCustomShiroSessionDAO(CustomShiroSessionDAO customShiroSessionDAO) {
-		this.customShiroSessionDAO = customShiroSessionDAO;
-	}
+//	public void setShiroSessionRepository(ShiroSessionRepository shiroSessionRepository) {
+//		this.shiroSessionRepository = shiroSessionRepository;
+//	}
+//
+//	public void setCustomShiroSessionDAO(CustomShiroSessionDAO customShiroSessionDAO) {
+//		this.customShiroSessionDAO = customShiroSessionDAO;
+//	}
 }

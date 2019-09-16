@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://shiro.apache.org/tags">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,15 +39,39 @@
 									data-pagination="true" data-mobile-responsive="true">
 									<thead>
 										<tr>
-											<th data-field="id">SessionID</th>
-											<th data-field="name">昵称</th>
-											<th data-field="account">Email/账号</th>
-											<th data-field="create_time">创建会话</th>
-											<th data-field="last_login">会话最后活动</th>
-											<th data-field="state">状态</th>
+											<th data-field="sessionId">SessionID</th>
+											<th data-field="nickname">昵称</th>
+											<th data-field="userName">账号</th>
+											<th data-field="startTime">创建会话时间</th>
+											<th data-field="lastAccess">会话最后活动时间</th>
+											<th data-field="sessionStatus">状态</th>
 											<th data-field="event">操作</th>
 										</tr>
 									</thead>
+									<tr th:if="${#lists.size(page.list) gt 0}" th:each="it:${page.list}" >
+										<td><input th:value="${it.sessionId}" type="checkbox" id="subcheckbox" onclick="userCheck(this)" /></td>
+										<td th:text="${it.nickname}"></td>
+										<td th:text="${it.userName}"></td>
+										<td th:text="${#dates.format(it.startTime, 'yyyy年MMM月dd日 HH点mm分ss秒')}"></td>
+										<td th:text="${#dates.format(it.lastAccess, 'yyyy年MMM月dd日 HH点mm分ss秒')}"></td>
+										<td th:if="${it.sessionStatus==true }">在线</td>
+										<td th:unless="${it.sessionStatus==true }">已踢出</td>
+										<td>
+											<shiro:hasPermission name="/users/detail">
+												<div th:if="${it.status==1 }">
+													<a class="btn btn-success btn-sm" href="<%=basePath%>/member/onlineDetails/${it.sessionId}.shtml"><span class="glyphicon glyphicon-info-sign"></span> 详情</a>
+												</div>
+											</shiro:hasPermission>
+											<shiro:hasPermission name="/users/kickout">
+												<div th:if="${it.status!=1 }">
+													<a class="btn btn-danger btn-sm" v="onlineDetails" href="javascript:void(0);" sessionId="${it.sessionId}" status="1"><span class="glyphicon glyphicon-eye-close"></span> 踢出</a>
+												</div>
+											</shiro:hasPermission> 
+											<shiro:hasPermission name="/users/kickin">
+												<a class="btn btn-success btn-sm" v="onlineDetails" href="javascript:void(0);" sessionId="${it.sessionId}" status="0"><span class="glyphicon glyphicon-eye"></span> 激活</a>
+											</shiro:hasPermission> 
+										</td>
+									</tr>
 								</table>
 							</div>
 						</div>
@@ -57,53 +82,6 @@
 		</div>
 		<!-- End Panel Other -->
 	</div>
-	<!--
-    <script>
-    window.operateEvents = {
-      "click #TableEditor":function(e, value, row, index){
-
-      },
-      "click #TableDelete": function(e, value, row, index){
-        $(this).parent().parent().remove();
-      }
-    }
-    function AddFunctionAlty(value, row, index){
-      return[
-        '<button id="TableEditor" type="button" class="btn btn-w-m btn-primary">btn-primary</button>',
-        '<button id="TableDelete" type="button" class="btn btn-w-m btn-success">btn-success</button>'
-      ].join('')
-    }
-
-    $("#TableStyle").bootstrapTable({
-      url:"js/demo/table_base.json",
-      search:true,
-      showRefresh:true,
-      searchAlign:"left",
-      columns: [{
-        field: 'id',
-        title: '昵称'
-      },{
-        field: 'account',
-        title: 'Email/账号'
-      },{
-        field: 'online',
-        title: '登陆状态'
-      },{
-        field: 'create_time',
-        title: '创建时间'
-      },{
-        field: 'last_login',
-        title: '最后登陆时间'
-      },{
-        field: 'event',
-        title: '操作'，
-        events: operateEvents, // 给按钮注册事件
-        formatter: AddFunctionAlty //表格中增加按钮
-      }]
-    })
-    </script>
--->
-
 	<!-- 全局js -->
 	<script th:src="@{/static/js/jquery-2.0.3.min.js}" type="text/javascript"></script>
 	<script th:src="@{/static/js/bootstrap.min.js}" type="text/javascript"></script>
@@ -123,8 +101,5 @@
 	<script src="../../../static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 	<script src="../../../static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
 	<script src="../../../static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-
-	<!-- Peity
-    <script src="js/demo/bootstrap-table-demo.js"></script> -->
 </body>
 </html>

@@ -47,10 +47,10 @@ public class LoginController extends BaseController{
             //SysUser user = (SysUser) subject.getPrincipal();
         } catch (DisabledAccountException e) {
             request.setAttribute("msg", "账户已被禁用");
-            return "login";
+            return "auth/login";
         } catch (AuthenticationException e) {
             request.setAttribute("msg", "用户名或密码错误");
-            return "login";
+            return "auth/login";
         }
 
         // 执行到这里说明用户已登录成功

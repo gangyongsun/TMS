@@ -37,12 +37,16 @@
 						<div class="example-wrap">
 							<div class="example">
 								<div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
-									<button type="button" class="btn btn-outline btn-default">
-										<i class="glyphicon glyphicon-plus" aria-hidden="true">添加用户</i>
-									</button>
-									<button type="button" class="btn btn-outline btn-default">
-										<i class="glyphicon glyphicon-trash" aria-hidden="true">删除用户</i>
-									</button>
+									<shiro:hasPermission name="/users/add">
+										<button type="button" class="btn btn-outline btn-default">
+											<i class="glyphicon glyphicon-plus" aria-hidden="true">添加用户</i>
+										</button>
+									</shiro:hasPermission>
+									<shiro:hasPermission name="/users/delete">
+										<button type="button" class="btn btn-outline btn-default">
+											<i class="glyphicon glyphicon-trash" aria-hidden="true">删除用户</i>
+										</button>
+									</shiro:hasPermission>
 									<!-- <div class="input-group">
 										<input type="text" class="form-control" id="findContent" name="findContent" placeholder="请输入 用户昵称 / 用户帐号..."> <span class="input-group-btn">
 											<button class="btn btn-default" type="submit">
@@ -72,18 +76,20 @@
 										<td th:text="${#dates.format(it.createTime, 'yyyy年MMM月dd日 HH点mm分ss秒')}"></td>
 										<td th:text="${#dates.format(it.lastLoginTime, 'yyyy年MMM月dd日 HH点mm分ss秒')}"></td>
 										<td>
-											<shiro:hasPermission name="/member/forbidUserById.shtml">
+											<shiro:hasPermission name="/users/deactive">
 												<div th:if="${it.status==1 }">
 													<a class="btn btn-info btn-sm" href="javascript:forbidUserById(0,${it.id})"><span class="glyphicon glyphicon-eye-close"></span> 禁止登录</a>
 												</div>
+											</shiro:hasPermission>
+											<shiro:hasPermission name="/users/active">
 												<div th:if="${it.status!=1 }">
 													<a class="btn btn-success btn-sm" href="javascript:forbidUserById(1,${it.id})"><span class="glyphicon glyphicon-eye-open"></span> 激活登录</a>
 												</div>
 											</shiro:hasPermission> 
-											<shiro:hasPermission name="/member/deleteUserById.shtml">
+											<shiro:hasPermission name="/users/delete">
 												<a class="btn btn-danger btn-sm" href="javascript:_delete([${it.id}]);"><span class="glyphicon glyphicon-trash"></span> 删除</a>
 											</shiro:hasPermission> 
-											<shiro:hasPermission name="/member/resetPasswd.shtml">
+											<shiro:hasPermission name="/users/resetPassword">
 												<a class="btn btn-info btn-sm" href="javascript:openResetPasswdWindow(${it.id});"><span class="glyphicon glyphicon-eye-open"></span> 重置密码</a>
 											</shiro:hasPermission>
 										</td>
@@ -132,52 +138,6 @@
 		</div>
 		<!-- End Panel Other -->
 	</div>
-	<!--
-    <script>
-    window.operateEvents = {
-      "click #TableEditor":function(e, value, row, index){
-
-      },
-      "click #TableDelete": function(e, value, row, index){
-        $(this).parent().parent().remove();
-      }
-    }
-    function AddFunctionAlty(value, row, index){
-      return[
-        '<button id="TableEditor" type="button" class="btn btn-w-m btn-primary">btn-primary</button>',
-        '<button id="TableDelete" type="button" class="btn btn-w-m btn-success">btn-success</button>'
-      ].join('')
-    }
-
-    $("#TableStyle").bootstrapTable({
-      url:"js/demo/table_base.json",
-      search:true,
-      showRefresh:true,
-      searchAlign:"left",
-      columns: [{
-        field: 'id',
-        title: '昵称'
-      },{
-        field: 'account',
-        title: 'Email/账号'
-      },{
-        field: 'online',
-        title: '登陆状态'
-      },{
-        field: 'create_time',
-        title: '创建时间'
-      },{
-        field: 'last_login',
-        title: '最后登陆时间'
-      },{
-        field: 'event',
-        title: '操作'，
-        events: operateEvents, // 给按钮注册事件
-        formatter: AddFunctionAlty //表格中增加按钮
-      }]
-    })
-    </script>
--->
 	<!-- 全局js -->
 	<script th:src="@{/static/js/jquery-2.0.3.min.js}" type="text/javascript"></script>
 	<script th:src="@{/static/js/bootstrap.min.js}" type="text/javascript"></script>
@@ -197,8 +157,5 @@
 	<script src="../../../static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 	<script src="../../../static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
 	<script src="../../../static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-
-	<!-- Peity 
-    <script src="js/demo/bootstrap-table-demo.js"></script>-->
 </body>
 </html>

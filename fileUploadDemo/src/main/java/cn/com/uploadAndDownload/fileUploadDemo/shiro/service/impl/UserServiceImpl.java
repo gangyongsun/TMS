@@ -22,7 +22,6 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysUserRoleMapper;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUserRole;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.UserService;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.session.CustomSessionManager;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.manager.TokenManager;
 
 @Service

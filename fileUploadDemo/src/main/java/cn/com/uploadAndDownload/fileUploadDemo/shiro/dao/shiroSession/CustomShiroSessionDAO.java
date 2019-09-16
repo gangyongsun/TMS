@@ -6,8 +6,9 @@ import java.util.Collection;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.session.ShiroSessionRepository;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.ShiroSessionRepository;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 import lombok.Data;
 
@@ -19,6 +20,8 @@ import lombok.Data;
  */
 @Data
 public class CustomShiroSessionDAO extends AbstractSessionDAO {
+	
+	@Autowired
 	private ShiroSessionRepository shiroSessionRepository;
 
 	@Override
