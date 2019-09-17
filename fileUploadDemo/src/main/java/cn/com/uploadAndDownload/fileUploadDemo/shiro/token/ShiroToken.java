@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.apache.shiro.authc.UsernamePasswordToken;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 自定义ShiroToken,继承UsernamePasswordToken
@@ -13,6 +14,7 @@ import lombok.Data;
  *
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class ShiroToken extends UsernamePasswordToken implements Serializable {
 	private static final long serialVersionUID = -6451794657814516274L;
 	/**

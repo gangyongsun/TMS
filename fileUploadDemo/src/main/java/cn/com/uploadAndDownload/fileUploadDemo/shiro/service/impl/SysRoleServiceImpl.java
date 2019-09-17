@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
+import cn.com.uploadAndDownload.fileUploadDemo.mybatis.BaseMybatisDao;
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.RoleResourceAllocationBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysRoleMapper;
@@ -15,20 +16,19 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysRole;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.RoleService;
 
 @Service
-public class SysRoleServiceImpl implements RoleService {
+public class SysRoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements RoleService {
 
-    @Autowired
-    private SysRoleMapper sysRoleMapper;
+	@Autowired
+	private SysRoleMapper sysRoleMapper;
 
-    @Override
-    public Set<String> findRoleNameByUserId(int userId) {
-        return sysRoleMapper.findRoleNameByUserId(userId);
-    }
+	@Override
+	public Set<String> findRoleNameByUserId(int userId) {
+		return sysRoleMapper.findRoleNameByUserId(userId);
+	}
 
 	@Override
 	public Pagination<SysRole> findPage(Map<String, Object> modelMap, int pageNo, int pageSize) {
-		// TODO Auto-generated method stub
-		return null;
+		return super.findPage(modelMap, pageNo, pageSize);
 	}
 
 	@Override

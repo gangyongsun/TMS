@@ -22,8 +22,16 @@ public class SysRole implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "SELECT LAST_INSERT_ID()")
 	private Integer id;
 
+	/**
+	 * 角色描述
+	 */
 	@Column(name = "role_desc")
 	private String roleDesc;
+
+	/**
+	 * 角色类型
+	 */
+	private String roleType;
 
 	/**
 	 * 一个role对多个resources，一对多处理

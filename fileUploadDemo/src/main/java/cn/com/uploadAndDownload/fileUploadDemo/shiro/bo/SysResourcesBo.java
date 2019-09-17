@@ -5,6 +5,7 @@ import java.io.Serializable;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysResources;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 权限选择
@@ -13,6 +14,7 @@ import lombok.Data;
  *
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class SysResourcesBo extends SysResources implements Serializable {
 	private static final long serialVersionUID = 1L;
 

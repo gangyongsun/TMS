@@ -40,8 +40,8 @@ public class RoleController extends BaseController {
 	@RequestMapping(value = "index")
 	public ModelAndView index(String findContent, ModelMap modelMap) {
 		modelMap.put("findContent", findContent);
-		Pagination<SysRole> role = roleService.findPage(modelMap, pageNo, pageSize);
-		return new ModelAndView("system/role/index", "page", role);
+		Pagination<SysRole> page = roleService.findPage(modelMap, pageNo, pageSize);
+		return new ModelAndView("system/role/index", "page", page);
 	}
 
 	/**

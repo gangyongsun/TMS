@@ -5,8 +5,10 @@ import java.io.Serializable;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysRole;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class SysRoleBo extends SysRole implements Serializable {
 	private static final long serialVersionUID = 1L;
 

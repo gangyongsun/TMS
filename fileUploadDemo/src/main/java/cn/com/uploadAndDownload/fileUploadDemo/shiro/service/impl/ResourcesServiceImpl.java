@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.com.uploadAndDownload.fileUploadDemo.mybatis.BaseMybatisDao;
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysResourcesBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysResourcesMapper;
@@ -14,7 +15,7 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysResources;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.ResourcesService;
 
 @Service
-public class ResourcesServiceImpl implements ResourcesService {
+public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper>  implements ResourcesService {
     @Autowired
     private SysResourcesMapper sysResourcesMapper;
 
@@ -25,8 +26,7 @@ public class ResourcesServiceImpl implements ResourcesService {
 
 	@Override
 	public Pagination<SysResources> findPage(Map<String, Object> modelMap, Integer pageNo, int pageSize) {
-		// TODO Auto-generated method stub
-		return null;
+		return super.findPage(modelMap, pageNo, pageSize);
 	}
 
 	@Override

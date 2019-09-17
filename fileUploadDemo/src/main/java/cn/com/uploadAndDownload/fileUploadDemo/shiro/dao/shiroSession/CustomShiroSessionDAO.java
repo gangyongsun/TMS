@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.ShiroSessionRepository;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * shiro Session操作
@@ -19,6 +20,7 @@ import lombok.Data;
  *
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class CustomShiroSessionDAO extends AbstractSessionDAO {
 	
 	@Autowired

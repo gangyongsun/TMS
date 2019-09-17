@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 用户角色分配 查询列表BO
@@ -12,6 +13,7 @@ import lombok.Data;
  *
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class UserRoleAllocationBo extends SysUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
