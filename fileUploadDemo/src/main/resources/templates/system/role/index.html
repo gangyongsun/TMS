@@ -95,9 +95,11 @@
 										<td><input th:value="${it.id}" type="checkbox" id="subcheckbox" onclick="userCheck(this)" /></td>
 										<td th:text="${it.roleDesc}"></td>
 										<td th:text="${it.roleType}"></td>
-										<td><shiro:hasPermission name="/role/delete">
+										<td>
+											<shiro:hasPermission name="/role/delete">
 												<a class="btn btn-danger btn-sm" href="javascript:deleteById([${it.id}]);"><span class="glyphicon glyphicon-remove"></span> 删除</a>
-											</shiro:hasPermission></td>
+											</shiro:hasPermission>
+										</td>
 									</tr>
 								</table>
 							</div>

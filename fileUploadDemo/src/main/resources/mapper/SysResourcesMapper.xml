@@ -10,4 +10,108 @@
 		<result column="parent_id" property="parentId" jdbcType="INTEGER" />
 		<result column="resource_sort" property="resourceSort" jdbcType="INTEGER" />
 	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, resource_name, resource_url,resource_type,parent_id,resource_sort
+	</sql>
+
+	<sql id="limit_sql">
+		<if test="page_sql != null and page_sql != ''">
+			${page_sql}
+		</if>
+	</sql>
+
+	<sql id="where_all">
+		<where>
+			<if test="findContent != null and findContent !='' ">
+				and (
+				LOWER(resource_name) like CONCAT("%",#{findContent,jdbcType=VARCHAR},"%") or
+				LOWER(resource_url) like CONCAT("%",#{findContent,jdbcType=VARCHAR},"%")
+				)
+			</if>
+		</where>
+	</sql>
+	<select id="findAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_resources
+		<include refid="where_all" />
+		<include refid="limit_sql" />
+	</select>
+	<select id="findCount" resultMap="BaseResultMap">
+		select count(id) from sys_resources
+		<include refid="where_all" />
+	</select>
+	<!-- 根据角色获取权限，marker:0,没有权限，marker：非0(和up.id)一致表示有权限。 cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysResourcesBo中的这个方法是校验权限 public boolean isCheck(){ return StringUtils.equals(roleId,marker); } -->
+	<select id="selectPermissionById" resultType="cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysResourcesBo">
+		select sysResource.id,sysResource.resource_name,sysRoleResource.role_id roleId, sysResource.resource_url,ifnull(sysRoleResource.role_id,0)marker from sys_resources sysResource 
+		left join (select * from sys_role_resources  where role_id = #{id,jdbcType=BIGINT}) sysRoleResource on sysRoleResource.resources_id = sysResource.id
+		order by sysResource.id 
+	</select>
+	<!-- 根据用ID查询permission -->
+	<select id="findPermissionByUserId" resultType="java.lang.String">
+		select sysResource.resource_url from sys_resources sysResource , sys_role_resources sysRoleResource, sys_user_role sysUserRole
+		where user_id =#{id,jdbcType=BIGINT} and sysResource.id = sysRoleResource.resource_id and sysRoleResource.role_id
+		= sysUserRole.role_id
+	</select>
+
+	<!-- <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from sys_resources
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from sys_resources
+		where id = #{id,jdbcType=BIGINT}
+	</delete> 
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysResources">
+		insert into sys_resources (id, resource_url, resource_name)
+		values (#{id,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysResources">
+		insert into sys_resources
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="url != null">
+				resource_url,
+			</if>
+			<if test="name != null">
+				resource_name,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="url != null">
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysResources">
+		update sys_resources
+		<set>
+			<if test="url != null">
+				resource_url = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				resource_name = #{name,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysResources">
+		update sys_resources
+		set resource_resource_url = #{url,jdbcType=VARCHAR},
+		resource_name = #{name,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	-->
 </mapper>

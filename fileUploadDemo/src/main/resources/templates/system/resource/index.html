@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://shiro.apache.org/tags">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,17 +85,30 @@
 					<div class="col-sm-12">
 						<div class="example-wrap">
 							<div class="example">
-								<table id="TableStyle" class="table table-bordered tab-content" data-toggle="table" data-url="js/demo/table_base_PERMISSION.json" data-height="700"
+								<table id="TableStyle" class="table table-bordered tab-content" data-toggle="table" data-height="700"
 									data-pagination="true" data-mobile-responsive="true">
 									<thead>
 										<tr>
-											<th data-field="state" data-checkbox="true"></th>
-											<th data-field="name">权限名称</th>
-											<th data-field="category">角色类型</th>
+											<th data-field="id" data-checkbox="true"></th>
+											<th data-field="resourceName">权限名称</th>
+											<th data-field="resourceUrl">权限URL</th>
+											<th data-field=resourceType>权限类型</th>
+											<th data-field="resourceSort">排序</th>
 											<th data-field="event">操作</th>
 										</tr>
 									</thead>
-
+									<tr th:if="${#lists.size(page.list) gt 0}" th:each="it:${page.list}" >
+										<td><input th:value="${it.id}" type="checkbox" id="subcheckbox" onclick="userCheck(this)" /></td>
+										<td th:text="${it.resourceName}"></td>
+										<td th:text="${it.resourceUrl}"></td>
+										<td th:text="${it.resourceType}"></td>
+										<td th:text="${it.resourceSort}"></td>
+										<td>
+											<shiro:hasPermission name="/users/delete">
+												<a class="btn btn-danger btn-sm" href="javascript:_delete([${it.id}]);"><span class="glyphicon glyphicon-trash"></span> 删除</a>
+											</shiro:hasPermission> 
+										</td>
+									</tr>
 								</table>
 							</div>
 						</div>
@@ -107,7 +120,7 @@
 		<!-- End Panel Other -->
 	</div>
 
-	<script>
+	<!-- <script>
 		//点击按钮弹出框
 		$("#btn_add").click(function() {
 			$("#myModalLabel").text("添加权限");
@@ -127,7 +140,7 @@
 
 			}
 		})
-	</script>
+	</script> -->
 	<!-- 全局js -->
 	<script th:src="@{/static/js/jquery-2.0.3.min.js}" type="text/javascript"></script>
 	<script th:src="@{/static/js/bootstrap.min.js}" type="text/javascript"></script>

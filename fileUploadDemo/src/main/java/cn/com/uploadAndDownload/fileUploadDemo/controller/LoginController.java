@@ -1,7 +1,5 @@
 package cn.com.uploadAndDownload.fileUploadDemo.controller;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +11,6 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.manager.TokenManager;
@@ -79,7 +76,6 @@ public class LoginController extends BaseController {
 		return "index";
 	}
 
-	
 	/**
 	 * 退出
 	 * 
@@ -96,7 +92,7 @@ public class LoginController extends BaseController {
 		System.out.println("kickout");
 		return "auth/kickout";
 	}
-	
+
 	/**
 	 * 被踢出后跳转的页面
 	 * 
