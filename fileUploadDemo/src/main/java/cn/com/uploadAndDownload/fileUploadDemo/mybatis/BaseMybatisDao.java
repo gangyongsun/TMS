@@ -165,18 +165,19 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 	 * @return
 	 */
 	public Pagination findPage(String sqlId, String countId, Map<String, Object> params, Integer pageNo, Integer pageSize) {
-		pageNo = null == pageNo ? 1 : pageNo;
-		pageSize = null == pageSize ? 10 : pageSize;
+//		pageNo = null == pageNo ? 1 : pageNo;
+//		pageSize = null == pageSize ? 10 : pageSize;
 		Pagination page = new Pagination();
-		page.setPageNo(pageNo);
-		page.setPageSize(pageSize);
-		Configuration configuration = this.getSqlSession().getConfiguration();
+		page.setPageNo(null == pageNo ? 1 : pageNo);
+		page.setPageSize(null == pageSize ? 10 : pageSize);
+		
 		int offset = (page.getPageNo() - 1) * page.getPageSize();
 		String page_sql = String.format(" limit  %s , %s ", offset, pageSize);
 		params.put("page_sql", page_sql);
 
 		sqlId = String.format("%s.%s", NAMESPACE, sqlId);
 
+		Configuration configuration = this.getSqlSession().getConfiguration();
 		BoundSql boundSql = configuration.getMappedStatement(sqlId).getBoundSql(params);
 		String sqlcode = boundSql.getSql();
 		LoggerUtils.fmtDebug(SELF, "findPage sql : %s", sqlcode);

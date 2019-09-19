@@ -16,7 +16,7 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysRole;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.RoleService;
 
 @Service
-public class SysRoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements RoleService {
+public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements RoleService {
 
 	@Autowired
 	private SysRoleMapper sysRoleMapper;
@@ -51,8 +51,7 @@ public class SysRoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements
 
 	@Override
 	public Pagination<RoleResourceAllocationBo> findRoleAndResourcePage(ModelMap modelMap, Integer pageNo, int pageSize) {
-		// TODO Auto-generated method stub
-		return null;
+		return super.findPage("findRoleAndResources", "findCount", modelMap, pageNo, pageSize);
 	}
 
 	@Override

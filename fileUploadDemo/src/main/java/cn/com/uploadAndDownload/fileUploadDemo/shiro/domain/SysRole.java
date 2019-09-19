@@ -12,9 +12,11 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Table(name = "sys_role")
 @Data
+@NoArgsConstructor
 public class SysRole implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -31,6 +33,7 @@ public class SysRole implements Serializable {
 	/**
 	 * 角色类型
 	 */
+	@Column(name = "role_type")
 	private String roleType;
 
 	/**
@@ -38,5 +41,10 @@ public class SysRole implements Serializable {
 	 */
 	@Transient
 	private List<SysResources> resources = new LinkedList<SysResources>();
+
+	public SysRole(SysRole sysRole) {
+		this.roleDesc = sysRole.roleDesc;
+		this.roleType = sysRole.roleType;
+	}
 
 }

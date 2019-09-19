@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://shiro.apache.org/tags">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -88,57 +88,31 @@
 									data-pagination="true" data-mobile-responsive="true">
 									<thead>
 										<tr>
-											<th data-field="state" data-checkbox="true"></th>
-											<th data-field="name">用户昵称</th>
-											<th data-field="account">Email/账号</th>
-											<th data-field="valid">状态</th>
-											<th data-field="category">拥有的角色</th>
+											<th data-field="id" data-checkbox="true"></th>
+											<th data-field="nickname">用户昵称</th>
+											<th data-field="userName">账号</th>
+											<th data-field="userEnable">状态</th>
+											<th data-field="roleNames">拥有的角色</th>
 											<th data-field="event">操作</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td></td>
-											<td>系统管理员</td>
-											<td>admin</td>
-											<td>有效</td>
-											<td>系统管理员</td>
-											<td><button id='selectRole' class='btn btn-sm btn-success' type='button'></button> <i class='fa fa-check'></i> <span class='bold'>选择角色</span></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td>Alvin</td>
-											<td>sunyonggang@goldwind.com.cn</td>
-											<td>有效</td>
-											<td>普通用户</td>
-											<td><button id='selectRole' class='btn btn-sm btn-success' type='button'></button> <i class='fa fa-check'></i> <span class='bold'>选择角色</span></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td>Kevin</td>
-											<td>Kevin@goldwind.com.cn</td>
-											<td>有效</td>
-											<td>采购员</td>
-											<td><button id='selectRole' class='btn btn-sm btn-success' type='button'></button> <i class='fa fa-check'></i> <span class='bold'>选择角色</span></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td>Tom</td>
-											<td>Tom@goldwind.com.cn</td>
-											<td>有效</td>
-											<td>权限管理员</td>
-											<td><button id='selectRole' class='btn btn-sm btn-success' type='button'></button> <i class='fa fa-check'></i> <span class='bold'>选择角色</span></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td>Rush</td>
-											<td>Rush@goldwind.com.cn</td>
-											<td>有效</td>
-											<td>用户管理员</td>
-											<td><button id='selectRole' class='btn btn-sm btn-success' type='button'></button> <i class='fa fa-check'></i> <span class='bold'>选择角色</span></td>
+										<tr th:if="${#lists.size(page.list) gt 0}" th:each="it:${page.list}" >
+											<td><input th:value="${it.id}" type="checkbox" id="subcheckbox" onclick="userCheck(this)" /></td>
+											<td th:text="${it.nickname}"></td>
+											<td th:text="${it.userName}"></td>
+											<td th:if="${it.userEnable==1 }">有效</td>
+											<td th:unless="${it.userEnable==1 }">无效</td>
+											<td th:text="${it.roleNames}"></td>
+											<td>
+												<shiro:hasPermission name="/users/deactive">
+													<div th:if="${it.userEnable==1 }">
+														<a class="btn btn-info btn-sm" href="javascript:selectRoleById(${it.id});"><span class="glyphicon glyphicon-eye-close"></span>选择角色</a>
+													</div>
+												</shiro:hasPermission>
+											</td>
 										</tr>
 									</tbody>
-
 								</table>
 							</div>
 						</div>
@@ -189,8 +163,5 @@
 	<script src="../../../static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 	<script src="../../../static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
 	<script src="../../../static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-
-	<!-- Peity
-    <script src="js/demo/bootstrap-table-demo.js"></script> -->
 </body>
 </html>

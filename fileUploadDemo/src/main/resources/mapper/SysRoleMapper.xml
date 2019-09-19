@@ -52,8 +52,8 @@
 	</select>
 
 	<!-- 权限分配的分页查询 -->
-	<select id="findRoleAndPermission" resultType="cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.RoleResourceAllocationBo">
-		select sysRole.id,sysRole.role_type,sysRole.role_desc,group_concat(sysResource.name) resourceNames,group_concat(sysResource.id)resourceIds from
+	<select id="findRoleAndResources" resultType="cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.RoleResourceAllocationBo">
+		select sysRole.id,sysRole.role_type roleType,sysRole.role_desc roleDesc,group_concat(sysResource.resource_name) resourceNames,group_concat(sysResource.id)resourceIds from
 		sys_role sysRole left join
 		sys_role_resources sysRoleResource on sysRoleResource.role_id
 		= sysRole.id left join
@@ -80,7 +80,7 @@
 	</resultMap>
 	<!-- 根据用户ID，查询所有权限 -->
 	<select id="findNowAllPermission" resultMap="findNowAllPermission_resultMap">
-		select sysRole.id,sysRole.role_desc,sysRole.role_type ,sysResource.id resourceId,sysResource.url,sysResource.name resourceName
+		select sysRole.id,sysRole.role_desc,sysRole.role_type ,sysResource.id resourceId,sysResource.resource_url,sysResource.resource_name resourceName
 		from
 		(select role_id from sys_user_role where user_id =
 		#{userId,jdbcType=BIGINT}) sysUserRole

@@ -63,7 +63,7 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 
 	@Override
 	public Pagination<UserRoleAllocationBo> findUserAndRole(ModelMap modelMap, Integer pageNo, int pageSize) {
-		return super.findPage(modelMap, pageNo, pageSize);
+		return super.findPage("findUserAndRole", "findCount", modelMap, pageNo, pageSize);
 	}
 
 	@Override

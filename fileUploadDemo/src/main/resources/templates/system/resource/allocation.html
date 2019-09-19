@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://shiro.apache.org/tags">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -87,51 +87,28 @@
 									data-mobile-responsive="true">
 									<thead>
 										<tr>
-											<th data-field="state" data-checkbox="true"></th>
-											<th data-field="name">角色名称</th>
-											<th data-field="account">Email / 账号</th>
-											<th data-field="category">拥有的权限</th>
+											<th data-field="id" data-checkbox="true"></th>
+											<th data-field="roleDesc">角色名称</th>
+											<th data-field="roleType">角色类型</th>
+											<th data-field="resourceNames">拥有的权限</th>
 											<th data-field="event">操作</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td></td>
-											<td>系统管理员</td>
-											<td>100001</td>
-											<td>为角色分配权限,清空用户的角色,在线用户踢出,购物清单物资删除,地址详情,清空角色的权限,角色搜索,术语搜索,去创建订单,地址列表,权限搜索,系统用户列表,术语加入到购物清单,提交订单,重置密码,角色列表,系统用户搜索,收藏术语,订单列表,术语自定义,权限列表,角色添加,系统用户激活&禁止,取消术语收藏,设置默认地址,权限添加,角色删除,系统用户删除,goto购物清单,添加收货地址,权限删除,角色分配页面,在线用户列表,术语收藏列表,编辑收货地址,权限分配页面,为用户分配角色,在线用户详情,删除收藏术语,删除收货地址</td>
-											<td><button id='selectRole' class='btn btn-sm btn-success' type='button'></button> <i class='fa fa-check'></i> <span class='bold'>选择权限</span></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td>权限管理员</td>
-											<td>100002</td>
-											<td>权限分配页面,为用户分配角色,为角色分配权限,清空用户的角色,清空角色的权限,角色搜索,权限搜索,角色列表,权限列表,角色添加,权限添加,角色删除,权限删除,角色分配页</td>
-											<td><button id='selectRole' class='btn btn-sm btn-success' type='button'></button> <i class='fa fa-check'></i> <span class='bold'>选择权限</span></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td>用户管理员</td>
-											<td>100003</td>
-											<td>在线用户详情,在线用户踢出,系统用户列表,系统用户搜索,系统用户激活&禁止,系统用户删除,在线用户列表</td>
-											<td><button id='selectRole' class='btn btn-sm btn-success' type='button'></button> <i class='fa fa-check'></i> <span class='bold'>选择权限</span></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td>采购员</td>
-											<td>100004</td>
-											<td>订单列表</td>
-											<td><button id='selectRole' class='btn btn-sm btn-success' type='button'></button> <i class='fa fa-check'></i> <span class='bold'>选择权限</span></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td>普通用户</td>
-											<td>100005</td>
-											<td>术语收藏列表,编辑收货地址,删除收藏术语,删除收货地址,购物清单物资删除,地址详情,术语搜索,去创建订单,地址列表,术语加入到购物清单,提交订单,收藏术语,订单列表,取消术语收藏,设置默认地址,goto购物清单,添加收货地址</td>
-											<td><button id='selectRole' class='btn btn-sm btn-success' type='button'></button> <i class='fa fa-check'></i> <span class='bold'>选择权限</span></td>
+										<tr th:if="${#lists.size(page.list) gt 0}" th:each="it:${page.list}" >
+											<td><input th:value="${it.id}" type="checkbox" id="subcheckbox" onclick="userCheck(this)" /></td>
+											<td th:text="${it.roleDesc}"></td>
+											<td th:text="${it.roleType}"></td>
+											<td th:text="${it.resourceNames}"></td>
+											<td>
+												<shiro:hasPermission name="/users/deactive">
+													<div th:if="${it.userEnable==1 }">
+														<a class="btn btn-info btn-sm" href="javascript:selectRoleById(${it.id});"><span class="glyphicon glyphicon-eye-close"></span>选择权限</a>
+													</div>
+												</shiro:hasPermission>
+											</td>
 										</tr>
 									</tbody>
-
 								</table>
 							</div>
 						</div>
@@ -182,8 +159,5 @@
 	<script src="../../../static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 	<script src="../../../static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
 	<script src="../../../static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-
-	<!-- Peity
-    <script src="js/demo/bootstrap-table-demo.js"></script> -->
 </body>
 </html>
