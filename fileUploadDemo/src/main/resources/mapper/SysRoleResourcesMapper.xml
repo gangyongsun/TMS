@@ -8,12 +8,11 @@
 		<result column="resources_id" property="resourcesId" jdbcType="INTEGER" />
 	</resultMap>
 	
-	
 	<sql id="Base_Column_List">
 		role_id, resources_id
 	</sql>
 	<!-- 根据权限ID查找 -->
-	<select id="findRolePermissionByPid" resultMap="BaseResultMap">
+	<select id="findRoleResourceByResourceId" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from sys_role_resources
@@ -21,7 +20,7 @@
 	</select>
 	
 	<!-- 根据角色ID查找 -->
-	<select id="findRolePermissionByRid" resultMap="BaseResultMap">
+	<select id="findRoleResourceByRoleId" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from sys_role_resources
@@ -38,12 +37,12 @@
 	</select>
 	
 	<!-- 根据权限ID删除 -->
-	<delete id="deleteByPid">
+	<delete id="deleteByResourceId">
 		delete from sys_role_resources where resources_id = #{id,jdbcType=BIGINT}
 	</delete>
 	
 	<!-- 根据角色ID删除 -->
-	<delete id="deleteByRid">
+	<delete id="deleteByRoleId">
 		delete from sys_role_resources where role_id = #{id,jdbcType=BIGINT}
 	</delete>
 	
@@ -54,7 +53,7 @@
 	</delete> -->
 	
 	<!-- 根据角色IDs删除 -->
-	<delete id="deleteByRids">
+	<delete id="deleteByRoleIds">
 		delete from sys_role_resources where role_id in(#{roleIds,jdbcType=VARCHAR})
 	</delete>
 <!-- 

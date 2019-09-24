@@ -36,12 +36,12 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 	/**
 	 * 默认的查询Sql id
 	 */
-	final static String DEFAULT_SQL_ID = "findAll";
+	final static String SQL_ID_FINDALL = "findAll";
 
 	/**
 	 * 默认的查询Count sql id
 	 */
-	final static String DEFAULT_COUNT_SQL_ID = "findCount";
+	final static String SQL_ID_FINDCOUNT = "findCount";
 
 	public BaseMybatisDao() {
 		try {
@@ -64,30 +64,31 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 	 * 根据Sql id 去查询 分页对象
 	 * 
 	 * @param sqlId    对应mapper.xml 里的Sql Id
-	 * @param params   参数<String,Object>
+	 * @param paramMap   参数<String,Object>
 	 * @param pageNo   number
 	 * @param pageSize size
 	 * @return
 	 */
-	public Pagination findByPageBySqlId(String sqlId, Map<String, Object> params, Integer pageNo, Integer pageSize) {
+	public Pagination findByPageBySqlId(String sqlId, Map<String, Object> paramMap, Integer pageNo, Integer pageSize) {
+		Pagination page = new Pagination();
 		pageNo = null == pageNo ? 1 : pageNo;
 		pageSize = null == pageSize ? 10 : pageSize;
-
-		sqlId = String.format("%s.%s", NAMESPACE, sqlId);
-
-		Pagination page = new Pagination();
 		page.setPageNo(pageNo);
 		page.setPageSize(pageSize);
-		Configuration c = this.getSqlSession().getConfiguration();
+		
 		int offset = (page.getPageNo() - 1) * page.getPageSize();
 		String page_sql = String.format(" limit %s , %s", offset, pageSize);
-		params.put("page_sql", page_sql);
+		paramMap.put("page_sql", page_sql);
 
-		BoundSql boundSql = c.getMappedStatement(sqlId).getBoundSql(params);
+		Configuration configuration = this.getSqlSession().getConfiguration();
+		sqlId = String.format("%s.%s", NAMESPACE, sqlId);
+		BoundSql boundSql = configuration.getMappedStatement(sqlId).getBoundSql(paramMap);
 		String sqlcode = boundSql.getSql();
 
 		LoggerUtils.fmtDebug(SELF, "findByPageBySqlId sql : %s", sqlcode);
-		String countCode = "", countId = "";
+		
+		String countCode = "";
+		String countId = "";
 		BoundSql countSql = null;
 		// sql id 和 count id 用同一个
 		if (StringUtils.isBlank(sqlId)) {
@@ -97,17 +98,18 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 			countId = sqlId;
 
 			Map<String, Object> countMap = new HashMap<String, Object>();
-			countMap.putAll(params);
-			countMap.remove("page_sql");// 去掉，分页的参数。
-			countSql = c.getMappedStatement(countId).getBoundSql(countMap);
+			countMap.putAll(paramMap);
+			countMap.remove("page_sql");// 去掉，分页的参数
+			countSql = configuration.getMappedStatement(countId).getBoundSql(countMap);
 			countCode = countSql.getSql();
 		}
+		
 		try {
 			Connection conn = this.getSqlSession().getConnection();
 
-			List<?> resultList = this.getSqlSession().selectList(sqlId, params);
+			List<?> resultList = this.getSqlSession().selectList(sqlId, paramMap);
 			page.setList(resultList);
-			PreparedStatement ps = getPreparedStatement(countCode, countSql.getParameterMappings(), params, conn);
+			PreparedStatement ps = getPreparedStatement(countCode, countSql.getParameterMappings(), paramMap, conn);
 			ps.execute();
 			ResultSet set = ps.getResultSet();
 
@@ -124,61 +126,61 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 	 * 根据Sql ID 查询List，而不要查询分页的页码
 	 * 
 	 * @param sqlId    对应mapper.xml 里的Sql Id[主语句]
-	 * @param params   参数<String,Object>
+	 * @param paramMap   参数<String,Object>
 	 * @param pageNo   number
 	 * @param pageSize size
 	 * @return
 	 */
-	public List findList(String sqlId, Map<String, Object> params, Integer pageNo, Integer pageSize) {
+	public List findList(String sqlId, Map<String, Object> paramMap, Integer pageNo, Integer pageSize) {
 		pageNo = null == pageNo ? 1 : pageNo;
 		pageSize = null == pageSize ? 10 : pageSize;
-
 		int offset = (pageNo - 1) * pageSize;
+		
 		String page_sql = String.format(" limit %s , %s", offset, pageSize);
-		params.put("page_sql", page_sql);
+		paramMap.put("page_sql", page_sql);
 		sqlId = String.format("%s.%s", NAMESPACE, sqlId);
 
-		List resultList = this.getSqlSession().selectList(sqlId, params);
+		List resultList = this.getSqlSession().selectList(sqlId, paramMap);
 		return resultList;
 	}
 
 	/**
-	 * 当Sql ID 是 default findAll的情况下。
+	 * 当Sql ID 是 default findAll的情况下
 	 * 
-	 * @param params
+	 * @param paramMap
 	 * @param pageNo
 	 * @param pageSize
 	 * @param requiredType 返回的类型[可以不传参]
 	 * @return
 	 */
-	public List findList(Map<String, Object> params, Integer pageNo, Integer pageSize) {
-		return findList(DEFAULT_SQL_ID, params, pageNo, pageSize);
+	public List findList(Map<String, Object> paramMap, Integer pageNo, Integer pageSize) {
+		return findList(SQL_ID_FINDALL, paramMap, pageNo, pageSize);
 	}
 
 	/**
 	 * 
 	 * @param sqlId    主语句
 	 * @param countId  Count语句
-	 * @param params   参数
+	 * @param paramMap   参数
 	 * @param pageNo   第几页
 	 * @param pageSize 每页显示多少条
 	 * @return
 	 */
-	public Pagination findPage(String sqlId, String countId, Map<String, Object> params, Integer pageNo, Integer pageSize) {
-//		pageNo = null == pageNo ? 1 : pageNo;
-//		pageSize = null == pageSize ? 10 : pageSize;
+	public Pagination findPage(String sqlId, String countId, Map<String, Object> paramMap, Integer pageNo, Integer pageSize) {
 		Pagination page = new Pagination();
-		page.setPageNo(null == pageNo ? 1 : pageNo);
-		page.setPageSize(null == pageSize ? 10 : pageSize);
-		
+		pageNo = null == pageNo ? 1 : pageNo;
+		pageSize = null == pageSize ? 10 : pageSize;
+		page.setPageNo(pageNo);
+		page.setPageSize(pageSize);
 		int offset = (page.getPageNo() - 1) * page.getPageSize();
+		
 		String page_sql = String.format(" limit  %s , %s ", offset, pageSize);
-		params.put("page_sql", page_sql);
+		paramMap.put("page_sql", page_sql);
 
 		sqlId = String.format("%s.%s", NAMESPACE, sqlId);
 
 		Configuration configuration = this.getSqlSession().getConfiguration();
-		BoundSql boundSql = configuration.getMappedStatement(sqlId).getBoundSql(params);
+		BoundSql boundSql = configuration.getMappedStatement(sqlId).getBoundSql(paramMap);
 		String sqlcode = boundSql.getSql();
 		LoggerUtils.fmtDebug(SELF, "findPage sql : %s", sqlcode);
 		String countCode = "";
@@ -188,7 +190,7 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 			countSql = boundSql;
 		} else {
 			countId = String.format("%s.%s", NAMESPACE, countId);
-			countSql = configuration.getMappedStatement(countId).getBoundSql(params);
+			countSql = configuration.getMappedStatement(countId).getBoundSql(paramMap);
 			countCode = countSql.getSql();
 		}
 		try {
@@ -199,11 +201,11 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 
 //			System.out.println(conn.isClosed());
 
-			List resultList = this.getSqlSession().selectList(sqlId, params);
+			List resultList = this.getSqlSession().selectList(sqlId, paramMap);
 			page.setList(resultList);
 
 			// 处理Count
-			PreparedStatement ps = getPreparedStatement4Count(countCode, countSql.getParameterMappings(), params, conn);
+			PreparedStatement ps = getPreparedStatement4Count(countCode, countSql.getParameterMappings(), paramMap, conn);
 			ps.execute();
 			ResultSet set = ps.getResultSet();
 
@@ -226,7 +228,7 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 	 * @return
 	 */
 	public Pagination findPage(Map<String, Object> params, Integer pageNo, Integer pageSize) {
-		return findPage(DEFAULT_SQL_ID, DEFAULT_COUNT_SQL_ID, params, pageNo, pageSize);
+		return findPage(SQL_ID_FINDALL, SQL_ID_FINDCOUNT, params, pageNo, pageSize);
 	}
 
 	/**

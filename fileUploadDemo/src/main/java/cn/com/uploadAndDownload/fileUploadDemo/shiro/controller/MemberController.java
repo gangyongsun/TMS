@@ -54,7 +54,7 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "list")
 	public ModelAndView list(ModelMap map, Integer pageNo, String findContent) {
 		map.put("findContent", findContent);
-		Pagination<SysUser> page = userService.findByPage(map, pageNo, pageSize);
+		Pagination<SysUser> page = userService.findUserByPage(map, pageNo, pageSize);
 		map.put("page", page);
 		return new ModelAndView("system/member/list");
 	}
@@ -106,7 +106,7 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "deleteUserById", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> deleteUserById(String ids) {
-		return userService.deleteUserById(ids);
+		return userService.deleteUserByIds(ids);
 	}
 
 	/**
@@ -118,8 +118,8 @@ public class MemberController extends BaseController {
 	 */
 	@RequestMapping(value = "forbidUserById", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> forbidUserById(Long id, Long status) {
-		return userService.updateForbidUserById(id, status);
+	public Map<String, Object> forbidUserById(Integer id, Integer userEnable) {
+		return userService.updateForbidUserById(id, userEnable);
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class MemberController extends BaseController {
 
 		user.setPassWord(newPswd);
 		user = UserManager.md5Pswd(user);
-		userService.updateByPrimaryKeySelective(user);
+		userService.updateUserOnSelective(user);
 		resultMap.put("status", 200);
 		resultMap.put("message", "密码重置成功!");
 		return resultMap;

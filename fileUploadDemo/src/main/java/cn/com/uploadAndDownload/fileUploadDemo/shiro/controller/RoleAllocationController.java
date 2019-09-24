@@ -30,6 +30,7 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.UserService;
 public class RoleAllocationController extends BaseController {
 	@Autowired
 	UserService userService;
+	
 	@Autowired
 	ResourcesService permissionService;
 

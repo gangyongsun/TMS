@@ -9,22 +9,93 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysResourcesBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysResources;
 
 public interface ResourcesService {
+//	/**
+//	 * 查询所有资源
+//	 * 
+//	 * @return
+//	 */
+//	List<SysResources> selectAll();
+
 	/**
-	 * 查询所有资源
+	 * 分页查询资源信息
 	 * 
+	 * @param modelMap
+	 * @param pageNo
+	 * @param pageSize
 	 * @return
 	 */
-	List<SysResources> selectAll();
+	Pagination<SysResources> findPage(Map<String, Object> modelMap, Integer pageNo, int pageSize);
 
-	Pagination<SysResources> findPage(Map<String, Object>  modelMap, Integer pageNo, int pageSize);
+	/**
+	 * 添加资源
+	 * 
+	 * @param resources
+	 * @return
+	 */
+	SysResources insert(SysResources resources);
 
-	SysResources insertSelective(SysResources psermission);
+	/**
+	 * 添加资源
+	 * 
+	 * @param resources
+	 * @return
+	 */
+	SysResources insertSelective(SysResources resources);
 
-	Map<String, Object> deleteResourceById(String ids);
+	/**
+	 * 根据IDs删除资源
+	 * 
+	 * @param ids
+	 * @return
+	 */
+	Map<String, Object> deleteResourceByIds(String ids);
 
-	Map<String, Object> addResource2Role(Long roleId, String ids);
+	/**
+	 * 根据ID删除资源
+	 * 
+	 * @param id
+	 * @return
+	 */
+	int deleteResourceById(Integer id);
 
-	List<SysResourcesBo> selectResourceById(Long id);
+	/**
+	 * 为角色添加资源
+	 * 
+	 * @param roleId
+	 * @param ids
+	 * @return
+	 */
+	Map<String, Object> addResource2Role(Integer roleId, String ids);
 
+	/**
+	 * 根据角色ID查询其拥有的资源列表
+	 * 
+	 * @param roleId
+	 * @return
+	 */
+	List<SysResourcesBo> selectResourceByRoleId(Integer roleId);
+
+	/**
+	 * 根据用户ID查询资源，放入到Authorization里
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	Set<String> findResourceByUserId(Integer userId);
+	
+	/**
+	 * 更新资源信息
+	 * 
+	 * @param resources
+	 * @return
+	 */
+	int updateByPrimaryKeySelective(SysResources resources);
+	
+	/**
+	 * 根据主键查询资源
+	 * 
+	 * @param id
+	 * @return
+	 */
+	SysResources selectByPrimaryKey(Integer id);
 }

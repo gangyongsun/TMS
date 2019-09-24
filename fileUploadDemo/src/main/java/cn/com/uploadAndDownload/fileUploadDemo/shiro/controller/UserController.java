@@ -61,7 +61,8 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "{page}", method = RequestMethod.GET)
 	public ModelAndView toPage(@PathVariable("page") String page) {
-		return new ModelAndView(String.format("system/%s", page), "token", TokenManager.getToken());
+		SysUser token = TokenManager.getToken();
+		return new ModelAndView(String.format("system/%s", page), "token", token);
 	}
 
 	/**
@@ -93,7 +94,7 @@ public class UserController extends BaseController {
 		} else {
 			user.setPassWord(newPswd);
 			user = UserManager.md5Pswd(user);
-			userService.updateByPrimaryKeySelective(user);
+			userService.updateUserOnSelective(user);
 			resultMap.put("status", 200);
 			resultMap.put("message", "修改成功!");
 			/**
@@ -111,13 +112,13 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "updateSelf", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> updateSelf(SysUser entity, HttpServletRequest request) {
+	public Map<String, Object> updateSelf(SysUser sysUser, HttpServletRequest request) {
 		try {
-			userService.updateByPrimaryKeySelective(entity);
+			userService.updateUserOnSelective(sysUser);
 			resultMap.put("status", 200);
 			resultMap.put("message", "修改成功!");
 			// 更新token的Nickname
-			TokenManager.setUser(entity);
+			TokenManager.setUser(sysUser);
 			// 跳转到首页
 			String url = null;
 			if (StringUtils.isBlank(url)) {
@@ -127,7 +128,7 @@ public class UserController extends BaseController {
 		} catch (Exception e) {
 			resultMap.put("status", 500);
 			resultMap.put("message", "修改失败!");
-			LoggerUtils.fmtError(getClass(), e, "修改个人资料出错![%s]", JSONObject.fromObject(entity).toString());
+			LoggerUtils.fmtError(getClass(), e, "修改个人资料出错![%s]", JSONObject.fromObject(sysUser).toString());
 		}
 		return resultMap;
 	}

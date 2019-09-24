@@ -12,13 +12,14 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.UserRoleAllocationBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 
 public interface UserService {
+
 	/***
 	 * 根据用户信息获取用户
 	 *
 	 * @param user
 	 * @return
 	 */
-	SysUser getUser(SysUser user);
+	public SysUser getUser(SysUser user);
 
 	/**
 	 * 根据userId获取用户权限
@@ -26,26 +27,100 @@ public interface UserService {
 	 * @param userId userId
 	 * @return 用户权限
 	 */
-	Set<String> findResourcesByUserId(int userId);
+	public Set<String> findResourcesByUserId(int userId);
 
-	Pagination<UserRoleAllocationBo> findUserAndRole(ModelMap modelMap, Integer pageNo, int pageSize);
+	/**
+	 * 用户角色权限分配分页查询
+	 * 
+	 * @param modelMap
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	public Pagination<UserRoleAllocationBo> findUserAndRole(ModelMap modelMap, Integer pageNo, int pageSize);
 
-	List<SysRoleBo> selectRoleByUserId(int id);
+	/**
+	 * 根据用户ID查询权限
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public List<SysRoleBo> selectRoleByUserId(int id);
 
-	Map<String, Object> addRole2User(int userId, String ids);
+	/**
+	 * 为用户添加角色
+	 * 
+	 * @param userId
+	 * @param ids
+	 * @return
+	 */
+	public Map<String, Object> addRole2User(int userId, String ids);
 
-	Map<String, Object> deleteRoleByUserIds(String userIds);
+	/**
+	 * 根据用户id清空y用户拥有的角色
+	 * 
+	 * @param userIds
+	 * @return
+	 */
+	public Map<String, Object> deleteRoleByUserIds(String userIds);
 
-	SysUser login(String username, String pswd);
+	/**
+	 * 用户登录，用于密码修改
+	 * 
+	 * @param username
+	 * @param pswd
+	 * @return
+	 */
+	public SysUser login(String username, String pswd);
 
-	void updateByPrimaryKeySelective(SysUser user);
+	/**
+	 * 更新用户信息
+	 * 
+	 * @param user
+	 */
+	public int updateUserOnSelective(SysUser user);
 
-	Pagination<SysUser> findByPage(Map<String, Object> map, Integer pageNo, int pageSize);
+	/**
+	 * 分页查询用户列表
+	 * 
+	 * @param map
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	public Pagination<SysUser> findUserByPage(Map<String, Object> map, Integer pageNo, int pageSize);
 
-	Map<String, Object> deleteUserById(String ids);
+	/**
+	 * 根据用户id删除用户,ids 如果有多个则以“,”间隔。
+	 * 
+	 * @param ids
+	 * @return
+	 */
+	public Map<String, Object> deleteUserByIds(String ids);
 
-	Map<String, Object> updateForbidUserById(Long id, Long status);
+	/**
+	 * 根据主键删除
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public int deleteUserById(Integer userId);
 
-	SysUser findUserById(Integer userId);
+	/**
+	 * 根据ID禁止登录
+	 * 
+	 * @param id
+	 * @param status
+	 * @return
+	 */
+	public Map<String, Object> updateForbidUserById(Integer id, Integer userEnable);
+
+	/**
+	 * 根据ID查找用户
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public SysUser findUserById(Integer userId);
 
 }

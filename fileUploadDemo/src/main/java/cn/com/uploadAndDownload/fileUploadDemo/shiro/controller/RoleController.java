@@ -41,7 +41,8 @@ public class RoleController extends BaseController {
 	public ModelAndView index(String findContent, ModelMap modelMap) {
 		modelMap.put("findContent", findContent);
 		Pagination<SysRole> page = roleService.findPage(modelMap, pageNo, pageSize);
-		return new ModelAndView("system/role/index", "page", page);
+		modelMap.put("page", page);
+		return new ModelAndView("system/role/index");
 	}
 
 	/**
@@ -75,7 +76,7 @@ public class RoleController extends BaseController {
 	@RequestMapping(value = "deleteRoleById", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> deleteRoleById(String ids) {
-		return roleService.deleteRoleById(ids);
+		return roleService.deleteRoleByIds(ids);
 	}
 
 	/**

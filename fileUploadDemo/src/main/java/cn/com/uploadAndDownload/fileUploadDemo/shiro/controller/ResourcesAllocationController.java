@@ -57,10 +57,10 @@ public class ResourcesAllocationController extends BaseController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "selectResourceById")
+	@RequestMapping(value = "selectResourceByRoleId")
 	@ResponseBody
-	public List<SysResourcesBo> selectResourceById(Long id) {
-		List<SysResourcesBo> resourceBoList = resourcesService.selectResourceById(id);
+	public List<SysResourcesBo> selectResourceByRoleId(Integer id) {
+		List<SysResourcesBo> resourceBoList = resourcesService.selectResourceByRoleId(id);
 		return resourceBoList;
 	}
 
@@ -73,12 +73,12 @@ public class ResourcesAllocationController extends BaseController {
 	 */
 	@RequestMapping(value = "addResource2Role")
 	@ResponseBody
-	public Map<String, Object> addResource2Role(Long roleId, String ids) {
+	public Map<String, Object> addResource2Role(Integer roleId, String ids) {
 		return resourcesService.addResource2Role(roleId, ids);
 	}
 
 	/**
-	 * 根据角色id清空权限。
+	 * 根据角色id清空权限
 	 * 
 	 * @param roleIds 角色ID ，以‘,’间隔
 	 * @return
@@ -86,6 +86,6 @@ public class ResourcesAllocationController extends BaseController {
 	@RequestMapping(value = "clearResourceByRoleIds")
 	@ResponseBody
 	public Map<String, Object> clearResourceByRoleIds(String roleIds) {
-		return resourcesService.deleteResourceById(roleIds);
+		return resourcesService.deleteResourceByIds(roleIds);
 	}
 }

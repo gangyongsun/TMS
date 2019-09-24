@@ -57,7 +57,7 @@ public class SampleRealm extends AuthorizingRealm {
 		} else {
 			// 更新最后登录时间
 			user.setLastLoginTime(new Date());
-			userService.updateByPrimaryKeySelective(user);
+			userService.updateUserOnSelective(user);
 		}
 		return new SimpleAuthenticationInfo(user, user.getPassWord(), getName());
 	}

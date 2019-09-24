@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.UserOnlineBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.ShiroSessionRepository;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.shiroSession.CustomShiroSessionDAO;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.vo.SessionStatus;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
@@ -190,7 +191,7 @@ public class CustomSessionManager {
 	 * @param id     用户ID
 	 * @param status 用户状态
 	 */
-	public void forbidUserById(Integer id, Long status) {
+	public void forbidUserById(Integer id, Integer status) {
 		// 获取所有在线用户
 		for (UserOnlineBo userOnlineBo : getAllUser()) {
 			Integer userId = userOnlineBo.getId();
@@ -208,11 +209,11 @@ public class CustomSessionManager {
 		}
 	}
 
-//	public void setShiroSessionRepository(ShiroSessionRepository shiroSessionRepository) {
-//		this.shiroSessionRepository = shiroSessionRepository;
-//	}
-//
-//	public void setCustomShiroSessionDAO(CustomShiroSessionDAO customShiroSessionDAO) {
-//		this.customShiroSessionDAO = customShiroSessionDAO;
-//	}
+	public void setShiroSessionRepository(ShiroSessionRepository shiroSessionRepository) {
+		this.shiroSessionRepository = shiroSessionRepository;
+	}
+
+	public void setCustomShiroSessionDAO(CustomShiroSessionDAO customShiroSessionDAO) {
+		this.customShiroSessionDAO = customShiroSessionDAO;
+	}
 }

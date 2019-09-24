@@ -3,14 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <title>GoldWind Key Information Search Engine</title>
-<link rel="stylesheet" th:href="@{/css/bootstrap.css}">
-<link rel="stylesheet" th:href="@{/css/font-awesome.css?v=4.4.0}">
-
+<link rel="stylesheet" th:href="@{/static/css/bootstrap.css}">
+<link rel="stylesheet" th:href="@{/static/css/font-awesome.css}">
 <!-- Data Tables -->
-<link rel="stylesheet" th:href="@{/css/dataTables/dataTables.bootstrap.css}" >
-<link rel="stylesheet" th:href="@{/css/animate.css}">
+<link rel="stylesheet" th:href="@{/static/css/dataTables/dataTables.bootstrap.css}" >
+<link rel="stylesheet" th:href="@{/static/css/animate.css}">
+<link rel="stylesheet" th:href="@{/static/css/style.css}">
 
-<link rel="stylesheet" th:href="@{/css/style.css?v=4.1.0}">
+<link rel="stylesheet" href="../../static/css/bootstrap.css">
+<link rel="stylesheet" href="../../static/css/font-awesome.css">
+<!-- Data Tables -->
+<link rel="stylesheet" href="../../static/css/dataTables/dataTables.bootstrap.css" >
+<link rel="stylesheet" href="../../static/css/animate.css">
+<link rel="stylesheet" href="../../static/css/style.css">
 </head>
 <body class="container" id="keyInfoMain">
 	<img th:src="@{/img/logo.png}">
@@ -66,16 +71,21 @@
 		</div>
 	</div>
 		
-	<script type="text/javascript" th:src="@{/js/jquery-3.1.1.min.js}"></script>
-	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
-	
+	<script type="text/javascript" th:src="@{/static/js/jquery-3.1.1.min.js}"></script>
+	<script type="text/javascript" th:src="@{/static/js/bootstrap.min.js}"></script>
 	<!-- Data Tables -->
-	<script type="text/javascript" th:src="@{/js/dataTables/jquery.dataTables.js}"></script>
-	<script type="text/javascript" th:src="@{/js/plugins/dataTables/dataTables.bootstrap.js}"></script>
-
-	<script type="text/javascript" th:src="@{/js/content.js}"></script>
-
-	<script type="text/javascript" th:src="@{/js/kis/search.js}"></script>
+	<script type="text/javascript" th:src="@{/static/js/dataTables/jquery.dataTables.js}"></script>
+	<script type="text/javascript" th:src="@{/static/js/plugins/dataTables/dataTables.bootstrap.js}"></script>
+	<script type="text/javascript" th:src="@{/static/js/content.js}"></script>
+	<script type="text/javascript" th:src="@{/static/js/kis/search.js}"></script>
+	
+	<script type="text/javascript" src="../../static/js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="../../static/js/bootstrap.min.js"></script>
+	<!-- Data Tables -->
+	<script type="text/javascript" src="../../static/js/dataTables/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="../../static/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+	<script type="text/javascript" src="../../static/js/content.js"></script>
+	<script type="text/javascript" src="../../static/js/kis/search.js"></script>
 	<script>
         $(document).ready(function () {
             $('.dataTables-example').dataTable();

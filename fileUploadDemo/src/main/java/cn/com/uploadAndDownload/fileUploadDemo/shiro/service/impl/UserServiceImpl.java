@@ -23,6 +23,7 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUserRole;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.UserService;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.manager.TokenManager;
+import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 
 @Service
 public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements UserService {
@@ -34,13 +35,13 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	CustomSessionManager customSessionManager;
 
 	@Autowired
-	SysUserRoleMapper userRoleMapper;
+	private SysUserRoleMapper userRoleMapper;
 
 	@Autowired
 	private SysUserMapper userMapper;
 
 	@Autowired
-	private SysResourcesMapper sysResourcesMapper;
+	private SysResourcesMapper resourcesMapper;
 
 	@Override
 	public SysUser getUser(SysUser user) {
@@ -48,10 +49,15 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	}
 
 	@Override
+	public int deleteUserById(Integer id) {
+		return userMapper.deleteByPrimaryKey(id);
+	}
+	
+	@Override
 	public Set<String> findResourcesByUserId(int userId) {
-		Set<String> permissions = sysResourcesMapper.findRoleNameByUserId(userId);
+		Set<String> resourceSet = resourcesMapper.findResourceByUserId(userId);
 		Set<String> result = new HashSet<>();
-		for (String permission : permissions) {
+		for (String permission : resourceSet) {
 			if (StringUtils.isBlank(permission)) {
 				continue;
 			}
@@ -125,37 +131,71 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	}
 
 	@Override
-	public SysUser login(String username, String pswd) {
-		// TODO Auto-generated method stub
-		return null;
+	public SysUser login(String userName, String password) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("username", userName);
+		map.put("password", password);
+		SysUser user = userMapper.login(map);
+		return user;
 	}
 
 	@Override
-	public void updateByPrimaryKeySelective(SysUser user) {
-		// TODO Auto-generated method stub
-
+	public int updateUserOnSelective(SysUser sysUser) {
+		return userMapper.updateByPrimaryKeySelective(sysUser);
 	}
 
 	@Override
-	public Pagination<SysUser> findByPage(Map<String, Object> map, Integer pageNo, int pageSize) {
+	public Pagination<SysUser> findUserByPage(Map<String, Object> map, Integer pageNo, int pageSize) {
 		return super.findPage(map, pageNo, pageSize);
 	}
 
 	@Override
-	public Map<String, Object> deleteUserById(String ids) {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, Object> deleteUserByIds(String ids) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			int count = 0;
+			String[] idArray = new String[] {};
+			if (StringUtils.contains(ids, ",")) {
+				idArray = ids.split(",");
+			} else {
+				idArray = new String[] { ids };
+			}
+
+			for (String id : idArray) {
+				count += this.deleteUserById(new Integer(id));
+			}
+			resultMap.put("status", 200);
+			resultMap.put("count", count);
+		} catch (Exception e) {
+			LoggerUtils.fmtError(getClass(), e, "根据IDS删除用户出现错误，ids[%s]", ids);
+			resultMap.put("status", 500);
+			resultMap.put("message", "删除出现错误，请刷新后再试！");
+		}
+		return resultMap;
 	}
 
 	@Override
-	public Map<String, Object> updateForbidUserById(Long id, Long status) {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, Object> updateForbidUserById(Integer id, Integer userEnable) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			SysUser user =findUserById(id);
+			user.setUserEnable(userEnable);
+			updateUserOnSelective(user);
+
+			// 如果当前用户在线，需要标记并且踢出
+			customSessionManager.forbidUserById(id, userEnable);
+
+			resultMap.put("status", 200);
+		} catch (Exception e) {
+			resultMap.put("status", 500);
+			resultMap.put("message", "操作失败，请刷新再试！");
+			LoggerUtils.fmtError(getClass(), "禁止或者激活用户登录失败，id[%s],status[%s]", id, userEnable);
+		}
+		return resultMap;
 	}
 
 	@Override
-	public SysUser findUserById(Integer userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public SysUser findUserById(Integer id) {
+		return userMapper.selectByPrimaryKey(id);
 	}
 }
