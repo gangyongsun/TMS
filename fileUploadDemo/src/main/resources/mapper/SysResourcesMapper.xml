@@ -43,15 +43,15 @@
 		<include refid="where_all" />
 	</select>
 	<!-- 根据角色获取权限，marker:0,没有权限，marker：非0(和up.id)一致表示有权限。 cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysResourcesBo中的这个方法是校验权限 public boolean isCheck(){ return StringUtils.equals(roleId,marker); } -->
-	<select id="selectPermissionById" resultType="cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysResourcesBo">
+	<select id="selectResourceById" resultType="cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysResourcesBo">
 		select sysResource.id,sysResource.resource_name,sysRoleResource.role_id roleId, sysResource.resource_url,ifnull(sysRoleResource.role_id,0)marker from sys_resources sysResource 
 		left join (select * from sys_role_resources  where role_id = #{id,jdbcType=BIGINT}) sysRoleResource on sysRoleResource.resources_id = sysResource.id
 		order by sysResource.id 
 	</select>
 	<!-- 根据用ID查询permission -->
-	<select id="findPermissionByUserId" resultType="java.lang.String">
+	<select id="findResourceByUserId" resultType="java.lang.String">
 		select sysResource.resource_url from sys_resources sysResource , sys_role_resources sysRoleResource, sys_user_role sysUserRole
-		where user_id =#{id,jdbcType=BIGINT} and sysResource.id = sysRoleResource.resource_id and sysRoleResource.role_id
+		where user_id =#{id,jdbcType=BIGINT} and sysResource.id = sysRoleResource.resources_id and sysRoleResource.role_id
 		= sysUserRole.role_id
 	</select>
 
