@@ -35,66 +35,68 @@
 					<div class="col-sm-12">
 						<!-- Example Events -->
 						<div class="example-wrap">
-							<div class="example">
-								<div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
-									<!-- <shiro:hasPermission name="/member/add"> -->
-										<a class="btn btn-success" onclick="adduser();"><span class="glyphicon glyphicon-plus"></span> 添加用户</a>
-									<!-- </shiro:hasPermission>
-									<shiro:hasPermission name="/member/delete"> -->
-										<a class="btn btn-danger" onclick="deleteAll();"><span class="glyphicon glyphicon-trash"></span> 删除用户</a>
-									<!-- </shiro:hasPermission> -->
-									<!-- <div class="input-group">
-										<input type="text" class="form-control" id="findContent" name="findContent" placeholder="请输入 用户昵称 / 用户帐号..."> <span class="input-group-btn">
-											<button class="btn btn-default" type="submit">
-												<span class="glyphicon glyphicon-search">查询</span>
-											</button>
-										</span>
-									</div> -->
+							<form method="post" action="" id="formId" class="form-inline">
+								<div class="example">
+									<div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
+										<!-- <shiro:hasPermission name="/member/add"> -->
+											<a class="btn btn-success" onclick="adduser();"><span class="glyphicon glyphicon-plus"></span> 添加用户</a>
+										<!-- </shiro:hasPermission>
+										<shiro:hasPermission name="/member/delete"> -->
+											<a class="btn btn-danger" onclick="deleteAll();"><span class="glyphicon glyphicon-trash"></span> 删除用户</a>
+										<!-- </shiro:hasPermission> -->
+										<!-- <div class="input-group">
+											<input type="text" class="form-control" id="findContent" name="findContent" placeholder="请输入 用户昵称 / 用户帐号..."> <span class="input-group-btn">
+												<button class="btn btn-default" type="submit">
+													<span class="glyphicon glyphicon-search">查询</span>
+												</button>
+											</span>
+										</div> -->
+									</div>
+									<table id="TableStyle" class="table table-bordered tab-content" data-toggle="table" data-height="700" data-pagination="true" data-mobile-responsive="true">
+										<thead>
+											<tr>
+												<th data-field="id" data-checkbox="true"></th>
+												<th data-field="nickname">昵称</th>
+												<th data-field="userName">账号</th>
+												<th data-field="userEnable">是否有效</th>
+												<th data-field="createTime">创建时间</th>
+												<th data-field="lastLoginTime">最后登陆时间</th>
+												<th data-field="event">操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:if="${#lists.size(page.list) gt 0}" th:each="it:${page.list}" >
+												<td><input th:value="${it.id}" type="checkbox" id="subcheckbox" name="subcheckbox" onclick="userCheck(this)" /></td>
+												<td th:text="${it.nickname}"></td>
+												<td th:text="${it.userName}"></td>
+												<td th:if="${it.userEnable==1 }">有效</td>
+												<td th:unless="${it.userEnable==1 }">无效</td>
+												<td th:text="${#dates.format(it.createTime, 'yyyy年MMM月dd日 HH点mm分ss秒')}"></td>
+												<td th:text="${#dates.format(it.lastLoginTime, 'yyyy年MMM月dd日 HH点mm分ss秒')}"></td>
+												<td>
+													<!-- <shiro:hasPermission name="/users/deactive"> -->
+														<div th:if="${it.userEnable==1 }">
+															<button type="button" class="btn btn-info btn-sm" th:id="${it.id}" onclick="forbidUserById(0,this)"><span class="glyphicon glyphicon-eye-close"></span> 禁止登录</button>
+														</div>
+													<!-- </shiro:hasPermission>
+													<shiro:hasPermission name="/users/active"> -->
+														<div th:unless="${it.userEnable==1 }">
+															<button type="button" class="btn btn-success btn-sm" th:id="${it.id}" onclick="forbidUserById(1,this)"><span class="glyphicon glyphicon-eye-open"></span> 激活登录</button>
+														</div>
+													<!-- </shiro:hasPermission> -->
+													<shiro:hasPermission name="/users/delete">
+														<button type="button" class="btn btn-danger btn-sm" th:id="${it.id}" onclick="_deleteone(this)"><span class="glyphicon glyphicon-trash"></span> 删除</button>
+													</shiro:hasPermission> 
+													<!-- <shiro:hasPermission name="/users/resetPassword"> -->
+														<button type="button" class="btn btn-info btn-sm" th:id="${it.id}" onclick="openResetPasswdWindow(this)"><span class="glyphicon glyphicon-eye-open"></span> 重置密码</button>
+													<!-- </shiro:hasPermission> -->
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<!-- <div th:if="${#lists.size(page.list) gt 0}" th:replace="${page.pageHtml}" class="pagination pull-right"></div> -->
 								</div>
-								<table id="TableStyle" class="table table-bordered tab-content" data-toggle="table" data-height="700" data-pagination="true" data-mobile-responsive="true">
-									<thead>
-										<tr>
-											<th data-field="id" data-checkbox="true"></th>
-											<th data-field="nickname">昵称</th>
-											<th data-field="userName">账号</th>
-											<th data-field="userEnable">是否有效</th>
-											<th data-field="createTime">创建时间</th>
-											<th data-field="lastLoginTime">最后登陆时间</th>
-											<th data-field="event">操作</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:if="${#lists.size(page.list) gt 0}" th:each="it:${page.list}" >
-											<td><input th:value="${it.id}" type="checkbox" id="subcheckbox" name="subcheckbox" onclick="userCheck(this)" /></td>
-											<td th:text="${it.nickname}"></td>
-											<td th:text="${it.userName}"></td>
-											<td th:if="${it.userEnable==1 }">有效</td>
-											<td th:unless="${it.userEnable==1 }">无效</td>
-											<td th:text="${#dates.format(it.createTime, 'yyyy年MMM月dd日 HH点mm分ss秒')}"></td>
-											<td th:text="${#dates.format(it.lastLoginTime, 'yyyy年MMM月dd日 HH点mm分ss秒')}"></td>
-											<td>
-												<!-- <shiro:hasPermission name="/users/deactive"> -->
-													<div th:if="${it.userEnable==1 }">
-														<a class="btn btn-info btn-sm" href="javascript:forbidUserById(0,${it.id})"><span class="glyphicon glyphicon-eye-close"></span> 禁止登录</a>
-													</div>
-												<!-- </shiro:hasPermission>
-												<shiro:hasPermission name="/users/active"> -->
-													<div th:unless="${it.userEnable==1 }">
-														<a class="btn btn-success btn-sm" href="javascript:forbidUserById(1,${it.id})"><span class="glyphicon glyphicon-eye-open"></span> 激活登录</a>
-													</div>
-												<!-- </shiro:hasPermission> -->
-												<shiro:hasPermission name="/users/delete"> 
-													<a class="btn btn-danger btn-sm" href="javascript:_delete([${it.id}]);"><span class="glyphicon glyphicon-trash"></span> 删除</a>
-												</shiro:hasPermission> 
-												<!-- <shiro:hasPermission name="/users/resetPassword"> -->
-													<a class="btn btn-info btn-sm" href='javascript:openResetPasswdWindow("${it.id}");'><span class="glyphicon glyphicon-eye-open"></span> 重置密码</a>
-												<!-- </shiro:hasPermission> -->
-											</td>
-										</tr>
-									</tbody>
-								</table>
-								<!-- <div th:if="${#lists.size(page.list) gt 0}" th:replace="${page.pageHtml}" class="pagination pull-right"></div> -->
-							</div>
+							</form>
 						</div>
 						<!-- End Example Events -->
 						<!--添加弹框-->

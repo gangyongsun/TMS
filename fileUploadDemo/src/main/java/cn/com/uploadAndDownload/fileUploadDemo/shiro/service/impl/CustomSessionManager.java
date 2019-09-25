@@ -53,9 +53,9 @@ public class CustomSessionManager {
 		List<UserOnlineBo> userOnlineList = new ArrayList<UserOnlineBo>();
 
 		for (Session session : sessions) {
-			UserOnlineBo userOnlie = getSessionBo(session);
-			if (null != userOnlie) {
-				userOnlineList.add(userOnlie);
+			UserOnlineBo userOnline = getSessionBo(session);
+			if (null != userOnline) {
+				userOnlineList.add(userOnline);
 			}
 		}
 		return userOnlineList;
@@ -193,18 +193,21 @@ public class CustomSessionManager {
 	 */
 	public void forbidUserById(Integer id, Integer status) {
 		// 获取所有在线用户
-		for (UserOnlineBo userOnlineBo : getAllUser()) {
-			Integer userId = userOnlineBo.getId();
-			// 匹配用户ID
-			if (userId.equals(id)) {
-				// 获取用户Session
-				Session session = shiroSessionRepository.getSession(userOnlineBo.getSessionId());
-				// 标记用户Session
-				SessionStatus sessionStatus = (SessionStatus) session.getAttribute(SESSION_STATUS);
-				// 是否踢出 true:有效，false：踢出
-				sessionStatus.setOnlineStatus(status.intValue() == 1);
-				// 更新Session
-				customShiroSessionDAO.update(session);
+		List<UserOnlineBo> userOnlineList = getAllUser();
+		if (null != userOnlineList) {
+			for (UserOnlineBo userOnlineBo : userOnlineList) {
+				Integer userId = userOnlineBo.getId();
+				// 匹配用户ID
+				if (null != userId && userId.equals(id)) {
+					// 获取用户Session
+					Session session = shiroSessionRepository.getSession(userOnlineBo.getSessionId());
+					// 标记用户Session
+					SessionStatus sessionStatus = (SessionStatus) session.getAttribute(SESSION_STATUS);
+					// 是否踢出 true:有效，false：踢出
+					sessionStatus.setOnlineStatus(status.intValue() == 1);
+					// 更新Session
+					customShiroSessionDAO.update(session);
+				}
 			}
 		}
 	}

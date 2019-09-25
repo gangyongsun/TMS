@@ -78,28 +78,25 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	}
 
 	@Override
-	public Map<String, Object> addRole2User(int userId, String ids) {
+	public Map<String, Object> addRole2User(int userId, String roleIds) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		int count = 0;
 		try {
-			// 先删除原有的。
+			// 先删除原有的
 			userRoleMapper.deleteByUserId(userId);
-			// 如果ids,role 的id 有值，那么就添加。没值象征着：把这个用户（userId）所有角色取消。
-			if (StringUtils.isNotBlank(ids)) {
-				String[] idArray = null;
-
-				// 这里有的人习惯，直接ids.split(",") 都可以，我习惯这么写。清楚明了。
-				if (StringUtils.contains(ids, ",")) {
-					idArray = ids.split(",");
+			// 如果roleIds有值就添加，roleIds没值象征着把这个用户（userId）所有角色取消
+			if (StringUtils.isNotBlank(roleIds)) {
+				String[] roleIdArray = null;
+				if (StringUtils.contains(roleIds, ",")) {
+					roleIdArray = roleIds.split(",");
 				} else {
-					idArray = new String[] { ids };
+					roleIdArray = new String[] { roleIds };
 				}
-				// 添加新的。
-				for (String rid : idArray) {
-					// 这里严谨点可以判断，也可以不判断。这个{@link StringUtils 我是重写了的}
-					if (StringUtils.isNotBlank(rid)) {
-						SysUserRole entity = new SysUserRole(userId, new Integer(rid));
-						count += userRoleMapper.insertSelective(entity);
+				// 添加新的
+				for (String roleId : roleIdArray) {
+					if (StringUtils.isNotBlank(roleId)) {
+						SysUserRole userRole = new SysUserRole(userId, new Integer(roleId));
+						count += userRoleMapper.insertSelective(userRole);
 					}
 				}
 			}
@@ -165,11 +162,12 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 				count += this.deleteUserById(new Integer(id));
 			}
 			resultMap.put("status", 200);
+			resultMap.put("message", "删除成功！");
 			resultMap.put("count", count);
 		} catch (Exception e) {
 			LoggerUtils.fmtError(getClass(), e, "根据IDS删除用户出现错误，ids[%s]", ids);
 			resultMap.put("status", 500);
-			resultMap.put("message", "删除出现错误，请刷新后再试！");
+			resultMap.put("message", "删除失败！");
 		}
 		return resultMap;
 	}
@@ -186,9 +184,10 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 			customSessionManager.forbidUserById(id, userEnable);
 
 			resultMap.put("status", 200);
+			resultMap.put("message", "操作成功！");
 		} catch (Exception e) {
 			resultMap.put("status", 500);
-			resultMap.put("message", "操作失败，请刷新再试！");
+			resultMap.put("message", "操作失败！");
 			LoggerUtils.fmtError(getClass(), "禁止或者激活用户登录失败，id[%s],status[%s]", id, userEnable);
 		}
 		return resultMap;

@@ -27,14 +27,34 @@ function _delete(ids){
 		var load = layer.load();
 		$.post('deleteUserById',{ids:ids.join(',')},function(result){
 			layer.close(load);
-			if(result && result.status != 200){
-				return layer.msg(result.message),!0;
-			}else{
-				layer.msg('删除成功!');
-				setTimeout(function(){
-					$('#formId').submit();
-				},1000);
+			if(result){
+				layer.msg(result.message);
 			}
+			setTimeout(function(){
+				$('#formId').submit();
+			},1000);
+		},'json');
+	});
+}
+
+/**
+ * 根据ID数组，删除
+ * 
+ * @param ids
+ * @returns
+ */
+function _deleteone(obj){
+	var id = $(obj).attr("id");
+	var index = layer.confirm("确定删除该用户？",function(){
+		var load = layer.load();
+		$.post('deleteUserById',{ids:id},function(result){
+			layer.close(load);
+			if(result){
+				layer.msg(result.message);
+			}
+			setTimeout(function(){
+				$('#formId').submit();
+			},1000);
 		},'json');
 	});
 }
@@ -45,12 +65,10 @@ function _delete(ids){
  * @param id
  * @returns
  */
-function openResetPasswdWindow(id){
-	console.log(id);
-//	var recId = $("#TableStyle tr:eq(" + 1 + ") td:eq(0)").html();
-	console.log(recId);
+function openResetPasswdWindow(obj){
+	var id = $(obj).attr("id");
 	$("#userId").val(id);
-	$('#passwdReset').modal();
+	$('#passwdReset').modal({backdrop: false,keyboard: true})
 }
 
 /**
@@ -87,20 +105,19 @@ function resetPasswd(){
  * @param id
  * @returns
  */
-function forbidUserById(status,id){
-	var text = status?'激活':'禁止';
+function forbidUserById(userEnable,obj){
+	var id = $(obj).attr("id");
+	var text = userEnable?'激活':'禁止';
 	var index = layer.confirm("确定"+text+"这个用户？",function(){
 		var load = layer.load();
-		$.post('forbidUserById',{status:status,id:id},function(result){
+		$.post('forbidUserById',{userEnable:userEnable,id:id},function(result){
 			layer.close(load);
-			if(result && result.status != 200){
-				return layer.msg(result.message),!0;
-			}else{
-				layer.msg(text +'成功!');
-				setTimeout(function(){
-					$('#formId').submit();
-				},1000);
+			if(result){
+				layer.msg(result.message);
 			}
+			setTimeout(function(){
+				$('#formId').submit();
+			},1000);
 		},'json');
 		layer.close(index);
 	});

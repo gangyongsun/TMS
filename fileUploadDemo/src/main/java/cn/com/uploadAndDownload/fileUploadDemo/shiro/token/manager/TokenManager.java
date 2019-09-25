@@ -7,6 +7,7 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.impl.CustomSessionManager;
@@ -24,13 +25,17 @@ public class TokenManager {
 	/**
 	 * 用户登录管理
 	 */
-	public static final SampleRealm sampleRealm = SpringContextUtil.getBean("sampleRealm", SampleRealm.class);
+//	public static final SampleRealm sampleRealm = SpringContextUtil.getBean("sampleRealm", SampleRealm.class);
+	
+	@Autowired
+	static SampleRealm sampleRealm;
 
 	/**
 	 * 用户session管理
 	 */
-	public static final CustomSessionManager customSessionManager = SpringContextUtil.getBean("customSessionManager", CustomSessionManager.class);
-
+//	public static final CustomSessionManager customSessionManager = SpringContextUtil.getBean("customSessionManager", CustomSessionManager.class);
+	@Autowired
+	static CustomSessionManager customSessionManager;
 	/**
 	 * 获取当前登录的用户User对象
 	 * 

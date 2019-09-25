@@ -30,7 +30,7 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.UserService;
 public class RoleAllocationController extends BaseController {
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	ResourcesService permissionService;
 
@@ -58,7 +58,7 @@ public class RoleAllocationController extends BaseController {
 	 */
 	@RequestMapping(value = "selectRoleByUserId")
 	@ResponseBody
-	public List<SysRoleBo> selectRoleByUserId(int id) {
+	public List<SysRoleBo> selectRoleByUserId(Integer id) {
 		List<SysRoleBo> sysRoleBoList = userService.selectRoleByUserId(id);
 		return sysRoleBoList;
 	}
@@ -66,14 +66,14 @@ public class RoleAllocationController extends BaseController {
 	/**
 	 * 操作用户的角色
 	 * 
-	 * @param userId 用户ID
-	 * @param ids    角色ID，以‘,’间隔
+	 * @param userId  用户ID
+	 * @param roleIds 角色ID，以‘,’间隔
 	 * @return
 	 */
 	@RequestMapping(value = "addRole2User")
 	@ResponseBody
-	public Map<String, Object> addRole2User(int userId, String ids) {
-		return userService.addRole2User(userId, ids);
+	public Map<String, Object> addRole2User(Integer userId, String roleIds) {
+		return userService.addRole2User(userId, roleIds);
 	}
 
 	/**

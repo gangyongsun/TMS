@@ -52,9 +52,10 @@ public class ShiroConfig {
 		shiroFilterFactoryBean.setFilters(filtersMap);
 		// 权限控制map.
 		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
-		filterChainDefinitionMap.put("/css/**", "anon");
-		filterChainDefinitionMap.put("/js/**", "anon");
-		filterChainDefinitionMap.put("/img/**", "anon");
+		filterChainDefinitionMap.put("/static/**", "anon");
+//		filterChainDefinitionMap.put("/css/**", "anon");
+//		filterChainDefinitionMap.put("/js/**", "anon");
+//		filterChainDefinitionMap.put("/static/img/**", "anon");
 		filterChainDefinitionMap.put("/auth/login", "anon");
 		filterChainDefinitionMap.put("/auth/submitLogin", "anon");
 		filterChainDefinitionMap.put("/auth/logout", "logout");

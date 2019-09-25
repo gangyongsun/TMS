@@ -1,16 +1,17 @@
 package cn.com.uploadAndDownload.fileUploadDemo.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.DisabledAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.util.SavedRequest;
+import org.apache.shiro.web.util.WebUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.manager.TokenManager;
@@ -38,22 +39,55 @@ public class LoginController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+//	@RequestMapping(value = "submitLogin", method = RequestMethod.POST)
+//	public String submitLogin(String username, String password, HttpServletRequest request) {
+//		try {
+//			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+//			Subject subject = SecurityUtils.getSubject();
+//			subject.login(token);
+//			// SysUser user = (SysUser) subject.getPrincipal();
+//		} catch (DisabledAccountException e) {
+//			request.setAttribute("msg", "账户已被禁用");
+//			return "auth/login";
+//		} catch (AuthenticationException e) {
+//			request.setAttribute("msg", "用户名或密码错误");
+//			return "auth/login";
+//		}
+//		// 执行到这里说明用户已登录成功
+//		return "redirect:index";
+//	}
+	
 	@RequestMapping(value = "submitLogin", method = RequestMethod.POST)
-	public String submitLogin(String username, String password, HttpServletRequest request) {
+	@ResponseBody
+	public Map<String, Object> submitLogin(SysUser user, Boolean rememberMe, HttpServletRequest request) {
 		try {
-			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-			Subject subject = SecurityUtils.getSubject();
-			subject.login(token);
-			// SysUser user = (SysUser) subject.getPrincipal();
+			user = TokenManager.login(user, rememberMe);
+			resultMap.put("status", 200);
+			resultMap.put("message", "登录成功");
+
+			// shiro 获取登录之前的地址
+			SavedRequest savedRequest = WebUtils.getSavedRequest(request);
+			String url = null;
+			if (null != savedRequest && "admin" == user.getNickname()) {
+				url = savedRequest.getRequestUrl();
+				LoggerUtils.fmtDebug(getClass(), "获取登录之前的URL:[%s]", url);
+			}
+
+			// 如果登录之前没有地址，那么就跳转到首页
+			if (StringUtils.isBlank(url)) {
+				url = request.getContextPath() + "index";
+			}
+			// 跳转地址
+			resultMap.put("back_url", url);
+			// 这里其实可以直接catch Exception，然后抛出 message即可，但是最好还是各种明细catch 好点
 		} catch (DisabledAccountException e) {
-			request.setAttribute("msg", "账户已被禁用");
-			return "auth/login";
-		} catch (AuthenticationException e) {
-			request.setAttribute("msg", "用户名或密码错误");
-			return "auth/login";
+			resultMap.put("status", 500);
+			resultMap.put("message", "帐号已经禁用!");
+		} catch (Exception e) {
+			resultMap.put("status", 500);
+			resultMap.put("message", "帐号或密码错误!");
 		}
-		// 执行到这里说明用户已登录成功
-		return "redirect:index";
+		return resultMap;
 	}
 
 	/**

@@ -1,5 +1,6 @@
 /**
  * 清空多个用户的角色
+ * 
  * @returns
  */
 function deleteAll(){
@@ -20,7 +21,7 @@ function deleteAll(){
 function deleteById(ids){
 	var index = layer.confirm("确定清除这"+ ids.length +"个用户的角色？",function(){
 		var load = layer.load();
-		$.post('clearRoleByUserIds.shtml',{userIds:ids.join(',')},function(result){
+		$.post('clearRoleByUserIds',{userIds:ids.join(',')},function(result){
 			layer.close(load);
 			if(result && result.status != 200){
 				return layer.msg(result.message,so.default),!0;
@@ -45,14 +46,14 @@ function selectRole(){
 		ids.push(this.id);
 		names.push($.trim($(this).attr('name')));
 	});
+	userId=$('#selectedUserId').val();
 	var index = layer.confirm("确定操作？",function(){
 		var load = layer.load();
-		$.post('addRole2User.shtml',{ids:ids.join(','),userId:$('#selectUserId').val()},function(result){
+		$.post('addRole2User',{roleIds:ids.join(','),userId: userId},function(result){
 			layer.close(load);
-			if(result && result.status != 200){
-				return layer.msg(result.message,so.default),!1;
+			if(result){
+				layer.msg(result.message,so.default),!1;
 			}
-			layer.msg('添加成功!');
 			setTimeout(function(){
 				$('#formId').submit();
 			},1000);
@@ -63,9 +64,10 @@ function selectRole(){
 /**
  * 根据角色ID选择权限，分配权限操作
  */
-function selectRoleById(id){
+function selectRoleById(obj){
+	var id = $(obj).attr("id");
 	var load = layer.load();
-	$.post("selectRoleByUserId.shtml",{id:id},function(result){
+	$.post("selectRoleByUserId",{id:id},function(result){
 		layer.close(load);
 		if(result && result.length){
 			var html =[];
@@ -78,12 +80,12 @@ function selectRoleById(id){
 					html.push(" checked='checked'");
 				}
 				html.push("name='");
-				html.push(this.name);
+				html.push(this.roleDesc);
 				html.push("'/>");
-				html.push(this.name);
+				html.push(this.roleDesc);
 				html.push('</label></div>');
 			});
-			return so.id('boxRoleForm').html(html.join('')) & $('#selectRole').modal(),$('#selectUserId').val(id),!1;
+			return so.id('boxRoleForm').html(html.join('')) & $('#selectRole').modal({backdrop: false,keyboard: true}),$('#selectedUserId').val(id),!1;
 		}else{
 			return layer.msg(result.message,so.default);
 		}
