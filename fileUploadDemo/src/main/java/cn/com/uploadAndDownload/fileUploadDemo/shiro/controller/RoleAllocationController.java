@@ -15,7 +15,7 @@ import cn.com.uploadAndDownload.fileUploadDemo.controller.BaseController;
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysRoleBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.UserRoleAllocationBo;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.ResourcesService;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.RoleService;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.UserService;
 
 /**
@@ -32,7 +32,7 @@ public class RoleAllocationController extends BaseController {
 	UserService userService;
 
 	@Autowired
-	ResourcesService permissionService;
+	RoleService roleService;
 
 	/**
 	 * 用户角色权限分配
@@ -59,7 +59,7 @@ public class RoleAllocationController extends BaseController {
 	@RequestMapping(value = "selectRoleByUserId")
 	@ResponseBody
 	public List<SysRoleBo> selectRoleByUserId(Integer id) {
-		List<SysRoleBo> sysRoleBoList = userService.selectRoleByUserId(id);
+		List<SysRoleBo> sysRoleBoList = roleService.selectRoleByUserId(id);
 		return sysRoleBoList;
 	}
 
@@ -73,7 +73,7 @@ public class RoleAllocationController extends BaseController {
 	@RequestMapping(value = "addRole2User")
 	@ResponseBody
 	public Map<String, Object> addRole2User(Integer userId, String roleIds) {
-		return userService.addRole2User(userId, roleIds);
+		return roleService.addRole2User(userId, roleIds);
 	}
 
 	/**
@@ -85,6 +85,6 @@ public class RoleAllocationController extends BaseController {
 	@RequestMapping(value = "clearRoleByUserIds")
 	@ResponseBody
 	public Map<String, Object> clearRoleByUserIds(String userIds) {
-		return userService.deleteRoleByUserIds(userIds);
+		return roleService.deleteRoleByUserIds(userIds);
 	}
 }

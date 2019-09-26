@@ -74,7 +74,8 @@ public class ResourcesAllocationController extends BaseController {
 	@RequestMapping(value = "addResource2Role")
 	@ResponseBody
 	public Map<String, Object> addResource2Role(Integer roleId, String ids) {
-		return resourcesService.addResource2Role(roleId, ids);
+		Map<String, Object> resultMap=resourcesService.addResource2Role(roleId, ids);
+		return resultMap;
 	}
 
 	/**

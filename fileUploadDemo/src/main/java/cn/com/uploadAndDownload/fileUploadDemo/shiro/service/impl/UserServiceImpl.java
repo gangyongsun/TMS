@@ -24,7 +24,6 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUserRole;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.UserService;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.SampleRealm;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.manager.TokenManager;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 
 @Service
@@ -35,9 +34,6 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	 */
 	@Autowired
 	CustomSessionManager customSessionManager;
-	
-	@Autowired
-	public static SampleRealm sampleRealm;
 
 	@Autowired
 	private SysUserRoleMapper userRoleMapper;
@@ -57,7 +53,7 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	public int deleteUserById(Integer id) {
 		return userMapper.deleteByPrimaryKey(id);
 	}
-	
+
 	@Override
 	public Set<String> findResourcesByUserId(int userId) {
 		Set<String> resourceSet = resourcesMapper.findResourceByUserId(userId);
@@ -75,68 +71,6 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	@Override
 	public Pagination<UserRoleAllocationBo> findUserAndRole(ModelMap modelMap, Integer pageNo, int pageSize) {
 		return super.findPage("findUserAndRole", "findCount", modelMap, pageNo, pageSize);
-	}
-
-	@Override
-	public List<SysRoleBo> selectRoleByUserId(int id) {
-		return userMapper.selectRoleByUserId(id);
-	}
-
-	@Override
-	public Map<String, Object> addRole2User(int userId, String roleIds) {
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		int count = 0;
-		try {
-			// 先删除原有的
-			userRoleMapper.deleteByUserId(userId);
-			// 如果roleIds有值就添加，roleIds没值象征着把这个用户（userId）所有角色取消
-			if (StringUtils.isNotBlank(roleIds)) {
-				String[] roleIdArray = null;
-				if (StringUtils.contains(roleIds, ",")) {
-					roleIdArray = roleIds.split(",");
-				} else {
-					roleIdArray = new String[] { roleIds };
-				}
-				// 添加新的
-				for (String roleId : roleIdArray) {
-					if (StringUtils.isNotBlank(roleId)) {
-						SysUserRole userRole = new SysUserRole(userId, new Integer(roleId));
-						count += userRoleMapper.insertSelective(userRole);
-					}
-				}
-			}
-			resultMap.put("status", 200);
-			resultMap.put("message", "操作成功");
-		} catch (Exception e) {
-			resultMap.put("status", 200);
-			resultMap.put("message", "操作失败，请重试！");
-		}
-//		 清空用户的权限，迫使再次获取权限的时候，得重新加载
-//		TokenManager.clearUserAuthByUserId(userId);
-		
-		
-		List<SimplePrincipalCollection> result = customSessionManager.getSimplePrincipalCollectionByUserId(userId);
-		for (SimplePrincipalCollection simplePrincipalCollection : result) {
-			sampleRealm.clearCachedAuthorizationInfo(simplePrincipalCollection);
-		}
-		
-		resultMap.put("count", count);
-		return resultMap;
-	}
-
-	@Override
-	public Map<String, Object> deleteRoleByUserIds(String userIds) {
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		try {
-			resultMap.put("userIds", userIds);
-			userRoleMapper.deleteRoleByUserIds(resultMap);
-			resultMap.put("status", 200);
-			resultMap.put("message", "操作成功");
-		} catch (Exception e) {
-			resultMap.put("status", 200);
-			resultMap.put("message", "操作失败，请重试！");
-		}
-		return resultMap;
 	}
 
 	@Override
@@ -188,7 +122,7 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	public Map<String, Object> updateForbidUserById(Integer id, Integer userEnable) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
-			SysUser user =findUserById(id);
+			SysUser user = findUserById(id);
 			user.setUserEnable(userEnable);
 			updateUserOnSelective(user);
 

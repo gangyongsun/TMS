@@ -30,6 +30,14 @@
 		select r.role_type from sys_role r,sys_user_role sysRole where sysRole.role_id = r.id and sysRole.user_id =
 		#{id,jdbcType=BIGINT}
 	</select>
+	
+	<select id="selectRoleByUserId" resultType="cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysRoleBo">
+		select sysRole.id,sysRole.role_desc roleDesc,sysRole.role_type roleType,sysUserRole.user_id userId,ifnull(sysUserRole.user_id,0) marker from sys_role sysRole
+		left join(select * from sys_user_role where
+		user_id=#{id,jdbcType=BIGINT}) sysUserRole on sysUserRole.role_id = sysRole.id
+		order by sysRole.id
+	</select>
+	
 	<!-- 普通的分页查询 -->
 	<select id="findAll" resultMap="BaseResultMap">
 		select
@@ -41,13 +49,6 @@
 	<select id="findCount" resultMap="BaseResultMap">
 		select count(id) from sys_role
 		<include refid="where_all" />
-	</select>
-
-	<!-- 选择角色给用户，checkbox 列表 -->
-	<select id="selectRoleByUserId" resultType="cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysRoleBo">
-		select sysRole.id,sysRole.role_desc,sysRole.role_type,ifnull(sysUserRole.user_id,0) marker from sys_role sysRole left
-		join(select * from sys_user_role where user_id=#{id,jdbcType=BIGINT}) sysUserRole on sysUserRole.role_id
-		= sysRole.id
 	</select>
 
 	<!-- 权限分配的分页查询 -->

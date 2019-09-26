@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysRoleBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysRole;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -51,6 +52,14 @@ public interface SysRoleMapper extends Mapper<SysRole>{
 	 * @return
 	 */
 	Set<String> findRoleByUserId(Integer id);
+	
+	/**
+	 * 根据用户主键ID查询用户角色
+	 * 
+	 * @param id
+	 * @return
+	 */
+	List<SysRoleBo> selectRoleByUserId(Integer id);
 
 	/**
 	 * 根据用户ID，查询所有权限
@@ -59,4 +68,5 @@ public interface SysRoleMapper extends Mapper<SysRole>{
 	 * @return
 	 */
 	List<SysRole> findNowAllPermission(Map<String, Object> map);
+
 }

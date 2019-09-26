@@ -23,6 +23,7 @@ import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;
 
 @Service
 public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> implements ResourcesService {
+
 	@Autowired
 	private SysResourcesMapper resourcesMapper;
 
@@ -67,12 +68,8 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 	@Override
 	public Map<String, Object> addResource2Role(Integer roleId, String ids) {
 		roleResourceMapper.deleteByRoleId(roleId);
-		return executePermission(roleId, ids);
-	}
-
-	@Override
-	public List<SysResourcesBo> selectResourceByRoleId(Integer id) {
-		return roleResourceMapper.findRoleResourceByRoleId(id);
+		Map<String, Object> resultMap = executePermission(roleId, ids);
+		return resultMap;
 	}
 
 	@Override
@@ -175,8 +172,19 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 		List<Integer> userIds = userRoleMapper.findUserIdListByRoleId(roleId);
 
 		TokenManager.clearUserAuthByUserId(userIds);
+//
+//		List<SimplePrincipalCollection> result = customSessionManager.getSimplePrincipalCollectionByUserId(userIds);
+//		for (SimplePrincipalCollection simplePrincipalCollection : result) {
+//			sampleRealm.clearCachedAuthorizationInfo(simplePrincipalCollection);
+//		}
+
 		resultMap.put("count", count);
 		return resultMap;
+	}
+
+	@Override
+	public List<SysResourcesBo> selectResourceByRoleId(Integer id) {
+		return resourcesMapper.selectResourceByRoleId(id);
 	}
 
 }

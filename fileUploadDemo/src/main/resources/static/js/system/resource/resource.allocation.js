@@ -1,5 +1,6 @@
 /**
  * 清空多个角色的权限
+ * 
  * @returns
  */
 function deleteAll(){
@@ -23,7 +24,7 @@ function deleteAll(){
 function deleteById(ids){
 	var index = layer.confirm("确定清除这"+ ids.length +"个角色的权限？",function(){
 		var load = layer.load();
-		$.post('clearPermissionByRoleIds.shtml',{roleIds:ids.join(',')},function(result){
+		$.post('clearResourceByRoleIds',{roleIds:ids.join(',')},function(result){
 			layer.close(load);
 			if(result && result.status != 200){
 				return layer.msg(result.message,so.default),!0;
@@ -43,16 +44,18 @@ function deleteById(ids){
  * 
  * @returns
  */
-function selectPermission(){
+function selectResource(){
 	var checked = $("#boxRoleForm  :checked");
 	var ids=[],names=[];
 	$.each(checked,function(){
 		ids.push(this.id);
 		names.push($.trim($(this).attr('name')));
 	});
+	roleId=$('#selectedRoleId').val();
+	console.log(roleId);
 	var index = layer.confirm("确定操作？",function(){
 		var load = layer.load();
-		$.post('addPermission2Role.shtml',{ids:ids.join(','),roleId:$('#selectRoleId').val()},function(result){
+		$.post('addResource2Role',{ids:ids.join(','),roleId:roleId},function(result){
 			layer.close(load);
 			if(result && result.status != 200){
 				return layer.msg(result.message,so.default),!1;
@@ -65,11 +68,12 @@ function selectPermission(){
 	});
 }
 /**
- * 根据角色ID选择权限，分配权限操作。
+ * 根据角色ID选择权限，分配权限操作
  */
-function selectPermissionById(id){
+function selectResourceById(obj){
+	var id = $(obj).attr("id");
 	var load = layer.load();
-	$.post("selectPermissionById.shtml",{id:id},function(result){
+	$.post("selectResourceByRoleId",{id:id},function(result){
 		layer.close(load);
 		if(result && result.length){
 			var html =[];
@@ -83,15 +87,15 @@ function selectPermissionById(id){
 					html.push(" checked='checked'");
 				}
 				html.push("name='");
-				html.push(this.name);
+				html.push(this.resourceName);
 				html.push("'/>");
-				html.push(this.name);
+				html.push(this.resourceName);
 				html.push('</label></div>');
 			});
 			// 初始化全选
 			return so.id('boxRoleForm').html(html.join('')),
 			so.checkBoxInit('[selectAllBox]','[selectBox]'),
-			$('#selectPermission').modal(),$('#selectRoleId').val(id),!1;
+			$('#selectResource').modal({backdrop: false,keyboard: true}),$('#selectedRoleId').val(id),!1;
 		}else{
 			return layer.msg('没有获取到权限数据，请先添加权限数据!',so.default);
 		}

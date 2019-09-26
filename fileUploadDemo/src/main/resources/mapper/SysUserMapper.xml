@@ -73,12 +73,7 @@
 		</where>
 		group by sysUser.id
 	</select>
-	<select id="selectRoleByUserId" resultType="cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysRoleBo">
-		select sysRole.id,sysRole.role_desc roleDesc,sysRole.role_type roleType,sysUserRole.user_id userId,ifnull(sysUserRole.user_id,0) marker from sys_role sysRole
-		left join(select * from sys_user_role where
-		user_id=#{id,jdbcType=BIGINT}) sysUserRole on sysUserRole.role_id = sysRole.id
-		order by sysRole.id
-	</select>
+	
 	<!-- 登录 -->
 	<select id="login" resultMap="BaseResultMap">
 		select

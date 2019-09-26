@@ -1,9 +1,7 @@
 package cn.com.uploadAndDownload.fileUploadDemo.shiro.dao;
 
-import java.util.List;
 import java.util.Map;
 
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysRoleBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -65,12 +63,5 @@ public interface SysUserMapper extends Mapper<SysUser> {
 	 */
 	SysUser findUserByName(String userName);
 
-	/**
-	 * 根据用户主键ID查询用户角色
-	 * 
-	 * @param id
-	 * @return
-	 */
-	List<SysRoleBo> selectRoleByUserId(Integer id);
 
 }

@@ -31,7 +31,7 @@ public interface SysRoleResourcesMapper extends Mapper<SysRoleResources>{
 	 * @param id 角色ID
 	 * @return
 	 */
-	List<SysResourcesBo> findRoleResourceByRoleId(Integer id);
+	List<SysResourcesBo> selectResourceByRoleId(Integer id);
 
 	/**
 	 * 根据资源 && 角色ID查找
@@ -72,6 +72,8 @@ public interface SysRoleResourcesMapper extends Mapper<SysRoleResources>{
 	 * @return
 	 */
 	int deleteByRoleIds(Map<String, Object> resultMap);
+
+	
 
 //	/**
 //	 * 更新资源信息

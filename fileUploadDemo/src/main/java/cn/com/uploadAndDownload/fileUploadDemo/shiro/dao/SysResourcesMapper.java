@@ -7,7 +7,7 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysResourcesBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysResources;
 import tk.mybatis.mapper.common.Mapper;
 
-public interface SysResourcesMapper extends Mapper<SysResources>{
+public interface SysResourcesMapper extends Mapper<SysResources> {
 //	@ResultMap(value = "BaseResultMap")
 //	@Select("SELECT * FROM sys_resources ")
 //	List<SysResources> selectAll();
@@ -65,7 +65,7 @@ public interface SysResourcesMapper extends Mapper<SysResources>{
 	 * @param id 角色ID
 	 * @return 权限列表
 	 */
-	List<SysResourcesBo> selectResourceById(Integer id);
+	List<SysResourcesBo> selectResourceByRoleId(Integer id);
 
 	/**
 	 * 根据用户ID获取权限的Set集合

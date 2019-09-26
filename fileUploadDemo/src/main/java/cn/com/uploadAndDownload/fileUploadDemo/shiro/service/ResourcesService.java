@@ -68,14 +68,6 @@ public interface ResourcesService {
 	Map<String, Object> addResource2Role(Integer roleId, String ids);
 
 	/**
-	 * 根据角色ID查询其拥有的资源列表
-	 * 
-	 * @param roleId
-	 * @return
-	 */
-	List<SysResourcesBo> selectResourceByRoleId(Integer roleId);
-
-	/**
 	 * 根据用户ID查询资源，放入到Authorization里
 	 * 
 	 * @param userId
@@ -98,4 +90,12 @@ public interface ResourcesService {
 	 * @return
 	 */
 	SysResources selectByPrimaryKey(Integer id);
+
+	/**
+	 * 根据角色ID查询角色权限
+	 * 
+	 * @param id
+	 * @return
+	 */
+	List<SysResourcesBo> selectResourceByRoleId(Integer id);
 }

@@ -39,30 +39,6 @@ public interface UserService {
 	 */
 	public Pagination<UserRoleAllocationBo> findUserAndRole(ModelMap modelMap, Integer pageNo, int pageSize);
 
-	/**
-	 * 根据用户ID查询权限
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public List<SysRoleBo> selectRoleByUserId(int id);
-
-	/**
-	 * 为用户添加角色
-	 * 
-	 * @param userId
-	 * @param ids
-	 * @return
-	 */
-	public Map<String, Object> addRole2User(int userId, String ids);
-
-	/**
-	 * 根据用户id清空y用户拥有的角色
-	 * 
-	 * @param userIds
-	 * @return
-	 */
-	public Map<String, Object> deleteRoleByUserIds(String userIds);
 
 	/**
 	 * 用户登录，用于密码修改

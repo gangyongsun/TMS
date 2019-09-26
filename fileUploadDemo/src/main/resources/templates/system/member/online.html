@@ -57,19 +57,17 @@
 										<td th:if="${it.sessionStatus==true }">在线</td>
 										<td th:unless="${it.sessionStatus==true }">已踢出</td>
 										<td>
-											<shiro:hasPermission name="/users/detail">
-												<div th:if="${it.status==1 }">
+											<!-- <shiro:hasPermission name="/users/detail"> -->
 													<a class="btn btn-success btn-sm" href="<%=basePath%>/member/onlineDetails/${it.sessionId}.shtml"><span class="glyphicon glyphicon-info-sign"></span> 详情</a>
-												</div>
-											</shiro:hasPermission>
-											<shiro:hasPermission name="/users/kickout">
-												<div th:if="${it.status!=1 }">
+											<!-- </shiro:hasPermission>
+											<shiro:hasPermission name="/users/kickout"> -->
+												<div th:if="${it.sessionStatus==true }">
 													<a class="btn btn-danger btn-sm" v="onlineDetails" href="javascript:void(0);" sessionId="${it.sessionId}" status="1"><span class="glyphicon glyphicon-eye-close"></span> 踢出</a>
 												</div>
-											</shiro:hasPermission> 
-											<shiro:hasPermission name="/users/kickin">
+											<!-- </shiro:hasPermission> 
+											<shiro:hasPermission name="/users/kickin"> -->
 												<a class="btn btn-success btn-sm" v="onlineDetails" href="javascript:void(0);" sessionId="${it.sessionId}" status="0"><span class="glyphicon glyphicon-eye"></span> 激活</a>
-											</shiro:hasPermission> 
+											<!-- </shiro:hasPermission>  -->
 										</td>
 									</tr>
 								</table>
