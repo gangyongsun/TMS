@@ -66,7 +66,7 @@
 										</thead>
 										<tbody>
 											<tr th:if="${#lists.size(page.list) gt 0}" th:each="it:${page.list}" >
-												<td><input th:value="${it.id}" type="checkbox" id="subcheckbox" name="subcheckbox" onclick="userCheck(this)" /></td>
+												<td><input type="checkbox" id="subcheckbox" name="subcheckbox" th:value="${it.id}"/></td>
 												<td th:text="${it.nickname}"></td>
 												<td th:text="${it.userName}"></td>
 												<td th:if="${it.userEnable==1 }">有效</td>

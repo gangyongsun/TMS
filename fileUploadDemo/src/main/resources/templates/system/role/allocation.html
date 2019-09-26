@@ -29,62 +29,64 @@
 			<div class="ibox-title">
 				<h5>角色分配</h5>
 			</div>
-			<div class="ibox-content">
-				<div class="row row-lg">
-					<div class="col-sm-3">
-						<!--搜索框-->
-						<div class="input-group">
-							<input type="text" placeholder="查找用户" class="input form-control"> <span class="input-group-btn">
-								<button type="button" class="btn btn btn-primary">
-									<i class="fa fa-search"></i> 搜索
-								</button>
-							</span>
-						</div>
-						<button id="remove" type="button" class="btn btn btn-danger">
-							<i class="fa fa-times"></i> 清空用户角色
-						</button>
-					</div>
-					<div class="col-sm-12">
-						<!-- Example Events -->
-						<div class="example-wrap">
-							<div class="example">
-								<table id="TableStyle" class="table table-bordered tab-content" data-toggle="table" data-height="700" data-pagination="true" data-mobile-responsive="true">
-									<thead>
-										<tr>
-											<th data-field="id" data-checkbox="true"></th>
-											<th data-field="nickname">用户昵称</th>
-											<th data-field="userName">账号</th>
-											<th data-field="userEnable">状态</th>
-											<th data-field="roleNames">拥有的角色</th>
-											<th data-field="event">操作</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:if="${#lists.size(page.list) gt 0}" th:each="it:${page.list}" >
-											<td>
-												<input th:value="${it.id}" type="checkbox" id="subcheckbox" onclick="userCheck(this)" />
-											</td>
-											<td th:text="${it.nickname}"></td>
-											<td th:text="${it.userName}"></td>
-											<td th:if="${it.userEnable==1 }">有效</td>
-											<td th:unless="${it.userEnable==1 }">无效</td>
-											<td th:text="${it.roleNames}"></td>
-											<td>
-												<!-- <shiro:hasPermission name="/users/deactive"> -->
-													<div th:if="${it.userEnable==1 }">
-														<button type="button" class="btn btn btn-success" th:id="${it.id}" onclick="selectRoleById(this)"><span class="glyphicon glyphicon-eye-close"></span> 选择角色</button>
-													</div>
-												<!-- </shiro:hasPermission> -->
-											</td>
-										</tr>
-									</tbody>
-								</table>
+			<form method="post" action="" id="formId" class="form-inline">
+				<div class="ibox-content">
+					<div class="row row-lg">
+						<div class="col-sm-3">
+							<!--搜索框-->
+							<div class="input-group">
+								<input type="text" placeholder="查找用户" class="input form-control"> <span class="input-group-btn">
+									<button type="button" class="btn btn btn-primary">
+										<i class="fa fa-search"></i> 搜索
+									</button>
+								</span>
 							</div>
+							<button id="remove" type="button" class="btn btn btn-danger">
+								<i class="fa fa-times"></i> 清空用户角色
+							</button>
 						</div>
-						<!-- End Example Events -->
+						<div class="col-sm-12">
+							<!-- Example Events -->
+							<div class="example-wrap">
+								<div class="example">
+									<table id="TableStyle" class="table table-bordered tab-content" data-toggle="table" data-height="700" data-pagination="true" data-mobile-responsive="true">
+										<thead>
+											<tr>
+												<th data-field="id" data-checkbox="true"></th>
+												<th data-field="nickname">用户昵称</th>
+												<th data-field="userName">账号</th>
+												<th data-field="userEnable">状态</th>
+												<th data-field="roleNames">拥有的角色</th>
+												<th data-field="event">操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:if="${#lists.size(page.list) gt 0}" th:each="it:${page.list}" >
+												<td>
+													<input th:value="${it.id}" type="checkbox" id="subcheckbox" onclick="userCheck(this)" />
+												</td>
+												<td th:text="${it.nickname}"></td>
+												<td th:text="${it.userName}"></td>
+												<td th:if="${it.userEnable==1 }">有效</td>
+												<td th:unless="${it.userEnable==1 }">无效</td>
+												<td th:text="${it.roleNames}"></td>
+												<td>
+													<!-- <shiro:hasPermission name="/users/deactive"> -->
+														<div th:if="${it.userEnable==1 }">
+															<button type="button" class="btn btn btn-success" th:id="${it.id}" onclick="selectRoleById(this)"><span class="glyphicon glyphicon-eye-close"></span> 选择角色</button>
+														</div>
+													<!-- </shiro:hasPermission> -->
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<!-- End Example Events -->
+						</div>
 					</div>
 				</div>
-			</div>
+			</form>
 		</div>
 		<!-- End Panel Other -->
 		<input type="hidden" id="selectedUserId">

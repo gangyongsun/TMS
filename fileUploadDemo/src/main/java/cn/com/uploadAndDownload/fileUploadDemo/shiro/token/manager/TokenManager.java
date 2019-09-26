@@ -13,7 +13,6 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.impl.CustomSessionManager;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.SampleRealm;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.ShiroToken;
-import cn.com.uploadAndDownload.fileUploadDemo.utils.SpringContextUtil;
 
 /**
  * Shiro管理下的Token工具类
@@ -25,17 +24,16 @@ public class TokenManager {
 	/**
 	 * 用户登录管理
 	 */
-//	public static final SampleRealm sampleRealm = SpringContextUtil.getBean("sampleRealm", SampleRealm.class);
-	
+
 	@Autowired
-	static SampleRealm sampleRealm;
+	public static SampleRealm sampleRealm;
 
 	/**
 	 * 用户session管理
 	 */
-//	public static final CustomSessionManager customSessionManager = SpringContextUtil.getBean("customSessionManager", CustomSessionManager.class);
 	@Autowired
-	static CustomSessionManager customSessionManager;
+	public static CustomSessionManager customSessionManager;
+
 	/**
 	 * 获取当前登录的用户User对象
 	 * 
@@ -53,14 +51,14 @@ public class TokenManager {
 	 */
 	public static void setUser(SysUser userInfo) {
 		Subject subject = SecurityUtils.getSubject();
-		SysUser user =  (SysUser)subject.getPrincipal();
+		SysUser user = (SysUser) subject.getPrincipal();
 		user.setNickname(userInfo.getNickname());
 		PrincipalCollection principalCollection = subject.getPrincipals();
 		String realmName = principalCollection.getRealmNames().iterator().next();
 		PrincipalCollection newPrincipalCollection = new SimplePrincipalCollection(user, realmName);
 		subject.runAs(newPrincipalCollection);
 	}
-	
+
 	/**
 	 * 获取当前用户的Session
 	 * 
@@ -180,7 +178,6 @@ public class TokenManager {
 			return;
 		}
 		List<SimplePrincipalCollection> result = customSessionManager.getSimplePrincipalCollectionByUserId(userIds);
-
 		for (SimplePrincipalCollection simplePrincipalCollection : result) {
 			sampleRealm.clearCachedAuthorizationInfo(simplePrincipalCollection);
 		}
@@ -197,5 +194,5 @@ public class TokenManager {
 		}
 		clearUserAuthByUserId(userIds.toArray(new Integer[0]));
 	}
-	
+
 }

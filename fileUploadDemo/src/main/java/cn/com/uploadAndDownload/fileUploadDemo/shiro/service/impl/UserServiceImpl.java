@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
@@ -22,6 +23,7 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysUserRoleMapper;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUserRole;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.UserService;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.SampleRealm;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.manager.TokenManager;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 
@@ -33,6 +35,9 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	 */
 	@Autowired
 	CustomSessionManager customSessionManager;
+	
+	@Autowired
+	public static SampleRealm sampleRealm;
 
 	@Autowired
 	private SysUserRoleMapper userRoleMapper;
@@ -106,8 +111,15 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 			resultMap.put("status", 200);
 			resultMap.put("message", "操作失败，请重试！");
 		}
-		// 清空用户的权限，迫使再次获取权限的时候，得重新加载
-		TokenManager.clearUserAuthByUserId(userId);
+//		 清空用户的权限，迫使再次获取权限的时候，得重新加载
+//		TokenManager.clearUserAuthByUserId(userId);
+		
+		
+		List<SimplePrincipalCollection> result = customSessionManager.getSimplePrincipalCollectionByUserId(userId);
+		for (SimplePrincipalCollection simplePrincipalCollection : result) {
+			sampleRealm.clearCachedAuthorizationInfo(simplePrincipalCollection);
+		}
+		
 		resultMap.put("count", count);
 		return resultMap;
 	}

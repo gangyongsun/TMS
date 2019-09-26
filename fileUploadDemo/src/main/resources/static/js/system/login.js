@@ -45,7 +45,7 @@ jQuery(document).ready(
 					});
 					return false;
 				}
-				// var pswd = MD5(username + "#" + password);
+//				var password = MD5(username + "#" + password);
 				var data = {
 					userName : username,
 					passWord : password,
