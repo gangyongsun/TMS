@@ -9,6 +9,7 @@ jQuery(document).ready(function() {
 			searchKeyInfo();
 		}
 	}
+	document.getElementById("_datetime").innerText=new Date().getFullYear();
 });
 
 /**
@@ -25,7 +26,6 @@ function searchKeyInfo() {
 			findContent : findContentVal
 		},
 		success : function(data) {
-//			console.log(data);
 			$("#keyInfoMain").html(data);
 			$("#findContent").val(findContentVal);
 			$("#findContent").focus();
@@ -54,7 +54,6 @@ function searchByTermType(obj) {
 			termType : termTypeValue
 		},
 		success : function(data) {
-			console.log(data);
 			$("#indexMain").html(data);
 		},
 		error : function(data) {
