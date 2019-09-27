@@ -20,4 +20,14 @@ public class KeyInfoServiceImpl implements KeyInfoService {
 		return keyInforRepository.findByKeyInfo(keyInfo);
 	}
 
+	@Override
+	public List<String> findTermTypes() {
+		return keyInforRepository.findTermTypes();
+	}
+
+	@Override
+	public List<KeyInfo> findByTermType(String termType) {
+		return keyInforRepository.findByTermType(termType);
+	}
+
 }

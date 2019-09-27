@@ -11,6 +11,11 @@ jQuery(document).ready(function() {
 	}
 });
 
+/**
+ * 搜索术语
+ * 
+ * @returns
+ */
 function searchKeyInfo() {
 	var findContentVal = $("#findContent").val();
 	$.ajax({
@@ -31,6 +36,29 @@ function searchKeyInfo() {
 	});
 }
 
-function detail(id){
-	console.log(id);
+/**
+ * 按类别查询术语
+ * 
+ * @param obj
+ * @returns
+ */
+function searchByTermType(obj) {
+	var termTypeValue = null;
+	if (null != obj) {
+		var termTypeValue = $(obj).attr("value");
+	}
+	$.ajax({
+		type : "POST",
+		url : 'index',
+		data : {
+			termType : termTypeValue
+		},
+		success : function(data) {
+			console.log(data);
+			$("#indexMain").html(data);
+		},
+		error : function(data) {
+			console.log("搜索失败");
+		}
+	});
 }

@@ -14,4 +14,8 @@ public interface KeyInfoService {
 	 */
 	public List<KeyInfo> findByKeyInfo(String keyInfo);
 
+	public List<String> findTermTypes();
+
+	public List<KeyInfo> findByTermType(String termType);
+
 }
