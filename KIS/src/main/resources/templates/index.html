@@ -79,10 +79,11 @@
 	<script type="text/javascript" th:src="@{/static/js/jquery-3.1.1.min.js}" src="../static/js/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/bootstrap.min.js}" src="../static/js/bootstrap.min.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/bootstrap-table/bootstrap-table.min.js}" src="../static/js/bootstrap-table/bootstrap-table.min.js"></script>
-	<script type="text/javascript" th:src="@{/static/js/bootstrap-table/bootstrap-table-mobile.min.js}"
-		src="../static/js/bootstrap-table/bootstrap-table-mobile.min.js"></script>
-	<script type="text/javascript" th:src="@{/static/js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"
-		src="../static/js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+	<script type="text/javascript" th:src="@{/static/js/bootstrap-table/bootstrap-table-mobile.min.js}" src="../static/js/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+	<script type="text/javascript" th:src="@{/static/js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}" src="../static/js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/kis/search.js}" src="../static/js/kis/search.js"></script>
+	<script>
+		document.getElementById("_datetime").innerText=new Date().getFullYear();
+	</script>
 </body>
 </html>

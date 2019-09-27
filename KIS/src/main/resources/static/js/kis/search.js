@@ -9,7 +9,6 @@ jQuery(document).ready(function() {
 			searchKeyInfo();
 		}
 	}
-	document.getElementById("_datetime").innerText=new Date().getFullYear();
 });
 
 /**
