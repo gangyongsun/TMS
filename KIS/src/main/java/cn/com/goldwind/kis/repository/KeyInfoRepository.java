@@ -20,10 +20,10 @@ public interface KeyInfoRepository extends JpaRepository<KeyInfo, String>, Seria
 	@Query(value = "select * from t_key_info where chinese like CONCAT('%',:keyInfo,'%') or english like CONCAT('%',:keyInfo,'%')", nativeQuery = true)
 	public List<KeyInfo> findByKeyInfo(@Param("keyInfo") String keyInfo);
 
-	@Query(value = "select distinct key_info_position from kis.t_key_info", nativeQuery = true)
+	@Query(value = "select distinct key_info_function from kis.t_key_info", nativeQuery = true)
 	public List<String> findTermTypes();
 
-	@Query(value = "select * from kis.t_key_info where key_info_position = :termType", nativeQuery = true)
+	@Query(value = "select * from kis.t_key_info where key_info_function = :termType", nativeQuery = true)
 	public List<KeyInfo> findByTermType(@Param("termType") String termType);
 
 }
