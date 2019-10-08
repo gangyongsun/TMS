@@ -33,8 +33,12 @@ public class KeyInfoController {
 			keyInfoList = keyInfoService.findByTermType(termType);
 		}
 
-		map.put("keyInfoTypeList", keyInfoTypeList);
-		map.put("keyInfoList", keyInfoList);
+		if (null != keyInfoTypeList && keyInfoTypeList.size() > 0) {
+			map.put("keyInfoTypeList", keyInfoTypeList);
+		}
+		if (null != keyInfoList && keyInfoList.size() > 0) {
+			map.put("keyInfoList", keyInfoList);
+		}
 		return new ModelAndView("index");
 	}
 
@@ -47,11 +51,16 @@ public class KeyInfoController {
 	 */
 	@RequestMapping(value = "searchAll")
 	public ModelAndView searchAll(ModelMap map, String findContent) {
+		List<String> keyInfoTypeList = keyInfoService.findTermTypes();
+
 		List<KeyInfo> keyInfoList = keyInfoService.findByKeyInfo(findContent);
 		if (null != keyInfoList && keyInfoList.size() > 0) {
 			map.put("keyInfoList", keyInfoList);
 		}
-		return new ModelAndView("search");
+		if (null != keyInfoTypeList && keyInfoTypeList.size() > 0) {
+			map.put("keyInfoTypeList", keyInfoTypeList);
+		}
+		return new ModelAndView("index");
 	}
 
 }

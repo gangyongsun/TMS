@@ -27,13 +27,22 @@
 				<div class="about-content col-lg-12 col-xs-12">
 					<h1 class="text-white">Goldwind Terminology</h1>
 					<p>Goldwind Terminology introduction</p>
+					<div class="input-group">
+						<input type="text" class="form-control" id="findContent" name="findContent" placeholder="请输入..."> <span class="input-group-btn">
+							<button class="btn btn-default" type="button" onclick="searchKeyInfo()">
+								<span class="glyphicon glyphicon-search">搜索</span>
+							</button>
+						</span>
+					</div>
 				</div>
-				<div class="row align-items-center justify-content-between d-flex col-lg-12 col-xs-12">
-					<nav id="nav-menu-container">
-						<ul class="nav-menu" th:each="keyInfoType:${keyInfoTypeList}">
-							<li><a th:text="${keyInfoType}" th:value="${keyInfoType}" onclick="javascript:searchByTermType(this);return false;"></a></li>
-						</ul>
-					</nav>
+				<div class="container col-lg-12 col-xs-12">
+					<div class="row d-flex align-items-center justify-content-between">
+						<nav id="nav-menu-container">
+							<ul class="nav-menu" th:each="keyInfoType:${keyInfoTypeList}">
+								<li><a th:text="${keyInfoType}" th:value="${keyInfoType}" onclick="javascript:searchByTermType(this);return false;"></a></li>
+							</ul>
+						</nav>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -43,8 +52,8 @@
 			<table class="table table-bordered tab-content" data-toggle="table" data-icon-size="outline" data-search="true" data-mobile-responsive="true">
 				<thead>
 					<tr>
-						<th>CH</th>
-						<th>EN</th>
+						<th>中文</th>
+						<th>英文</th>
 						<th>一级分类</th>
 						<th>二级分类</th>
 						<th>三级分类</th>

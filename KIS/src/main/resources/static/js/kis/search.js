@@ -25,7 +25,7 @@ function searchKeyInfo() {
 			findContent : findContentVal
 		},
 		success : function(data) {
-			$("#keyInfoMain").html(data);
+			$("#indexMain").html(data);
 			$("#findContent").val(findContentVal);
 			$("#findContent").focus();
 		},
