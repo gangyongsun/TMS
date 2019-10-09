@@ -6,17 +6,11 @@
 <title>登录</title>
 <meta name="keywords" content="">
 <meta name="description" content="">
-
 <link rel="shortcut icon" href="favicon.ico">
-
-<link th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet">
-<link th:href="@{/static/css/font-awesome.css}" rel="stylesheet">
-<link th:href="@{/static/css/animate.css}" rel="stylesheet">
-<link th:href="@{/static/css/style.css}" rel="stylesheet">
-<link href="../../static/css/bootstrap.min.css" rel="stylesheet">
-<link href="../../static/css/font-awesome.css" rel="stylesheet">
-<link href="../../static/css/animate.css" rel="stylesheet">
-<link href="../../static/css/style.css" rel="stylesheet">
+<link href="../../static/css/bootstrap.min.css" th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet">
+<link href="../../static/css/font-awesome.css" th:href="@{/static/css/font-awesome.css}" rel="stylesheet">
+<link href="../../static/css/animate.css" th:href="@{/static/css/animate.css}" rel="stylesheet">
+<link href="../../static/css/style.css" th:href="@{/static/css/style.css}" rel="stylesheet">
 
 <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
@@ -32,7 +26,7 @@
 	<div class="middle-box text-center loginscreen  animated fadeInDown">
 		<div>
 			<div>
-				<h1 style="text-align: center" class="logo-name">GoldWind</h1>
+				<h1 style="text-align: center" class="logo-name">Goldwind</h1>
 			</div>
 			<h3>欢迎使用 Test System</h3>
 			<form id="_form" action="" method="post">
@@ -56,20 +50,12 @@
 		</div>
 	</div>
 	<!-- 全局js -->
-	<script th:src="@{/static/js/jquery-2.0.3.min.js}" type="text/javascript"></script>
-	<script th:src="@{/static/js/bootstrap.min.js}" type="text/javascript"></script>
-	<script th:src="@{/static/js/plugins/layer/layer.min.js}" type="text/javascript"></script>
-	<script th:src="@{/static/js/common/MD5.js}" type="text/javascript"></script>
-	<script th:src="@{/static/js/common/supersized.3.2.7.min.js}" type="text/javascript"></script>
-	<script th:src="@{/static/js/common/supersized-init.js}" type="text/javascript"></script>
-	<script th:src="@{/static/js/system/login.js}" type="text/javascript"></script>
-	
-	<script src="../../static/js/jquery-2.0.3.min.js" type="text/javascript"></script>
-	<script src="../../static/js/bootstrap.min.js" type="text/javascript"></script>
-	<script src="../../static/js/plugins/layer/layer.min.js" type="text/javascript"></script>
-	<script src="../../static/js/common/MD5.js" type="text/javascript"></script>
-	<script src="../../static/js/common/supersized.3.2.7.min.js" type="text/javascript"></script>
-	<script src="../../static/js/common/supersized-init.js" type="text/javascript"></script>
-	<script src="../../static/js/system/login.js" type="text/javascript"></script>
+	<script src="../../static/js/jquery-2.0.3.min.js" th:src="@{/static/js/jquery-2.0.3.min.js}" type="text/javascript"></script>
+	<script src="../../static/js/bootstrap.min.js" th:src="@{/static/js/bootstrap.min.js}" type="text/javascript"></script>
+	<script src="../../static/js/plugins/layer/layer.min.js" th:src="@{/static/js/plugins/layer/layer.min.js}" type="text/javascript"></script>
+	<script src="../../static/js/common/MD5.js" th:src="@{/static/js/common/MD5.js}" type="text/javascript"></script>
+	<script src="../../static/js/common/supersized.3.2.7.min.js" th:src="@{/static/js/common/supersized.3.2.7.min.js}" type="text/javascript"></script>
+	<script src="../../static/js/common/supersized-init.js" th:src="@{/static/js/common/supersized-init.js}" type="text/javascript"></script>
+	<script src="../../static/js/system/login.js" th:src="@{/static/js/system/login.js}" type="text/javascript"></script>
 </body>
 </html>

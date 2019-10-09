@@ -24,7 +24,6 @@ jQuery(document).ready(
 			 * 登录操作
 			 */
 			$('#login').click(function() {
-				console.log(111);
 				var username = $('#username').val();
 				var password = $('#password').val();
 				if (username == '') {
@@ -45,7 +44,7 @@ jQuery(document).ready(
 					});
 					return false;
 				}
-//				var password = MD5(username + "#" + password);
+				// var password = MD5(username + "#" + password);
 				var data = {
 					userName : username,
 					passWord : password,

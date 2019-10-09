@@ -21,6 +21,7 @@ import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 @Controller
 @RequestMapping(value = "/auth")
 public class LoginController extends BaseController {
+
 	/**
 	 * 登录跳转
 	 * 
@@ -31,32 +32,6 @@ public class LoginController extends BaseController {
 		return "auth/login";
 	}
 
-	/**
-	 * 用户登录
-	 * 
-	 * @param username
-	 * @param password
-	 * @param request
-	 * @return
-	 */
-//	@RequestMapping(value = "submitLogin", method = RequestMethod.POST)
-//	public String submitLogin(String username, String password, HttpServletRequest request) {
-//		try {
-//			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-//			Subject subject = SecurityUtils.getSubject();
-//			subject.login(token);
-//			// SysUser user = (SysUser) subject.getPrincipal();
-//		} catch (DisabledAccountException e) {
-//			request.setAttribute("msg", "账户已被禁用");
-//			return "auth/login";
-//		} catch (AuthenticationException e) {
-//			request.setAttribute("msg", "用户名或密码错误");
-//			return "auth/login";
-//		}
-//		// 执行到这里说明用户已登录成功
-//		return "redirect:index";
-//	}
-	
 	@RequestMapping(value = "submitLogin", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> submitLogin(SysUser user, Boolean rememberMe, HttpServletRequest request) {
@@ -79,7 +54,6 @@ public class LoginController extends BaseController {
 			}
 			// 跳转地址
 			resultMap.put("back_url", url);
-			// 这里其实可以直接catch Exception，然后抛出 message即可，但是最好还是各种明细catch 好点
 		} catch (DisabledAccountException e) {
 			resultMap.put("status", 500);
 			resultMap.put("message", "帐号已经禁用!");

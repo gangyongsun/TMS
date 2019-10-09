@@ -57,10 +57,9 @@ function selectResource(){
 		var load = layer.load();
 		$.post('addResource2Role',{ids:ids.join(','),roleId:roleId},function(result){
 			layer.close(load);
-			if(result && result.status != 200){
-				return layer.msg(result.message,so.default),!1;
+			if(result){
+				layer.msg(result.message,so.default),!1;
 			}
-			layer.msg('添加成功!');
 			setTimeout(function(){
 				$('#formId').submit();
 			},1000);

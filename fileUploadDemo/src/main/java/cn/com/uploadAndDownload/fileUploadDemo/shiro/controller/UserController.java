@@ -41,7 +41,7 @@ public class UserController extends BaseController {
 
 	@Autowired
 	RoleService roleService;
-
+	
 	/**
 	 * 个人资料
 	 * 

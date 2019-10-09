@@ -9,12 +9,6 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysResourcesBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysResources;
 
 public interface ResourcesService {
-//	/**
-//	 * 查询所有资源
-//	 * 
-//	 * @return
-//	 */
-//	List<SysResources> selectAll();
 
 	/**
 	 * 分页查询资源信息

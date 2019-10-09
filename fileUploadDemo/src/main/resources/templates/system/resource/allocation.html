@@ -28,56 +28,57 @@
 			<div class="ibox-title">
 				<h5>权限分配</h5>
 			</div>
-			<div class="ibox-content">
-				<div class="row row-lg">
-
-					<div class="col-sm-3" style="height: 80px">
-						<!--搜索框-->
-						<div class="input-group" style="height: 40px">
-							<input type="text" placeholder="查找角色" class="input form-control"> <span class="input-group-btn">
-								<button type="button" class="btn btn btn-primary">
-									<i class="fa fa-search"></i> 搜索
-								</button>
-							</span>
-						</div>
-						<button id="remove" type="button" class="btn btn btn-danger">
-							<i class="fa fa-times"></i> 清空角色权限
-						</button>
-					</div>
-					<div class="col-sm-12">
-						<!-- Example Events -->
-						<div class="example-wrap">
-							<div class="example">
-								<table id="TableStyle" class="table table-bordered tab-content" data-toggle="table" data-height="700" data-pagination="true" data-mobile-responsive="true">
-									<thead>
-										<tr>
-											<th data-field="id" data-checkbox="true"></th>
-											<th data-field="roleDesc">角色名称</th>
-											<th data-field="roleType">角色类型</th>
-											<th data-field="resourceNames">拥有的权限</th>
-											<th data-field="event">操作</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:if="${#lists.size(page.list) gt 0}" th:each="it:${page.list}" >
-											<td><input th:value="${it.id}" type="checkbox" id="subcheckbox" onclick="userCheck(this)" /></td>
-											<td th:text="${it.roleDesc}"></td>
-											<td th:text="${it.roleType}"></td>
-											<td th:text="${it.resourceNames}"></td>
-											<td>
-												<!-- <shiro:hasPermission name="/users/deactive"> -->
-													<button type="button" class="btn btn btn-success" th:id="${it.id}" onclick="selectResourceById(this)"><span class="glyphicon glyphicon-eye-close"></span> 选择权限</button>
-												<!-- </shiro:hasPermission> -->
-											</td>
-										</tr>
-									</tbody>
-								</table>
+			<form method="post" action="" id="formId" class="form-inline">
+				<div class="ibox-content">
+					<div class="row row-lg">
+						<div class="col-sm-3" style="height: 80px">
+							<!--搜索框-->
+							<div class="input-group" style="height: 40px">
+								<input type="text" placeholder="查找角色" class="input form-control"> <span class="input-group-btn">
+									<button type="button" class="btn btn btn-primary">
+										<i class="fa fa-search"></i> 搜索
+									</button>
+								</span>
 							</div>
+							<button id="remove" type="button" class="btn btn btn-danger">
+								<i class="fa fa-times"></i> 清空角色权限
+							</button>
 						</div>
-						<!-- End Example Events -->
+						<div class="col-sm-12">
+							<!-- Example Events -->
+							<div class="example-wrap">
+								<div class="example">
+									<table id="TableStyle" class="table table-bordered tab-content" data-toggle="table" data-height="700" data-pagination="true" data-mobile-responsive="true">
+										<thead>
+											<tr>
+												<th data-field="id" data-checkbox="true"></th>
+												<th data-field="roleDesc">角色名称</th>
+												<th data-field="roleType">角色类型</th>
+												<th data-field="resourceNames">拥有的权限</th>
+												<th data-field="event">操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:if="${#lists.size(page.list) gt 0}" th:each="it:${page.list}" >
+												<td><input th:value="${it.id}" type="checkbox" id="subcheckbox" onclick="userCheck(this)" /></td>
+												<td th:text="${it.roleDesc}"></td>
+												<td th:text="${it.roleType}"></td>
+												<td th:text="${it.resourceNames}"></td>
+												<td>
+													<!-- <shiro:hasPermission name="/users/deactive"> -->
+														<button type="button" class="btn btn btn-success" th:id="${it.id}" onclick="selectResourceById(this)"><span class="glyphicon glyphicon-eye-close"></span> 选择权限</button>
+													<!-- </shiro:hasPermission> -->
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<!-- End Example Events -->
+						</div>
 					</div>
 				</div>
-			</div>
+			</form>
 		</div>
 		<!-- End Panel Other -->
 		<input type="hidden" id="selectedRoleId">

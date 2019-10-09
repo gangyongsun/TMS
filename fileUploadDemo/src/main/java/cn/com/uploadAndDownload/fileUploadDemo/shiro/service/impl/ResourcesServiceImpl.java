@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +18,22 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysUserRoleMapper;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysResources;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysRoleResources;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.ResourcesService;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.manager.TokenManager;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.SampleRealm;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;
 
 @Service
 public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> implements ResourcesService {
 
+	/***
+	 * 用户手动操作Session
+	 */
+	@Autowired
+	private CustomSessionManager customSessionManager;
+
+	@Autowired
+	private static SampleRealm sampleRealm;
+	
 	@Autowired
 	private SysResourcesMapper resourcesMapper;
 
@@ -32,11 +42,6 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 
 	@Autowired
 	private SysRoleResourcesMapper roleResourceMapper;
-
-//	@Override
-//	public List<SysResources> selectAll() {
-//		return resourcesMapper.selectAll();
-//	}
 
 	@Override
 	public int deleteResourceById(Integer id) {
@@ -137,9 +142,7 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		int count = 0;
 		try {
-			/**
-			 * 如果ids,permission 的id 有值，那么就添加；没值象征着：把这个角色（roleId）所有权限取消
-			 */
+			//如果ids,permission 的id 有值，那么就添加；没值象征着：把这个角色（roleId）所有权限取消
 			if (StringUtils.isNotBlank(ids)) {
 				String[] idArray = null;
 				if (StringUtils.contains(ids, ",")) {
@@ -147,13 +150,8 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 				} else {
 					idArray = new String[] { ids };
 				}
-				/**
-				 * 添加新的
-				 */
+				//添加新的
 				for (String pid : idArray) {
-					/**
-					 * 这里严谨点可以判断，也可以不判断；这个{@link StringUtils 我是重写了的}
-					 */
 					if (StringUtils.isNotBlank(pid)) {
 						SysRoleResources roleResources = new SysRoleResources(roleId, new Integer(pid));
 						count += roleResourceMapper.insert(roleResources);
@@ -166,18 +164,16 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 			resultMap.put("status", 200);
 			resultMap.put("message", "操作失败，请重试！");
 		}
-		/**
-		 * 清空拥有角色Id为：roleId 的用户权限已加载数据，让权限数据重新加载
-		 */
+		//清空拥有角色Id为：roleId 的用户权限已加载数据，让权限数据重新加载
 		List<Integer> userIds = userRoleMapper.findUserIdListByRoleId(roleId);
 
-		TokenManager.clearUserAuthByUserId(userIds);
-//
-//		List<SimplePrincipalCollection> result = customSessionManager.getSimplePrincipalCollectionByUserId(userIds);
-//		for (SimplePrincipalCollection simplePrincipalCollection : result) {
-//			sampleRealm.clearCachedAuthorizationInfo(simplePrincipalCollection);
-//		}
-
+//		TokenManager.clearUserAuthByUserId(userIds);
+		for (Integer userId : userIds) {
+			List<SimplePrincipalCollection> result = customSessionManager.getSimplePrincipalCollectionByUserId(userId);
+			for (SimplePrincipalCollection simplePrincipalCollection : result) {
+				sampleRealm.clearCachedAuthorizationInfo(simplePrincipalCollection);
+			}
+		}
 		resultMap.put("count", count);
 		return resultMap;
 	}

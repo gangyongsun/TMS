@@ -69,11 +69,11 @@ public class SampleRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		Integer userId = TokenManager.getUserId();
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		
+
 		// 根据用户ID查询role，放入到Authorization里
 		Set<String> roles = roleService.findRoleByUserId(userId);
 		info.setRoles(roles);
-		
+
 		// 根据用户ID查询permission，放入到Authorization里
 		Set<String> resourcesSet = resourcesService.findResourceByUserId(userId);
 		info.setStringPermissions(resourcesSet);
@@ -96,5 +96,5 @@ public class SampleRealm extends AuthorizingRealm {
 		SimplePrincipalCollection principals = new SimplePrincipalCollection(principalCollection, getName());
 		super.clearCachedAuthorizationInfo(principals);
 	}
-	
+
 }

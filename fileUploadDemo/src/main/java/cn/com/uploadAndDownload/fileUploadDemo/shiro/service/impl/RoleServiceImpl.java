@@ -31,14 +31,14 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 	 * 用户手动操作Session
 	 */
 	@Autowired
-	CustomSessionManager customSessionManager;
+	private CustomSessionManager customSessionManager;
 
 	@Autowired
-	public static SampleRealm sampleRealm;
-	
+	private static SampleRealm sampleRealm;
+
 	@Autowired
 	private SysRoleMapper roleMapper;
-	
+
 	@Autowired
 	private SysUserRoleMapper userRoleMapper;
 
@@ -61,7 +61,7 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 	public List<SysRoleBo> selectRoleByUserId(int id) {
 		return roleMapper.selectRoleByUserId(id);
 	}
-	
+
 	@Override
 	public Set<String> findRoleByUserId(Integer userId) {
 		return roleMapper.findRoleByUserId(userId);
@@ -103,7 +103,6 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 		for (SimplePrincipalCollection simplePrincipalCollection : result) {
 			sampleRealm.clearCachedAuthorizationInfo(simplePrincipalCollection);
 		}
-
 		resultMap.put("count", count);
 		return resultMap;
 	}
@@ -122,7 +121,7 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 		}
 		return resultMap;
 	}
-	
+
 	@Override
 	public Map<String, Object> deleteRoleByIds(String ids) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -172,7 +171,5 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 	public int deleteRoleById(Integer roleId) {
 		return roleMapper.deleteByPrimaryKey(roleId);
 	}
-
-	
 
 }
