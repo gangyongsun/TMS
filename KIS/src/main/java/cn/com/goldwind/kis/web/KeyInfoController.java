@@ -23,14 +23,22 @@ public class KeyInfoController {
 	 * @return
 	 */
 	@RequestMapping(value = "index")
-	public ModelAndView index(ModelMap map, String termType) {
+	public ModelAndView index(ModelMap map, String termType, String findContent) {
+		// 查询所有术语类型
 		List<String> keyInfoTypeList = keyInfoService.findTermTypes();
 
+		// 如果搜索内容不空，按照关键词查询术语
 		List<KeyInfo> keyInfoList = null;
-		if (null == termType || "".equalsIgnoreCase(termType)) {
-			keyInfoList = keyInfoService.findByTermType(keyInfoTypeList.get(0));
+		if (null != findContent && !"".equalsIgnoreCase(findContent)) {
+			keyInfoList = keyInfoService.findByKeyInfo(findContent);
 		} else {
-			keyInfoList = keyInfoService.findByTermType(termType);
+			// 如果没有关键词，并且没有电机类型索引，默认搜索第一个索引类型的术语
+			if (null == termType || "".equalsIgnoreCase(termType)) {
+				keyInfoList = keyInfoService.findByTermType(keyInfoTypeList.get(0));
+			} else {
+				// 按术语类型搜索关键词
+				keyInfoList = keyInfoService.findByTermType(termType);
+			}
 		}
 
 		if (null != keyInfoTypeList && keyInfoTypeList.size() > 0) {
@@ -38,27 +46,6 @@ public class KeyInfoController {
 		}
 		if (null != keyInfoList && keyInfoList.size() > 0) {
 			map.put("keyInfoList", keyInfoList);
-		}
-		return new ModelAndView("index");
-	}
-
-	/**
-	 * 搜索关键词
-	 * 
-	 * @param map
-	 * @param findContent
-	 * @return
-	 */
-	@RequestMapping(value = "searchAll")
-	public ModelAndView searchAll(ModelMap map, String findContent) {
-		List<String> keyInfoTypeList = keyInfoService.findTermTypes();
-
-		List<KeyInfo> keyInfoList = keyInfoService.findByKeyInfo(findContent);
-		if (null != keyInfoList && keyInfoList.size() > 0) {
-			map.put("keyInfoList", keyInfoList);
-		}
-		if (null != keyInfoTypeList && keyInfoTypeList.size() > 0) {
-			map.put("keyInfoTypeList", keyInfoTypeList);
 		}
 		return new ModelAndView("index");
 	}

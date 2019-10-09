@@ -29,7 +29,7 @@
 					<p>Goldwind Terminology introduction</p>
 					<div class="input-group">
 						<input type="text" class="form-control" id="findContent" name="findContent" placeholder="请输入..."> <span class="input-group-btn">
-							<button class="btn btn-default" type="button" onclick="searchKeyInfo()">
+							<button class="btn btn-default" type="button" onclick="searchTerminology()">
 								<span class="glyphicon glyphicon-search">搜索</span>
 							</button>
 						</span>
@@ -39,7 +39,7 @@
 					<div class="row d-flex align-items-center justify-content-between">
 						<nav id="nav-menu-container">
 							<ul class="nav-menu" th:each="keyInfoType:${keyInfoTypeList}">
-								<li><a th:text="${keyInfoType}" th:value="${keyInfoType}" onclick="javascript:searchByTermType(this);return false;"></a></li>
+								<li><a th:text="${keyInfoType}" th:value="${keyInfoType}" onclick="javascript:searchTerminology(this);return false;"></a></li>
 							</ul>
 						</nav>
 					</div>
