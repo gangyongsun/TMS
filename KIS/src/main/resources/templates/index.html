@@ -54,20 +54,15 @@
 					<tr>
 						<th>中文</th>
 						<th>英文</th>
-						<th>一级分类</th>
-						<th>二级分类</th>
-						<th>三级分类</th>
-						<!-- <th>Remark</th> -->
+						<!-- <th>分类信息</th> -->
 					</tr>
 				</thead>
 				<tbody>
 					<tr class="gradeA" th:each="keyInfo:${keyInfoList}">
 						<td th:text="${keyInfo.chinese}"></td>
-						<td th:text="${keyInfo.english}"></td>
-						<td th:text="${keyInfo.subject}"></td>
-						<td th:text="${keyInfo.function}"></td>
-						<td th:text="${keyInfo.position}"></td>
-						<!-- <td th:text="${keyInfo.remark}"></td> -->
+						<td class="gradeB"  th:text="${keyInfo.english}" th:id="${keyInfo.subject}+'>'+${keyInfo.function}+'>'+${keyInfo.position}"></td>
+						<!-- <td class="gradeB" th:text="${keyInfo.subject}+'>'+${keyInfo.function}+'>'+${keyInfo.position}" th:id="${keyInfo.english}" data="default">
+						</td> -->
 					</tr>
 				</tbody>
 			</table>
@@ -91,6 +86,7 @@
 	<script type="text/javascript" th:src="@{/static/js/bootstrap-table/bootstrap-table-mobile.min.js}" src="../static/js/bootstrap-table/bootstrap-table-mobile.min.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}" src="../static/js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/kis/search.js}" src="../static/js/kis/search.js"></script>
+	<script type="text/javascript" th:src="@{/static/js/kis/mypopover.js}" src="../static/js/kis/mypopover.js"></script>
 	<script>
 		document.getElementById("_datetime").innerText=new Date().getFullYear();
 	</script>
