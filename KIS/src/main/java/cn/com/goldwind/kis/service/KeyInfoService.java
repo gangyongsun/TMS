@@ -20,4 +20,6 @@ public interface KeyInfoService {
 	
 	public int getNumByType(String termType);
 
+	public KeyInfo findTermById(String id);
+
 }

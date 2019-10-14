@@ -42,6 +42,7 @@
 								<th>主题分类</th>
 								<th>功能分类</th>
 								<th>位置分类</th>
+								<th>action</th>
 							</tr>
 						</thead>
 						<TBODY>
@@ -52,6 +53,27 @@
 								<td th:text="${keyInfo.subject}"></td>
 								<td th:text="${keyInfo.function}"></td>
 								<td th:text="${keyInfo.position}"></td>
+								<td>
+									<div class="btn-group">
+		                              <button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">
+		                                Action 
+		                                <span class="caret">
+		                                </span>
+		                              </button>
+		                              <ul class="dropdown-menu">
+		                                <li>
+		                                  <a href="#">
+		                                    Edit
+		                                  </a>
+		                                </li>
+		                                <li>
+		                                  <a href="#">
+		                                    Delete
+		                                  </a>
+		                                </li>
+		                              </ul>
+		                            </div>
+								</td>
 							</tr>
 						</TBODY>
 					</table>

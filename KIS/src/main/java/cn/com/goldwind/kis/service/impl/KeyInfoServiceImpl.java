@@ -35,4 +35,9 @@ public class KeyInfoServiceImpl implements KeyInfoService {
 		return keyInforRepository.getNumByType(termType);
 	}
 
+	@Override
+	public KeyInfo findTermById(String id) {
+		return keyInforRepository.findTermById(id);
+	}
+
 }

@@ -49,24 +49,36 @@
 	</section>
 	<section class="about-area section-gap">
 		<div class="col-lg-10 col-xs-10 col-md-10 col-sm-10 col-lg-offset-1">
-			<table class="table table-bordered tab-content" data-toggle="table" data-icon-size="outline" data-search="true" data-mobile-responsive="true">
+			<div class="wrapper wrapper-content animated fadeInRight" id="termSummary">
+		        <div class="row">
+		            <div class="col-sm-6">
+		                <div class="ibox float-e-margins">
+		                    <div class="ibox-title">
+		                        <h5>术语统计</h5>
+		                    </div>
+		                    <div class="ibox-content">
+		                        <div class="echarts" id="echarts-pie-chart"></div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+			<table th:if="${keyInfoList !=null}" class="table table-bordered tab-content" data-toggle="table" data-icon-size="outline" data-search="true" data-mobile-responsive="true">
 				<thead>
 					<tr>
 						<th>中文</th>
 						<th>英文</th>
-						<!-- <th>分类信息</th> -->
 					</tr>
 				</thead>
 				<tbody>
 					<tr class="gradeA" th:each="keyInfo:${keyInfoList}">
-						<td th:text="${keyInfo.chinese}"></td>
-						<td class="gradeB"  th:text="${keyInfo.english}" th:id="${keyInfo.subject}+'>'+${keyInfo.function}+'>'+${keyInfo.position}"></td>
-						<!-- <td class="gradeB" th:text="${keyInfo.subject}+'>'+${keyInfo.function}+'>'+${keyInfo.position}" th:id="${keyInfo.english}" data="default">
-						</td> -->
+						<td data-toggle="modal"><a th:text="${keyInfo.chinese}" th:id="${keyInfo.id}" onclick="javascript:showDetail(this);return false;"></a></td>
+						<td th:text="${keyInfo.english}" th:id="${keyInfo.subject}+'>'+${keyInfo.function}+'>'+${keyInfo.position}"></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
+        <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
 	</section>
 	<!-- Start Footer Area -->
 	<footer class=" section-gap">
@@ -87,6 +99,12 @@
 	<script type="text/javascript" th:src="@{/static/js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}" src="../static/js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/kis/search.js}" src="../static/js/kis/search.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/kis/mypopover.js}" src="../static/js/kis/mypopover.js"></script>
+	
+    <script type="text/javascript" th:src="@{/static/js/echarts/echarts-all.js}" src="../static/js/echarts/echarts-all.js"></script>
+    <!-- 自定义js -->
+    <script type="text/javascript" th:src="@{/static/js/content.js}" src="../static/js/content.js"></script>
+    <!-- ECharts demo data -->
+    <script type="text/javascript" th:src="@{/static/js/kis/echarts-demo_pie.js}" src="../static/js/kis/echarts-demo_pie.js"></script>
 	<script>
 		document.getElementById("_datetime").innerText=new Date().getFullYear();
 	</script>

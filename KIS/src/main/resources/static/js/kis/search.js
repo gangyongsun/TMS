@@ -36,6 +36,27 @@ function searchTerminology(obj) {
 			$("#indexMain").html(data);
 			$("#findContent").val(findContentVal);
 			$("#findContent").focus();
+			$("#termSummary").hide();
+		},
+		error : function(data) {
+			console.log("搜索失败");
+		}
+	});
+}
+
+function showDetail(obj){
+	if (null != obj) {
+		var id = $(obj).attr("id");
+	}
+	$.ajax({
+		type : "POST",
+		url : 'showDetail',
+		data : {
+			id : id
+		},
+		success : function(data) {
+			$("#myModal").html(data);
+			$('#myModal').modal('show');
 		},
 		error : function(data) {
 			console.log("搜索失败");

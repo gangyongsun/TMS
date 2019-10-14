@@ -26,7 +26,10 @@ public interface KeyInfoRepository extends JpaRepository<KeyInfo, String>, Seria
 	@Query(value = "select * from t_key_info where key_info_function = :termType", nativeQuery = true)
 	public List<KeyInfo> findByTermType(@Param("termType") String termType);
 
-	@Query(value="select count(1) from t_key_info where key_info_function= :termType", nativeQuery = true)
+	@Query(value = "select count(1) from t_key_info where key_info_function= :termType", nativeQuery = true)
 	public int getNumByType(@Param("termType") String termType);
+
+	@Query(value = "select * from t_key_info where key_info_id= :id", nativeQuery = true)
+	public KeyInfo findTermById(@Param("id") String id);
 
 }

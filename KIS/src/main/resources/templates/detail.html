@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>术语详情</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+
+<link rel="shortcut icon" href="favicon.ico">
+
+<link rel="stylesheet" th:href="@{/static/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/static/css/font-awesome.css}" href="../static/css/font-awesome.css">
+<link rel="stylesheet" th:href="@{/static/css/animate.css}" href="../static/css/animate.css">
+<link rel="stylesheet" th:href="@{/static/css/style.css}" href="../static/css/style.css">
+</head>
+
+<body class="gray-bg">
+	<div class="modal-dialog">
+		<div class="modal-content animated bounceInRight">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+				</button>
+				<!-- <i class="fa fa-laptop modal-icon"></i> -->
+				<h4 class="modal-title" th:text="${keyInfo.chinese}"></h4>
+				<h4 class="font-bold" th:text="${keyInfo.english}"></h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-sm-12">
+						<dl class="dl-horizontal">
+							<dt>定义：</dt>
+							<dd>短路是指电源正负极相接</dd>
+							<dt>定义来源：</dt>
+							<dd>百度百科</dd>
+							<dt>例句：</dt>
+							<dd>短路的后果很严重，可能会造成火灾</dd>
+							<dt>例句来源：</dt>
+							<dd>百度百科</dd>
+							<dt>分类一：</dt>
+							<dd th:text="${keyInfo.subject}"></dd>
+							<dt>分类二：</dt>
+							<dd th:text="${keyInfo.function}"></dd>
+							<dt>分类三：</dt>
+							<dd th:text="${keyInfo.position}"></dd>
+							<dt>类型：</dt>
+							<dd th:text="${keyInfo.form}"></dd>
+							<dt>备注：</dt>
+							<dd th:text="${keyInfo.remark}"></dd>
+						</dl>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<dl class="dl-horizontal">
+							<dt>图片:</dt>
+							<dd>
+								<img alt="image" class="img-responsive" src="http://10.12.9.34:8010/404.png" width="251" height="201" />
+								<!--<img alt="image" class="img-responsive" th:src="'http://10.12.9.34:8010/'+${image}+'.png'" width="376" height="301" /> -->
+							</dd>
+						</dl>
+					</div>
+				</div>
+				<!--  <div class="row">
+		                            <div class="col-sm-12">
+										<div class="pull-right">
+										     <a class="btn btn-xs btn-white"><i class="fa fa-thumbs-up"></i> 赞 </a>
+										     <a class="btn btn-xs btn-white"><i class="fa fa-heart"></i> 收藏</a>
+										     <a class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> 评论</a>
+										 </div>
+		                            </div>
+		                        </div> -->
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+	<!-- 全局js -->
+	<script type="text/javascript" th:src="@{/static/js/jquery-3.1.1.min.js}" src="../static/js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" th:src="@{/static/js/bootstrap.min.js}" src="../static/js/bootstrap.min.js"></script>
+	<script type="text/javascript" th:src="@{/static/js/content.js}" src="../static/js/content.js"></script>
+</body>
+</html>

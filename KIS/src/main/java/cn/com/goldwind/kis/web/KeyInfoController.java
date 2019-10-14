@@ -37,14 +37,15 @@ public class KeyInfoController {
 		List<KeyInfo> keyInfoList = null;
 		if (null != findContent && !"".equalsIgnoreCase(findContent)) {
 			keyInfoList = keyInfoService.findByKeyInfo(findContent);
-		} else {
-			// 如果没有关键词，并且没有电机类型索引，默认搜索第一个索引类型的术语
-			if (null == termType || "".equalsIgnoreCase(termType)) {
-				keyInfoList = keyInfoService.findByTermType(keyInfoTypeList.get(0));
-			} else {
+		}else {
+			if (null != termType || !"".equalsIgnoreCase(termType)) {
 				// 按术语类型搜索关键词
 				keyInfoList = keyInfoService.findByTermType(termType);
-			}
+			} 
+			// 如果没有关键词，并且没有电机类型索引，默认搜索第一个索引类型的术语
+//			else {
+//				keyInfoList = keyInfoService.findByTermType(keyInfoTypeList.get(0));
+//			}
 		}
 
 		if (null != keyInfoTypeList && keyInfoTypeList.size() > 0) {
@@ -56,6 +57,27 @@ public class KeyInfoController {
 		return new ModelAndView("index");
 	}
 
+	/**
+	 * 查询术语详情
+	 * 
+	 * @param map
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "showDetail")
+	public ModelAndView index(ModelMap map, String id) {
+		KeyInfo keyInfo = keyInfoService.findTermById(id);
+		if (null != keyInfo) {
+			map.put("keyInfo", keyInfo);
+		}
+		return new ModelAndView("detail");
+	}
+
+	/**
+	 * 转到图表页面
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "echart")
 	public String gotoSummary() {
 		return "echarts";
@@ -81,10 +103,6 @@ public class KeyInfoController {
 				termTypeNumMap.put(keyInfoType, num);
 			}
 		}
-//		if (null != termTypeNumMap && termTypeNumMap.size() > 0) {
-//			map.put("termTypeNumMap", termTypeNumMap);
-//		}
-//		return new ModelAndView("echarts");
 		return termTypeNumMap;
 	}
 
