@@ -29,31 +29,46 @@ $(function() {
 	}
 	//设置图片
 	function content_custom(obj){
-		var defaultImageURL = "http://10.12.9.34:8010/404.png";
 		var imageURL = 'http://10.12.9.34:8010/'+$(obj)[0].innerText+'.png';
-		$.ajax({
-	        url: imageURL,
-	        cache : false,
-	        async : false,
-	        type: "GET",
-	        dataType : 'html',
-	        data:'',
-	        complete : function(response,status) {
+//		var defaultImageURL = "http://10.12.9.34:8010/404.png";
+//		$.ajax({
+//	        url: imageURL,
+//	        cache : false,
+//	        async : false,
+//	        type: "GET",
+//	        dataType : 'html',
+//	        data:'',
+//	        complete : function(response,status) {
 //	        	console.log(response.status,status);
-//		   		console.log("修改前",$(obj).attr("data"));
-		   		if(response.status == '200') {
-		   			$(obj).attr("data",imageURL);
-		   		}else{
-		   			$(obj).attr("data",defaultImageURL);
-		   		}
-//		   		console.log("修改后",$(obj).attr("data"));
-		  	}
-	    });
-		
-//		console.log("获取",$(obj).attr("data"));
-		var url=$(obj).attr("data");
-		var content='<div id="popOverBox"><img src='+encodeURI(url)+' width="251" height="201" /></div>';
-//		console.log(content);
+//		   		if(response.status == '200') {
+//		   			$(obj).attr("data",imageURL);
+//		   		}else{
+//		   			$(obj).attr("data",defaultImageURL);
+//		   		}
+//		  	}  
+//	    });
+//		var url=$(obj).attr("data");
+		var content='<div id="popOverBox"><img src='+encodeURI(imageURL)+' width="251" height="201" /></div>';
 		return content;
 	}
+	
+//	function checkImageURL(imageURL){
+//		$.ajax({
+//	        url: imageURL,
+//	        cache : false,
+//	        async : false,
+//	        type: "GET",
+//	        dataType : 'jsonp',
+//	        jsonp: "callback",
+//	        jsonpCallback: "content_custom",
+//	        complete : function(response,status) {
+//	        	console.log(response.status,status);
+//		   		if(response.status == '200') {
+//		   			$(obj).attr("data",imageURL);
+//		   		}else{
+//		   			$(obj).attr("data",defaultImageURL);
+//		   		}
+//		  	}  
+//	    });
+//	}
 });
