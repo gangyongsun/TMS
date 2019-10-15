@@ -14,18 +14,18 @@ $(function() {
 			search : true,// 是否显示右上角的搜索框
 			trimOnSearch: true,//搜索内容是否自动去除前后空格
 			showToggle : true,// 是否显示切换视图（table/card）按钮
-			showExport : true, // 是否显示导出按钮
-			buttonsAlign : "right", // 按钮位置
-			exportDataType : 'all', // 导出的方式 all全部 selected已选择的  basic', 'all', 'selected'.
-			Icons : 'glyphicon glyphicon-export', // 导出图标
-			exportTypes : [ 'txt' ],
-			exportOptions: {
-	            ignoreColumn: [0,1],  //忽略某一列的索引
-	            fileName: 'terminology',  //文件名称设置
-	            worksheetName: 'sheet1',  //表格工作区名称
-	            tableName: 'termTable',
-	            excelstyles: ['background-color', 'color', 'font-size', 'font-weight']
-	        },
+//			showExport : true, // 是否显示导出按钮
+//			buttonsAlign : "right", // 按钮位置
+//			exportDataType : 'all', // 导出的方式 all全部 selected已选择的  basic', 'all', 'selected'.
+//			Icons : 'glyphicon glyphicon-export', // 导出图标
+//			exportTypes : [ 'txt' ],
+//			exportOptions: {
+//	            ignoreColumn: [0,1],  //忽略某一列的索引
+//	            fileName: 'terminology',  //文件名称设置
+//	            worksheetName: 'sheet1',  //表格工作区名称
+//	            tableName: 'termTable',
+//	            excelstyles: ['background-color', 'color', 'font-size', 'font-weight']
+//	        },
 	        columns: [
 	        	{
 		        	title: '中文', // 表格表头显示文字
