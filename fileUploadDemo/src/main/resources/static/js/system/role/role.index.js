@@ -1,4 +1,12 @@
 /**
+ * 添加用户弹框
+ * @returns
+ */
+function showAddRole(){
+	$('#showAddRole').modal({backdrop: false,keyboard: true})
+}
+
+/**
  * 删除多个角色
  * 
  * @returns

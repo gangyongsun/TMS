@@ -60,6 +60,29 @@ public class MemberController extends BaseController {
 	}
 
 	/**
+	 * 显示添加用户界面
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "showAddUser")
+	public ModelAndView showAddUser() {
+		System.out.println("showAddUser...");
+		return new ModelAndView("system/member/addUser");
+	}
+
+	/**
+	 * 显示编辑用户界面
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "showEditUser/{userId}")
+	public ModelAndView showEditUser(ModelMap map, @PathVariable("userId") String userId) {
+		SysUser user = userService.findUserById(new Integer(userId));
+		map.put("user", user);
+		return new ModelAndView("system/member/editUser");
+	}
+
+	/**
 	 * 在线用户管理
 	 * 
 	 * @return

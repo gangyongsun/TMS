@@ -72,6 +72,14 @@ function openResetPasswdWindow(obj){
 }
 
 /**
+ * 添加用户弹框
+ * @returns
+ */
+function showAddUser(){
+	$('#showAddUser').modal({backdrop: false,keyboard: true})
+}
+
+/**
  * 重置密码
  * 
  * @param id

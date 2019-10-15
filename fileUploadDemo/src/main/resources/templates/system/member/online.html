@@ -35,11 +35,18 @@
 						<!-- Example Events -->
 						<div class="example-wrap">
 							<div class="example">
-								<table id="TableStyle" class="table table-bordered tab-content" data-toggle="table" data-url="js/demo/table_base_USER_ONLINE.json" data-height="700"
-									data-pagination="true" data-mobile-responsive="true">
+								<table id="onlineTable" class="table table-bordered tab-content"
+									data-mobile-responsive="true" 
+									data-toggle="table" 
+									data-search="true"
+									data-side-pagination="client" 
+									data-pagination="true" 
+									data-click-to-select="true" 
+									data-single-select="false"
+									data-page-size="10">
 									<thead>
 										<tr>
-											<th data-field="sessionId">SessionID</th>
+											<th data-field="sessionId" data-checkbox="true">SessionID</th>
 											<th data-field="nickname">昵称</th>
 											<th data-field="userName">账号</th>
 											<th data-field="startTime">创建会话时间</th>
@@ -61,9 +68,7 @@
 													<a class="btn btn-success btn-sm" href="<%=basePath%>/member/onlineDetails/${it.sessionId}.shtml"><span class="glyphicon glyphicon-info-sign"></span> 详情</a>
 											<!-- </shiro:hasPermission>
 											<shiro:hasPermission name="/users/kickout"> -->
-												<div th:if="${it.sessionStatus==true }">
-													<a class="btn btn-danger btn-sm" v="onlineDetails" href="javascript:void(0);" sessionId="${it.sessionId}" status="1"><span class="glyphicon glyphicon-eye-close"></span> 踢出</a>
-												</div>
+													<a th:if="${it.sessionStatus==true }" class="btn btn-danger btn-sm" v="onlineDetails" href="javascript:void(0);" sessionId="${it.sessionId}" status="1"><span class="glyphicon glyphicon-eye-close"></span> 踢出</a>
 											<!-- </shiro:hasPermission> 
 											<shiro:hasPermission name="/users/kickin"> -->
 												<a class="btn btn-success btn-sm" v="onlineDetails" href="javascript:void(0);" sessionId="${it.sessionId}" status="0"><span class="glyphicon glyphicon-eye"></span> 激活</a>

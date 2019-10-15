@@ -1,3 +1,12 @@
+/**
+ * 添加权限弹框
+ * @returns
+ */
+function showAddResource(){
+	$('#showAddResource').modal({backdrop: false,keyboard: true})
+}
+
+
 //删除多个权限
 function deleteAll(){
 	var checkeds = $('[id=subcheckbox]:checked');
