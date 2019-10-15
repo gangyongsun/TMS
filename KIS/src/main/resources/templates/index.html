@@ -47,8 +47,8 @@
 			</div>
 		</div>
 	</section>
-	<section class="about-area section-gap">
-		<div class="col-lg-10 col-xs-10 col-md-10 col-sm-10 col-lg-offset-1">
+	<section class="about-area">
+		<div class="col-lg-8 col-xs-8 col-md-8 col-sm-8 col-lg-offset-2">
 			<div class="wrapper wrapper-content animated fadeInRight" id="termSummary">
 		        <div class="row">
 		            <div class="col-sm-6">
@@ -63,13 +63,7 @@
 		            </div>
 		        </div>
 		    </div>
-			<table th:if="${keyInfoList !=null}" class="table table-bordered tab-content" data-toggle="table" data-icon-size="outline" data-search="true" data-mobile-responsive="true">
-				<thead>
-					<tr>
-						<th>中文</th>
-						<th>英文</th>
-					</tr>
-				</thead>
+			<table th:if="${keyInfoList !=null}" class="table table-bordered tab-content" id="termTable">
 				<tbody>
 					<tr class="gradeA" th:each="keyInfo:${keyInfoList}">
 						<td data-toggle="modal"><a th:text="${keyInfo.chinese}" th:id="${keyInfo.id}" onclick="javascript:showDetail(this);return false;"></a></td>
@@ -94,17 +88,16 @@
 	<!-- End Footer Area -->
 	<script type="text/javascript" th:src="@{/static/js/jquery-3.1.1.min.js}" src="../static/js/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/bootstrap.min.js}" src="../static/js/bootstrap.min.js"></script>
-	<script type="text/javascript" th:src="@{/static/js/bootstrap-table/bootstrap-table.min.js}" src="../static/js/bootstrap-table/bootstrap-table.min.js"></script>
+	<script type="text/javascript" th:src="@{/static/js/bootstrap-table/bootstrap-table.js}" src="../static/js/bootstrap-table/bootstrap-table.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/bootstrap-table/bootstrap-table-mobile.min.js}" src="../static/js/bootstrap-table/bootstrap-table-mobile.min.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}" src="../static/js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-	<script type="text/javascript" th:src="@{/static/js/kis/search.js}" src="../static/js/kis/search.js"></script>
-	<script type="text/javascript" th:src="@{/static/js/kis/mypopover.js}" src="../static/js/kis/mypopover.js"></script>
+	<script type="text/javascript" th:src="@{/static/js/tableExport/tableExport.min.js}" src="../static/js/tableExport/tableExport.min.js"></script>
+	<script type="text/javascript" th:src="@{/static/js/bootstrap-table/extensions/export/bootstrap-table-export.js}" src="../static/js/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
 	
     <script type="text/javascript" th:src="@{/static/js/echarts/echarts-all.js}" src="../static/js/echarts/echarts-all.js"></script>
+	
     <!-- 自定义js -->
-    <script type="text/javascript" th:src="@{/static/js/content.js}" src="../static/js/content.js"></script>
-    <!-- ECharts demo data -->
-    <script type="text/javascript" th:src="@{/static/js/kis/echarts-demo_pie.js}" src="../static/js/kis/echarts-demo_pie.js"></script>
+	<script type="text/javascript" th:src="@{/static/js/kis/search.js}" src="../static/js/kis/search.js"></script>
 	<script>
 		document.getElementById("_datetime").innerText=new Date().getFullYear();
 	</script>

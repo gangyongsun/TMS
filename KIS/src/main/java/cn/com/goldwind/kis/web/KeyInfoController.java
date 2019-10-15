@@ -42,10 +42,6 @@ public class KeyInfoController {
 				// 按术语类型搜索关键词
 				keyInfoList = keyInfoService.findByTermType(termType);
 			} 
-			// 如果没有关键词，并且没有电机类型索引，默认搜索第一个索引类型的术语
-//			else {
-//				keyInfoList = keyInfoService.findByTermType(keyInfoTypeList.get(0));
-//			}
 		}
 
 		if (null != keyInfoTypeList && keyInfoTypeList.size() > 0) {
