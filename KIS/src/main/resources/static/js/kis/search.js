@@ -13,7 +13,7 @@ $(function() {
 			sortable : true, // 设置为false 将禁止所有列的排序
 			search : true,// 是否显示右上角的搜索框
 			trimOnSearch: true,//搜索内容是否自动去除前后空格
-			showToggle : true,// 是否显示切换视图（table/card）按钮
+//			showToggle : true,// 是否显示切换视图（table/card）按钮
 //			showExport : true, // 是否显示导出按钮
 //			buttonsAlign : "right", // 按钮位置
 //			exportDataType : 'all', // 导出的方式 all全部 selected已选择的  basic', 'all', 'selected'.
