@@ -7,10 +7,12 @@ import java.util.Set;
 import org.springframework.ui.ModelMap;
 
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
+import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.TableSplitResult;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.RoleResourceAllocationBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysResourcesBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysRoleBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysRole;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 
 public interface RoleService {
 
@@ -21,7 +23,7 @@ public interface RoleService {
 	 * @return
 	 */
 	Set<String> findRoleNameByUserId(int userId);
-	
+
 	/**
 	 * 分页查询角色列表
 	 * 
@@ -39,7 +41,7 @@ public interface RoleService {
 	 * @return
 	 */
 	public List<SysRoleBo> selectRoleByUserId(int id);
-	
+
 	/**
 	 * 根据用户ID查询用户角色
 	 * 
@@ -56,7 +58,7 @@ public interface RoleService {
 	 * @return
 	 */
 	public Map<String, Object> addRole2User(int userId, String ids);
-	
+
 	/**
 	 * 添加角色
 	 * 
@@ -80,7 +82,6 @@ public interface RoleService {
 	 * @return
 	 */
 	Map<String, Object> deleteRoleByIds(String ids);
-	
 
 	/**
 	 * 根据用户id删除用户拥有的角色
@@ -107,5 +108,14 @@ public interface RoleService {
 	 */
 	Pagination<RoleResourceAllocationBo> findRoleAndResourcePage(ModelMap modelMap, Integer pageNo, int pageSize);
 
-	
+	/**
+	 * bootstrap table 分页查询
+	 * 
+	 * @param modelMap
+	 * @param pageNumber
+	 * @param pageSize
+	 * @return
+	 */
+	TableSplitResult<SysRole> findPage2(ModelMap modelMap, Integer pageNumber, Integer pageSize);
+
 }

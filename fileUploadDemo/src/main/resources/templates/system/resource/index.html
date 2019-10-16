@@ -18,14 +18,12 @@
 
 <body class="gray-bg">
 	<div class="wrapper wrapper-content animated fadeInRight">
-		<!-- Panel Other -->
 		<div class="ibox float-e-margins">
 			<div class="ibox-title">
 				<h5>权限列表</h5>
 			</div>
 			<div class="ibox-content">
 				<div class="row row-lg">
-					<!-- Example Events -->
 					<div class="col-sm-12">
 						<div class="example-wrap">
 							<div class="example">
@@ -33,46 +31,13 @@
 									<a class="btn btn-success" id="showAddRoleBtn" onclick="showAddResource()"><span class="glyphicon glyphicon-plus"></span> 添加权限</a>
 									<a class="btn btn-danger"  id="showAddRoleBtn" onclick="deleteSelectedResource()"><span class="glyphicon glyphicon-trash"></span> 删除权限</a>
 								</div>
-								<table id="TableStyle" class="table table-bordered tab-content"
-									data-mobile-responsive="true" 
-									data-toggle="table" 
-									data-search="true"
-									data-side-pagination="client" 
-									data-pagination="true" 
-									data-click-to-select="true" 
-									data-single-select="false"
-									data-page-size="10">
-									<thead>
-										<tr>
-											<th data-field="id" data-checkbox="true"></th>
-											<th data-field="resourceName">权限名称</th>
-											<th data-field="resourceUrl">权限URL</th>
-											<th data-field=resourceType>权限类型</th>
-											<th data-field="resourceSort">排序</th>
-											<th data-field="event">操作</th>
-										</tr>
-									</thead>
-									<tr th:if="${#lists.size(page.list) gt 0}" th:each="it:${page.list}" >
-										<td><input th:id="${it.id}" type="checkbox"/></td>
-										<td th:text="${it.resourceName}"></td>
-										<td th:text="${it.resourceUrl}"></td>
-										<td th:text="${it.resourceType}"></td>
-										<td th:text="${it.resourceSort}"></td>
-										<td>
-											<shiro:hasPermission name="/users/delete">
-												<a class="btn btn-danger btn-sm" href="javascript:_delete([${it.id}]);"><span class="glyphicon glyphicon-trash"></span> 删除</a>
-											</shiro:hasPermission> 
-										</td>
-									</tr>
-								</table>
+								<table id="resourceListTable" class="table table-bordered tab-content"></table>
 							</div>
 						</div>
-						<!-- End Example Events -->
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- End Panel Other -->
 		<!--弹出框-->
 		<div class="modal fade" id="showAddResource" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
@@ -116,6 +81,95 @@
 	<!-- 自定义js -->
 	<script type="text/javascript" th:src="@{/static/js/content.js}" src="../../../static/js/content.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/system/resource/resource.index.js}" src="../../../static/js/system/resource/resource.index.js"></script>
+	<script type="text/javascript">
+		//server分页
+		$(function () {
+		    var t = $("#resourceListTable").bootstrapTable({
+		        url: '/resource/pageList',
+		        method: 'get',
+		        dataType: "json",
+		        cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+		        striped: true,//设置隔行变色效果
+                clickToSelect: true,
+		        undefinedText: "空",//当数据为undefined时显示的字符
+		        showRefresh:true,//显示刷新按钮
+		        showToggle: true,//是否显示切换试图（table/card）按钮
+		        showColumns: true,//是否显示内容列下拉框
+		        pagination: true, //启用分页
+		        showPaginationSwitch:true,//是否显示数据条数选择框
+		        pageNumber: 1,//分页首页页码
+		        pageSize: 10,//分页页面数据条数
+		        pageList: [10, 20, 50, 100],//设置可供选择的页面数据条数；设置为All则显示所有记录
+		        minimumCountColumns: 2,//最少允许的列数
+		        paginationFirstText: "首页",//指定“首页”按钮的图标或文字
+		        paginationPreText: '上一页',//指定“上一页”按钮的图标或文字
+		        paginationNextText: '下一页',//指定“下一页”按钮的图标或文字
+		        paginationLastText: "末页",//指定“末页”按钮的图标或文字
+		        data_local: "zh-US",//表格汉化
+		        sidePagination: "server", //服务端处理分页
+		        queryParamsType:'',//默认值为'limit',在默认情况下传给服务端的参数为：offset,limit,sort;设置为'',在这种情况下传给服务器的参数为：pageSize,pageNumber
+		      	idField: "id",//指定主键列
+		        columns: [
+		            {
+		                checkbox:true,
+		            },
+		            {
+		                visible:false,
+		                field: 'id',//json数据中rows数组中的属性名
+		                align: 'center'//水平居中
+		            },
+		            {
+		                title: '权限名称',
+		                field: 'resourceName',
+		                align: 'left'
+		            },
+		            {
+		                title: '权限URL',
+		                field: 'resourceUrl',
+		                align: 'left'
+		            },
+		            {
+		                title: '权限类型',
+		                field: 'resourceType',
+		                align: 'left'
+		            },
+		            {
+		                title: '排序',
+		                field: 'resourceSort',
+		                align: 'left'
+		            },
+		            {
+		                title: '操作',
+		                align: 'center',
+		                formatter: function (value, row, index) {//自定义显示，也可以写标签
+		                	operate=
+		                	'<!-- <shiro:hasPermission name="/resource/delete"> -->'+
+							'<a class="btn btn-danger btn-sm" onclick="javascript:deleteById(['+row.id+']);"><span class="glyphicon glyphicon-trash"></span> 删除</a>'+
+							'<!-- </shiro:hasPermission> -->'
+		                    return operate;
+		                }
+		            }
+		        ]
+		    });
+		 
+		    t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
+		        console.log("load success");
+		        $(".pull-right").css("display", "block");
+		    });
+		});
+		 
+	    function deleteSelected(){
+			getIdSelections();
+		}
+	    
+		//获得选中的
+		function getIdSelections() {
+			return $.map($("#resourceListTable").bootstrapTable('getSelections'), function(row) {
+				console.log(row.id)
+				return row.id;
+			});
+		}
+	</script>
 </body>
 
 </html>

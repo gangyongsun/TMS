@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:shiro="http://shiro.apache.org/tags">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://shiro.apache.org/tags">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,22 +8,16 @@
 <meta name="description" content="">
 
 <link rel="shortcut icon" href="favicon.ico">
-<link th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet">
-<link th:href="@{/static/css/plugins/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet">
-<link th:href="@{/static/css/font-awesome.css}" rel="stylesheet">
-<link th:href="@{/static/css/animate.css}" rel="stylesheet">
-<link th:href="@{/static/css/style.css}" rel="stylesheet">
 
-<link href="../../../static/css/bootstrap.min.css" rel="stylesheet">
-<link href="../../../static/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
-<link href="../../../static/css/font-awesome.css" rel="stylesheet">
-<link href="../../../static/css/animate.css" rel="stylesheet">
-<link href="../../../static/css/style.css" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/static/css/bootstrap.min.css}" href="../../../static/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/static/css/plugins/bootstrap-table/bootstrap-table.min.css}" href="../../../static/css/plugins/bootstrap-table/bootstrap-table.min.css">
+<link rel="stylesheet" th:href="@{/static/css/font-awesome.css}" href="../../../static/css/font-awesome.css">
+<link rel="stylesheet" th:href="@{/static/css/animate.css}" href="../../../static/css/animate.css">
+<link rel="stylesheet" th:href="@{/static/css/style.css}" href="../../../static/css/style.css">
 </head>
 
 <body class="gray-bg">
 	<div class="wrapper wrapper-content animated fadeInRight">
-		<!-- Panel Other -->
 		<div class="ibox float-e-margins">
 			<div class="ibox-title">
 				<h5>当前在线用户</h5>
@@ -32,77 +25,138 @@
 			<div class="ibox-content">
 				<div class="row row-lg">
 					<div class="col-sm-12">
-						<!-- Example Events -->
 						<div class="example-wrap">
 							<div class="example">
-								<table id="onlineTable" class="table table-bordered tab-content"
-									data-mobile-responsive="true" 
-									data-toggle="table" 
-									data-search="true"
-									data-side-pagination="client" 
-									data-pagination="true" 
-									data-click-to-select="true" 
-									data-single-select="false"
-									data-page-size="10">
-									<thead>
-										<tr>
-											<th data-field="sessionId" data-checkbox="true">SessionID</th>
-											<th data-field="nickname">昵称</th>
-											<th data-field="userName">账号</th>
-											<th data-field="startTime">创建会话时间</th>
-											<th data-field="lastAccess">会话最后活动时间</th>
-											<th data-field="sessionStatus">状态</th>
-											<th data-field="event">操作</th>
-										</tr>
-									</thead>
-									<tr th:if="${#lists.size(page.list) gt 0}" th:each="it:${page.list}" >
-										<td><input th:value="${it.sessionId}" type="checkbox" id="subcheckbox" onclick="userCheck(this)" /></td>
-										<td th:text="${it.nickname}"></td>
-										<td th:text="${it.userName}"></td>
-										<td th:text="${#dates.format(it.startTime, 'yyyy年MMM月dd日 HH点mm分ss秒')}"></td>
-										<td th:text="${#dates.format(it.lastAccess, 'yyyy年MMM月dd日 HH点mm分ss秒')}"></td>
-										<td th:if="${it.sessionStatus==true }">在线</td>
-										<td th:unless="${it.sessionStatus==true }">已踢出</td>
-										<td>
-											<!-- <shiro:hasPermission name="/users/detail"> -->
-													<a class="btn btn-success btn-sm" href="<%=basePath%>/member/onlineDetails/${it.sessionId}.shtml"><span class="glyphicon glyphicon-info-sign"></span> 详情</a>
-											<!-- </shiro:hasPermission>
-											<shiro:hasPermission name="/users/kickout"> -->
-													<a th:if="${it.sessionStatus==true }" class="btn btn-danger btn-sm" v="onlineDetails" href="javascript:void(0);" sessionId="${it.sessionId}" status="1"><span class="glyphicon glyphicon-eye-close"></span> 踢出</a>
-											<!-- </shiro:hasPermission> 
-											<shiro:hasPermission name="/users/kickin"> -->
-												<a class="btn btn-success btn-sm" v="onlineDetails" href="javascript:void(0);" sessionId="${it.sessionId}" status="0"><span class="glyphicon glyphicon-eye"></span> 激活</a>
-											<!-- </shiro:hasPermission>  -->
-										</td>
-									</tr>
-								</table>
+								<table id="onlineTable" class="table table-bordered tab-content"></table>
 							</div>
 						</div>
-						<!-- End Example Events -->
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- End Panel Other -->
 	</div>
 	<!-- 全局js -->
-	<script th:src="@{/static/js/jquery-2.0.3.min.js}" type="text/javascript"></script>
-	<script th:src="@{/static/js/bootstrap.min.js}" type="text/javascript"></script>
-
-	<script src="../../../static/js/jquery-2.0.3.min.js" type="text/javascript"></script>
-	<script src="../../../static/js/bootstrap.min.js" type="text/javascript"></script>
-
-	<!-- 自定义js -->
-	<script th:src="@{/static/js/content.js}" type="text/javascript"></script>
-
-	<script src="../../../static/js/content.js" type="text/javascript"></script>
+	<script type="text/javascript" th:src="@{/static/js/jquery-2.0.3.min.js}" src="../../../static/js/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" th:src="@{/static/js/bootstrap.min.js}" src="../../../static/js/bootstrap.min.js"></script>
 
 	<!-- Bootstrap table -->
-	<script th:src="@{/static/js/plugins/bootstrap-table/bootstrap-table.min.js}" type="text/javascript"></script>
-	<script th:src="@{/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js}" type="text/javascript"></script>
-	<script th:src="@{/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}" type="text/javascript"></script>
-	<script src="../../../static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
-	<script src="../../../static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
-	<script src="../../../static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+	<script type="text/javascript" th:src="@{/static/js/plugins/bootstrap-table/bootstrap-table.min.js}"  src="../../../static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+	<script type="text/javascript" th:src="@{/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js}" src="../../../static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+	<script type="text/javascript" th:src="@{/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}" src="../../../static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+	
+	<!-- 自定义js -->
+	<script type="text/javascript" th:src="@{/static/js/content.js}" src="../../../static/js/content.js" ></script>
+	<script type="text/javascript" th:src="@{/static/js/system/member/member.online.js}" src="../../../static/js/system/member/member.online.js"></script>
+	<script type="text/javascript">
+		//server分页
+		$(function () {
+		    var t = $("#onlineTable").bootstrapTable({
+		        url: '/member/pageOnline',
+		        method: 'get',
+		        dataType: "json",
+		        cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+		        striped: true,//设置隔行变色效果
+                clickToSelect: true,
+		        undefinedText: "空",//当数据为undefined时显示的字符
+		        showRefresh:true,//显示刷新按钮
+		        showToggle: true,//是否显示切换试图（table/card）按钮
+		        showColumns: true,//是否显示内容列下拉框
+		        pagination: true, //启用分页
+		        showPaginationSwitch:true,//是否显示数据条数选择框
+		        pageNumber: 1,//分页首页页码
+		        pageSize: 10,//分页页面数据条数
+		        pageList: [10, 20, 50, 100],//设置可供选择的页面数据条数；设置为All则显示所有记录
+		        minimumCountColumns: 2,//最少允许的列数
+		        paginationFirstText: "首页",//指定“首页”按钮的图标或文字
+		        paginationPreText: '上一页',//指定“上一页”按钮的图标或文字
+		        paginationNextText: '下一页',//指定“下一页”按钮的图标或文字
+		        paginationLastText: "末页",//指定“末页”按钮的图标或文字
+		        data_local: "zh-US",//表格汉化
+		        sidePagination: "server", //客户端分页
+		        queryParamsType:'',//默认值为'limit',在默认情况下传给服务端的参数为：offset,limit,sort;设置为'',在这种情况下传给服务器的参数为：pageSize,pageNumber
+		      	//idField: "id",//指定主键列
+		        columns: [
+		            {
+		                checkbox:true,
+		            },
+		            {
+		                visible:false,
+		                field: 'sessionId',//json数据中rows数组中的属性名
+		                align: 'center'//水平居中
+		            },
+		            {
+		                title: '昵称',
+		                field: 'nickname',
+		                align: 'left'
+		            },
+		            {
+		                title: '账号',
+		                field: 'userName',
+		                align: 'left'
+		            },
+		            {
+		                title: '在线状态',
+		                field: 'sessionStatus',
+		                align: 'left',
+		                formatter: function (value, row, index) {//自定义显示，这三个参数分别是：value该行的属性，row该行记录，index该行下标
+		                	 return row.sessionStatus == true ? "在线" : "不在线";
+		                }
+		            },
+		            {
+		                title: '会话创建时间',
+		                field: 'startTime',
+		                align: 'left'
+		            },
+		            {
+		                title: '会话最后活动时间',
+		                field: 'lastAccess',
+		                align: 'left'
+		            },
+		            {
+		                title: '操作',
+		                align: 'center',
+		                formatter: function (value, row, index) {
+		                	var detail_content=
+		                	'<!-- <shiro:hasPermission name="/users/detail"> -->'+
+							'<a class="btn btn-success btn-sm" onclick="onlineDetails('+row.sessionId+')"><span class="glyphicon glyphicon-info-sign"></span> 详情</a>'+
+							'<!-- </shiro:hasPermission>';
+							var deactive_content=
+							'<shiro:hasPermission name="/users/kickout"> -->'+
+							'<a class="btn btn-danger btn-sm" onclick="changeSessionStatus('+row.sessionId+',1)"><span class="glyphicon glyphicon-eye-close"></span> 踢出</a>'+
+							'<!-- </shiro:hasPermission>';
+							var active_content=
+							'<shiro:hasPermission name="/users/kickin"> -->'+
+							'<a class="btn btn-danger btn-sm" onclick="changeSessionStatus('+row.sessionId+',0)"><span class="glyphicon glyphicon-eye"></span> 激活</a>'+
+							'<!-- </shiro:hasPermission>  -->';
+							
+							if(row.sessionStatus==true){
+								var operate=detail_content+deactive_content;
+							}else{
+								var operate=detail_content+active_content;
+							}
+		                    return operate;
+		                }
+		            }
+		        ]
+		    });
+		 
+		    t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
+		        console.log("load success");
+		        $(".pull-right").css("display", "block");
+		    });
+		});
+		 
+	    function deleteSelected(){
+			getIdSelections();
+		}
+	    
+		//获得选中的
+		function getIdSelections() {
+			return $.map($("#onlineTable").bootstrapTable('getSelections'), function(row) {
+				console.log(row.id)
+				return row.id;
+			});
+		}
+	</script>
 </body>
 </html>

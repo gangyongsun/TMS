@@ -8,9 +8,11 @@ import java.util.Set;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.BaseMybatisDao;
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
+import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.TableSplitResult;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysResourcesBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysResourcesMapper;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysRoleResourcesMapper;
@@ -80,6 +82,10 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 	@Override
 	public Pagination<SysResources> findPage(Map<String, Object> modelMap, Integer pageNo, int pageSize) {
 		return super.findPage(modelMap, pageNo, pageSize);
+	}
+	@Override
+	public TableSplitResult<SysResources> findPage2(ModelMap modelMap, Integer pageNumber, Integer pageSize) {
+		return super.findPage2(modelMap, pageNumber, pageSize);
 	}
 
 	@Override
@@ -182,5 +188,7 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 	public List<SysResourcesBo> selectResourceByRoleId(Integer id) {
 		return resourcesMapper.selectResourceByRoleId(id);
 	}
+
+	
 
 }

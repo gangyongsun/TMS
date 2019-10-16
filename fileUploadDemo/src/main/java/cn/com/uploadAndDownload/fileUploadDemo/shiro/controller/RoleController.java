@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.com.uploadAndDownload.fileUploadDemo.controller.BaseController;
-import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
+import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.TableSplitResult;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysRole;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.RoleService;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.utils.UserManager;
@@ -38,13 +38,19 @@ public class RoleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "index")
-	public ModelAndView index(String findContent, ModelMap modelMap) {
-		modelMap.put("findContent", findContent);
-		Pagination<SysRole> page = roleService.findPage(modelMap, pageNo, pageSize);
-		modelMap.put("page", page);
+	public ModelAndView index() {
 		return new ModelAndView("system/role/index");
 	}
-
+	
+	@RequestMapping(value = "pageList")
+	@ResponseBody
+	public TableSplitResult<SysRole>  pageList(ModelMap modelMap, Integer pageSize, Integer pageNumber) {
+//		modelMap.put("findContent", findContent);
+		TableSplitResult<SysRole> page = roleService.findPage2(modelMap, pageNumber, pageSize);
+		modelMap.put("page", page);
+		return page;
+	}
+	
 	/**
 	 * 角色添加
 	 * 

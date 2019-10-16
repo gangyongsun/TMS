@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.ui.ModelMap;
+
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
+import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.TableSplitResult;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysResourcesBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysResources;
 
@@ -92,4 +95,6 @@ public interface ResourcesService {
 	 * @return
 	 */
 	List<SysResourcesBo> selectResourceByRoleId(Integer id);
+
+	TableSplitResult<SysResources> findPage2(ModelMap modelMap, Integer pageNumber, Integer pageSize);
 }

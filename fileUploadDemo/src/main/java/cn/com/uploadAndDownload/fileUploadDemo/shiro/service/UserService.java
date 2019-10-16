@@ -1,13 +1,12 @@
 package cn.com.uploadAndDownload.fileUploadDemo.shiro.service;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.springframework.ui.ModelMap;
 
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysRoleBo;
+import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.TableSplitResult;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.UserRoleAllocationBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 
@@ -39,7 +38,6 @@ public interface UserService {
 	 */
 	public Pagination<UserRoleAllocationBo> findUserAndRole(ModelMap modelMap, Integer pageNo, int pageSize);
 
-
 	/**
 	 * 用户登录，用于密码修改
 	 * 
@@ -64,7 +62,7 @@ public interface UserService {
 	 * @param pageSize
 	 * @return
 	 */
-	public Pagination<SysUser> findUserByPage(Map<String, Object> map, Integer pageNo, int pageSize);
+//	public Pagination<SysUser> findUserByPage(Map<String, Object> map, Integer pageNo, Integer pageSize);
 
 	/**
 	 * 根据用户id删除用户,ids 如果有多个则以“,”间隔。
@@ -98,5 +96,22 @@ public interface UserService {
 	 * @return
 	 */
 	public SysUser findUserById(Integer userId);
+
+	/**
+	 * 添加用户
+	 * 
+	 * @param sysUser
+	 * @return
+	 */
+	public int insertUser(SysUser sysUser);
+
+	/**
+	 * bootstrap table 分页查询用户列表
+	 * 
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	public TableSplitResult<SysUser> findUserInPage(Map<String, Object> map, Integer pageNo, Integer pageSize);
 
 }

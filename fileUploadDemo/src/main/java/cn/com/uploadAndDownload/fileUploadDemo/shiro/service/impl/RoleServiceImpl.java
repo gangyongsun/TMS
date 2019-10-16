@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.BaseMybatisDao;
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
+import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.TableSplitResult;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.RoleResourceAllocationBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysRoleBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysRoleMapper;
@@ -170,6 +171,11 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 	@Override
 	public int deleteRoleById(Integer roleId) {
 		return roleMapper.deleteByPrimaryKey(roleId);
+	}
+
+	@Override
+	public TableSplitResult<SysRole> findPage2(ModelMap modelMap, Integer pageNumber, Integer pageSize) {
+		return super.findPage2(modelMap, pageNumber, pageSize);
 	}
 
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.com.uploadAndDownload.fileUploadDemo.controller.BaseController;
-import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
+import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.TableSplitResult;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysResources;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.ResourcesService;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
@@ -40,11 +40,17 @@ public class ResourcesController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "index")
-	public ModelAndView index(String findContent, ModelMap modelMap, Integer pageNo) {
-		modelMap.put("findContent", findContent);
-		Pagination<SysResources> resources = resourcesService.findPage(modelMap, pageNo, pageSize);
-		modelMap.put("page", resources);
+	public ModelAndView index() {
 		return new ModelAndView("system/resource/index");
+	}
+	
+	@RequestMapping(value = "pageList")
+	@ResponseBody
+	public TableSplitResult<SysResources>  pageList(ModelMap modelMap, Integer pageSize, Integer pageNumber) {
+//		modelMap.put("findContent", findContent);
+		TableSplitResult<SysResources> page = resourcesService.findPage2(modelMap, pageNumber, pageSize);
+		modelMap.put("page", page);
+		return page;
 	}
 
 	/**

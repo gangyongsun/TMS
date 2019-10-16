@@ -1,6 +1,7 @@
 package cn.com.uploadAndDownload.fileUploadDemo.shiro.service.impl;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.ui.ModelMap;
 
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.BaseMybatisDao;
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
+import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.TableSplitResult;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysRoleBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.UserRoleAllocationBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysResourcesMapper;
@@ -87,10 +89,10 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 		return userMapper.updateByPrimaryKeySelective(sysUser);
 	}
 
-	@Override
-	public Pagination<SysUser> findUserByPage(Map<String, Object> map, Integer pageNo, int pageSize) {
-		return super.findPage(map, pageNo, pageSize);
-	}
+//	@Override
+//	public Pagination<SysUser> findUserByPage(Map<String, Object> map, Integer pageNo, Integer pageSize) {
+//		return super.findPage(map, pageNo, pageSize);
+//	}
 
 	@Override
 	public Map<String, Object> deleteUserByIds(String ids) {
@@ -143,4 +145,16 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	public SysUser findUserById(Integer id) {
 		return userMapper.selectByPrimaryKey(id);
 	}
+
+	@Override
+	public int insertUser(SysUser sysUser) {
+		sysUser.setCreateTime(new Date());
+		return userMapper.insertSelective(sysUser);
+	}
+
+	@Override
+	public TableSplitResult<SysUser> findUserInPage(Map<String, Object> map,Integer pageNo, Integer pageSize) {
+		return super.findPage2(map, pageNo, pageSize);
+	}
+
 }

@@ -79,6 +79,29 @@ function showAddUser(){
 	$('#showAddUser').modal({backdrop: false,keyboard: true})
 }
 
+function addUser(){
+	var username=$("#userName").val();
+	var password=$("#passWord").val();
+	var userenable=$("#userEnable").val();
+	
+	var load = layer.load();
+	$.post('addUser',
+		{
+			userName:username,
+			passWord:password,
+			userEnable:userenable
+		},
+		function(result){
+			layer.close(load);
+			if(result){
+				layer.msg(result.message);
+			}
+			setTimeout(function(){
+				$('#formId').submit();
+			},1000);
+		},'json');
+}
+
 /**
  * 重置密码
  * 

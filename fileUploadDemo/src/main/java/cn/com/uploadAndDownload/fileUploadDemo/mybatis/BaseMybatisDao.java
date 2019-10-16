@@ -23,6 +23,8 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.MysqlDialect;
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
+import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.TableSplitResult;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;
 
@@ -218,6 +220,60 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 		}
 		return page;
 	}
+	
+	public TableSplitResult findPage2(String sqlId, String countId, Map<String, Object> paramMap, Integer pageNo, Integer pageSize) {
+		TableSplitResult page = new TableSplitResult();
+		pageNo = null == pageNo ? 1 : pageNo;
+		pageSize = null == pageSize ? 10 : pageSize;
+		page.setPageNo(pageNo);
+		page.setPageSize(pageSize);
+		int offset = (page.getPageNo() - 1) * page.getPageSize();
+		
+		String page_sql = String.format(" limit  %s , %s ", offset, pageSize);
+		paramMap.put("page_sql", page_sql);
+		
+		sqlId = String.format("%s.%s", NAMESPACE, sqlId);
+		
+		Configuration configuration = this.getSqlSession().getConfiguration();
+		BoundSql boundSql = configuration.getMappedStatement(sqlId).getBoundSql(paramMap);
+		String sqlcode = boundSql.getSql();
+		LoggerUtils.fmtDebug(SELF, "findPage sql : %s", sqlcode);
+		String countCode = "";
+		BoundSql countSql = null;
+		if (StringUtils.isBlank(countId)) {
+			countCode = sqlcode;
+			countSql = boundSql;
+		} else {
+			countId = String.format("%s.%s", NAMESPACE, countId);
+			countSql = configuration.getMappedStatement(countId).getBoundSql(paramMap);
+			countCode = countSql.getSql();
+		}
+		try {
+//			Connection conn = this.getSqlSession().getConnection();
+			
+			SqlSessionTemplate st = (SqlSessionTemplate) getSqlSession();
+			Connection conn = SqlSessionUtils.getSqlSession(st.getSqlSessionFactory(), st.getExecutorType(), st.getPersistenceExceptionTranslator()).getConnection();
+			
+//			System.out.println(conn.isClosed());
+			
+			List resultList = this.getSqlSession().selectList(sqlId, paramMap);
+			page.setRows(resultList);
+			
+			// 处理Count
+			PreparedStatement ps = getPreparedStatement4Count(countCode, countSql.getParameterMappings(), paramMap, conn);
+			ps.execute();
+			ResultSet set = ps.getResultSet();
+			
+			while (set.next()) {
+				page.setTotal(set.getInt(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			LoggerUtils.error(SELF, "jdbc.error.code.findByPageBySqlId", e);
+		}
+		return page;
+	}
+	
 
 	/**
 	 * 重载减少参数DEFAULT_SQL_ID, "findCount"
@@ -231,6 +287,10 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 		return findPage(SQL_ID_FINDALL, SQL_ID_FINDCOUNT, params, pageNo, pageSize);
 	}
 
+	public TableSplitResult findPage2(Map<String, Object> params, Integer pageNo, Integer pageSize) {
+		return findPage2(SQL_ID_FINDALL, SQL_ID_FINDCOUNT, params,pageNo, pageSize);
+	}
+	
 	/**
 	 * 组装
 	 * 

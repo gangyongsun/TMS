@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.com.uploadAndDownload.fileUploadDemo.controller.BaseController;
-import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
+import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.TableSplitResult;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.UserOnlineBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.RoleService;
@@ -47,53 +47,77 @@ public class MemberController extends BaseController {
 	RoleService roleService;
 
 	/**
-	 * 用户列表管理
+	 * 用户列表页面
 	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "list")
-	public ModelAndView list(ModelMap map, Integer pageNo, String findContent) {
-		map.put("findContent", findContent);
-		Pagination<SysUser> page = userService.findUserByPage(map, pageNo, pageSize);
-		map.put("page", page);
+	public ModelAndView list() {
 		return new ModelAndView("system/member/list");
 	}
 
 	/**
-	 * 显示添加用户界面
+	 * bootstrap table分页查询用户列表
 	 * 
+	 * @param pageNumber 参数名必须为这个才能接收到bootstrap table传的参数
+	 * @param pageSize   参数名必须为这个才能接收到bootstrap table传的参数
 	 * @return
 	 */
-	@RequestMapping(value = "showAddUser")
-	public ModelAndView showAddUser() {
-		System.out.println("showAddUser...");
-		return new ModelAndView("system/member/addUser");
+	@RequestMapping(value = "pageList")
+	@ResponseBody
+	public TableSplitResult<SysUser> pageList(ModelMap map, Integer pageSize, Integer pageNumber) {
+		TableSplitResult<SysUser> page = userService.findUserInPage(map, pageNumber, pageSize);
+		return page;
 	}
 
 	/**
-	 * 显示编辑用户界面
+	 * 添加用户
 	 * 
+	 * @param ids 如果有多个，以“,”间隔。
 	 * @return
 	 */
-	@RequestMapping(value = "showEditUser/{userId}")
-	public ModelAndView showEditUser(ModelMap map, @PathVariable("userId") String userId) {
-		SysUser user = userService.findUserById(new Integer(userId));
-		map.put("user", user);
-		return new ModelAndView("system/member/editUser");
+	@RequestMapping(value = "addUser", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> addUser(SysUser sysUser) {
+		int result = userService.insertUser(sysUser);
+		if (result == 1) {
+			resultMap.put("status", 200);
+			resultMap.put("message", "添加用户成功！");
+		} else {
+			resultMap.put("status", 500);
+			resultMap.put("message", "添加用户失败！");
+		}
+		return resultMap;
 	}
 
 	/**
-	 * 在线用户管理
+	 * 在线用户管理页面
 	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "online")
-	public ModelAndView online(ModelMap map) {
-		Pagination<UserOnlineBo> page = new Pagination<UserOnlineBo>();
-		List<UserOnlineBo> list = customSessionManager.getAllUser();
-		page.setList(list);
-		map.put("page", page);
+	public ModelAndView online() {
 		return new ModelAndView("system/member/online");
+	}
+	
+	/**
+	 * 查询在线用户列表
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "pageOnline")
+	@ResponseBody
+	public TableSplitResult<List<UserOnlineBo>> pageOnline(ModelMap map, Integer pageSize, Integer pageNumber) {
+		TableSplitResult<List<UserOnlineBo>> page = new TableSplitResult<List<UserOnlineBo>>();
+		
+		List<UserOnlineBo> list = customSessionManager.getAllUser();
+		page.setRows(list);
+		page.setTotal(list.size());
+		
+		page.setPageNo(null == pageNumber ? 1 : pageNumber);
+		page.setPageSize(null == pageSize ? 10 : pageSize);
+		
+		return page;
 	}
 
 	/**
