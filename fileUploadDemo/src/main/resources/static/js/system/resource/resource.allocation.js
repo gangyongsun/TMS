@@ -69,8 +69,7 @@ function selectResource(){
 /**
  * 根据角色ID选择权限，分配权限操作
  */
-function selectResourceById(obj){
-	var id = $(obj).attr("id");
+function selectResourceById(id){
 	var load = layer.load();
 	$.post("selectResourceByRoleId",{id:id},function(result){
 		layer.close(load);

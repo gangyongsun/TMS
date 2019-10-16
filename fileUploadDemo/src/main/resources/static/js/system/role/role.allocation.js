@@ -64,8 +64,7 @@ function selectRole(){
 /**
  * 根据角色ID选择权限，分配权限操作
  */
-function selectRoleById(obj){
-	var id = $(obj).attr("id");
+function selectRoleById(id){
 	var load = layer.load();
 	$.post("selectRoleByUserId",{id:id},function(result){
 		layer.close(load);

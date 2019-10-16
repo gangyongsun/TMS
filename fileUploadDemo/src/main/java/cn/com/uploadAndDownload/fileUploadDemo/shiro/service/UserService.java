@@ -36,7 +36,7 @@ public interface UserService {
 	 * @param pageSize
 	 * @return
 	 */
-	public Pagination<UserRoleAllocationBo> findUserAndRole(ModelMap modelMap, Integer pageNo, int pageSize);
+	public Pagination<UserRoleAllocationBo> findUserAndRole(ModelMap modelMap, Integer pageNo, Integer pageSize);
 
 	/**
 	 * 用户登录，用于密码修改
@@ -113,5 +113,7 @@ public interface UserService {
 	 * @return
 	 */
 	public TableSplitResult<SysUser> findUserInPage(Map<String, Object> map, Integer pageNo, Integer pageSize);
+
+	public TableSplitResult<UserRoleAllocationBo> findUserAndRole2(ModelMap modelMap, Integer pageNumber, Integer pageSize);
 
 }

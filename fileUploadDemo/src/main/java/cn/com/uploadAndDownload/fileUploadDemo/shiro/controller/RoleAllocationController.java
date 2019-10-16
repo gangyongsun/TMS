@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.com.uploadAndDownload.fileUploadDemo.controller.BaseController;
-import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
+import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.TableSplitResult;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysRoleBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.UserRoleAllocationBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.RoleService;
@@ -35,19 +35,30 @@ public class RoleAllocationController extends BaseController {
 	RoleService roleService;
 
 	/**
-	 * 用户角色权限分配
+	 * 用户角色权限分配页面
 	 * 
-	 * @param modelMap
-	 * @param pageNo
-	 * @param findContent
 	 * @return
 	 */
 	@RequestMapping(value = "allocation")
-	public ModelAndView allocation(ModelMap modelMap, Integer pageNo, String findContent) {
-		modelMap.put("findContent", findContent);
-		Pagination<UserRoleAllocationBo> userRoleBoPage = userService.findUserAndRole(modelMap, pageNo, pageSize);
-		modelMap.put("page", userRoleBoPage);
+	public ModelAndView allocation() {
 		return new ModelAndView("system/role/allocation");
+	}
+	
+	/**
+	 * 用户角色分配页面列表
+	 * 
+	 * @param modelMap
+	 * @param pageSize
+	 * @param pageNumber
+	 * @return
+	 */
+	@RequestMapping(value = "pageList4Allocation")
+	@ResponseBody
+	public TableSplitResult<UserRoleAllocationBo>  pageList4Allocation(ModelMap modelMap, Integer pageSize, Integer pageNumber) {
+//		modelMap.put("findContent", findContent);
+		TableSplitResult<UserRoleAllocationBo> page = userService.findUserAndRole2(modelMap, pageNumber, pageSize);
+		modelMap.put("page", page);
+		return page;
 	}
 
 	/**

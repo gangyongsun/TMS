@@ -4,12 +4,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
@@ -17,15 +15,11 @@ import org.springframework.ui.ModelMap;
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.BaseMybatisDao;
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.TableSplitResult;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysRoleBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.UserRoleAllocationBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysResourcesMapper;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysUserMapper;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysUserRoleMapper;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUserRole;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.UserService;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.SampleRealm;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 
 @Service
@@ -36,9 +30,6 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	 */
 	@Autowired
 	CustomSessionManager customSessionManager;
-
-	@Autowired
-	private SysUserRoleMapper userRoleMapper;
 
 	@Autowired
 	private SysUserMapper userMapper;
@@ -71,10 +62,15 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	}
 
 	@Override
-	public Pagination<UserRoleAllocationBo> findUserAndRole(ModelMap modelMap, Integer pageNo, int pageSize) {
+	public Pagination<UserRoleAllocationBo> findUserAndRole(ModelMap modelMap, Integer pageNo, Integer pageSize) {
 		return super.findPage("findUserAndRole", "findCount", modelMap, pageNo, pageSize);
 	}
 
+	@Override
+	public TableSplitResult<UserRoleAllocationBo> findUserAndRole2(ModelMap modelMap, Integer pageNumber, Integer pageSize) {
+		return super.findPage2("findUserAndRole", "findCount", modelMap, pageNumber, pageSize);
+	}
+	
 	@Override
 	public SysUser login(String userName, String password) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -156,5 +152,6 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	public TableSplitResult<SysUser> findUserInPage(Map<String, Object> map,Integer pageNo, Integer pageSize) {
 		return super.findPage2(map, pageNo, pageSize);
 	}
+
 
 }

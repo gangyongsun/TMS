@@ -9,10 +9,8 @@ import org.springframework.ui.ModelMap;
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.TableSplitResult;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.RoleResourceAllocationBo;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysResourcesBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysRoleBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysRole;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 
 public interface RoleService {
 
@@ -117,5 +115,7 @@ public interface RoleService {
 	 * @return
 	 */
 	TableSplitResult<SysRole> findPage2(ModelMap modelMap, Integer pageNumber, Integer pageSize);
+
+	TableSplitResult<RoleResourceAllocationBo> findRoleAndResourcePage2(ModelMap modelMap, Integer pageNumber, Integer pageSize);
 
 }

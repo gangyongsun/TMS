@@ -47,7 +47,7 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 	public Pagination<SysRole> findPage(Map<String, Object> modelMap, int pageNo, int pageSize) {
 		return super.findPage(modelMap, pageNo, pageSize);
 	}
-
+	
 	@Override
 	public int insertSelective(SysRole role) {
 		return roleMapper.insertSelective(role);
@@ -168,6 +168,11 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 		return super.findPage("findRoleAndResources", "findCount", modelMap, pageNo, pageSize);
 	}
 
+	@Override
+	public TableSplitResult<RoleResourceAllocationBo> findRoleAndResourcePage2(ModelMap modelMap, Integer pageNumber, Integer pageSize) {
+		return super.findPage2("findRoleAndResources", "findCount", modelMap, pageNumber, pageSize);
+	}
+	
 	@Override
 	public int deleteRoleById(Integer roleId) {
 		return roleMapper.deleteByPrimaryKey(roleId);
