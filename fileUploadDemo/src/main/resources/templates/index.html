@@ -45,7 +45,7 @@
                         <span class="ng-scope">Dashboard</span>
                     </li>
                     <li>
-                        <a class="J_menuItem" href="/system/empty_page.html">
+                        <a class="J_menuItem" href="/system/main">
                             <i class="fa fa-home"></i>
                             <span class="nav-label">主页</span>
                         </a>
@@ -96,9 +96,9 @@
                         <ul class="nav nav-second-level">
                             <li><a class="J_menuItem" href="/file/index">文件上传</a>
                             </li>
-                            <li><a class="J_menuItem" href="system/empty_page.html">其他</a>
+                            <li><a class="J_menuItem" href="/system/main">其他</a>
                             </li>
-                            <li><a class="J_menuItem" href="system/empty_page.html">其他</a>
+                            <li><a class="J_menuItem" href="/system/main">其他</a>
                             </li>
                         </ul>
                     </li>
@@ -163,14 +163,14 @@
                                 </li>
                             </ul>
                         </li>
-                        <a type="button" class="btn btn-default btn-sm" href="logout">
-				          <span class="glyphicon glyphicon-log-out"></span> Log-out
-				        </a>
+                    	<li class="dropdown">
+                            <a href="/auth/logout"><span class="glyphicon glyphicon-log-out"></span> Log-out</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
             <div class="row J_mainContent" id="content-main">
-                <iframe id="J_iframe" width="100%" height="100%" src="system/empty_page.html" frameborder="0" data-id="system/empty_page.html" seamless></iframe>
+                <iframe id="J_iframe" width="100%" height="100%" src="/system/main" data-id="main" seamless></iframe>
             </div>
         </div>
         <!--右侧部分结束-->
