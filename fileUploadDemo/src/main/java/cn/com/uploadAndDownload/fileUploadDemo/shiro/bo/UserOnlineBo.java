@@ -3,6 +3,8 @@ package cn.com.uploadAndDownload.fileUploadDemo.shiro.bo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,11 +34,13 @@ public class UserOnlineBo extends SysUser implements Serializable {
 	/**
 	 * Session创建时间
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Date startTime;
 
 	/**
 	 * Session最后交互时间
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Date lastAccess;
 
 	/**

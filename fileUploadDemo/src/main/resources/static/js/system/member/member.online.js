@@ -64,22 +64,24 @@ $(function () {
                 align: 'center',
                 formatter: function (value, row, index) {
                 	var detail_content=
-                	'<!-- <shiro:hasPermission name="/users/detail"> -->'+
-					'<a class="btn btn-success btn-sm" onclick="onlineDetail(\''+ row.sessionId +'\')"><span class="glyphicon glyphicon-info-sign"></span> 详情</a>'+
-					'<!-- </shiro:hasPermission>';
+                		//'<!-- <shiro:hasPermission name="/users/detail"> -->'+
+                		'<a class="btn btn-success btn-sm" onclick="onlineDetail(\''+ row.sessionId +'\')"><span class="glyphicon glyphicon-info-sign"></span> 详情</a>';//+
+                		//'<!-- </shiro:hasPermission>';
 					var deactive_content=
-					'<shiro:hasPermission name="/users/kickout"> -->'+
-					'<a class="btn btn-danger btn-sm" onclick="changeSessionStatus(\''+row.sessionId +'\',\''+ false +'\')"><span class="glyphicon glyphicon-eye-close"></span> 踢出</a>'+
-					'<!-- </shiro:hasPermission>';
+						//'<shiro:hasPermission name="/users/kickout"> -->'+
+						'<a class="btn btn-danger btn-sm" onclick="changeSessionStatus(\''+row.sessionId +'\',\''+ false +'\')"><span class="glyphicon glyphicon-eye-close"></span> 踢出</a>';//+
+						//'<!-- </shiro:hasPermission>';
 					var active_content=
-					'<shiro:hasPermission name="/users/kickin"> -->'+
-					'<a class="btn btn-danger btn-sm" onclick="changeSessionStatus(\''+row.sessionId +'\',\''+ true +'\')"><span class="glyphicon glyphicon-eye"></span> 激活</a>'+
-					'<!-- </shiro:hasPermission>  -->';
+						//'<shiro:hasPermission name="/users/kickin"> -->'+
+						'<a class="btn btn-danger btn-sm" onclick="changeSessionStatus(\''+row.sessionId +'\',\''+ true +'\')"><span class="glyphicon glyphicon-eye"></span> 激活</a>';//+
+						//'<!-- </shiro:hasPermission>  -->';
 					
-					if(row.sessionStatus==true){
-						var operate=detail_content+deactive_content;
+					var operate=detail_content;
+					
+					if(row.sessionStatus == true){
+						operate+=deactive_content;
 					}else{
-						var operate=detail_content+active_content;
+						operate+=active_content;
 					}
                     return operate;
                 }
