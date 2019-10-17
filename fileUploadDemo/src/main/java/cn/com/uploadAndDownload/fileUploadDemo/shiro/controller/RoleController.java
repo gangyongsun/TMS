@@ -42,6 +42,14 @@ public class RoleController extends BaseController {
 		return new ModelAndView("system/role/index");
 	}
 	
+	/**
+	 * 分页查询角色列表
+	 * 
+	 * @param modelMap
+	 * @param pageSize
+	 * @param pageNumber
+	 * @return
+	 */
 	@RequestMapping(value = "pageList")
 	@ResponseBody
 	public TableSplitResult<SysRole>  pageList(ModelMap modelMap, Integer pageSize, Integer pageNumber) {
@@ -79,7 +87,7 @@ public class RoleController extends BaseController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "deleteRoleById", method = RequestMethod.POST)
+	@RequestMapping(value = "deleteRoleByIds", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> deleteRoleById(String ids) {
 		return roleService.deleteRoleByIds(ids);

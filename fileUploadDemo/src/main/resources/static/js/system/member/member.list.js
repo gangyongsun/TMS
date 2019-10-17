@@ -121,21 +121,25 @@ $(function () {
  */
 function deleteSelected(){
 	var idArray=getIdSelections();
-	console.log(idArray)
-	var index = layer.confirm("确定删除这" + idArray.length + "个用户？", function() {
-		var load = layer.load();
-		$.post('deleteUserById', {
-			ids : idArray.join(',')
-		}, function(result) {
-			layer.close(load);
-			if (result) {
-				layer.msg(result.message);
-			}
-			setTimeout(function() {
-				$('#formId').submit();
-			}, 1000);
-		}, 'json');
-	});
+	//console.log(idArray)
+	if (idArray.length == 0) {
+		layer.msg("请先选择要删除的用户!");
+	}else{
+		var index = layer.confirm("确定删除这" + idArray.length + "个用户？", function() {
+			var load = layer.load();
+			$.post('deleteUserById', {
+				ids : idArray.join(',')
+			}, function(result) {
+				layer.close(load);
+				if (result) {
+					layer.msg(result.message);
+				}
+				setTimeout(function() {
+					$('#formId').submit();
+				}, 1000);
+			}, 'json');
+		});
+	}
 }
 
 /**

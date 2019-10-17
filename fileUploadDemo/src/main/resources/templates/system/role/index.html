@@ -26,13 +26,15 @@
 				<div class="row row-lg">
 					<div class="col-sm-12">
 						<div class="example-wrap">
-							<div class="example">
-								<div class="col-sm-3">
-									<a class="btn btn-success" id="showAddRoleBtn" onclick="showAddRole()"><span class="glyphicon glyphicon-plus"></span> 添加角色</a>
-									<a class="btn btn-danger"  id="showAddRoleBtn" onclick="deleteSelectedRoles()"><span class="glyphicon glyphicon-trash"></span> 删除角色</a>
-								</div>
-								<table id="roleListTable" class="table table-bordered tab-content"></table>
+							<div class="col-sm-3">
+								<a class="btn btn-success" onclick="showAddRole()"><span class="glyphicon glyphicon-plus"></span> 添加角色</a>
+								<a class="btn btn-danger" onclick="deleteSelected()"><span class="glyphicon glyphicon-trash"></span> 删除角色</a>
 							</div>
+							<form method="post" id="formId" class="form-inline">
+								<div class="example">
+									<table id="roleListTable" class="table table-bordered tab-content"></table>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -59,30 +61,14 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+						<a class="btn btn-default btn-md" data-dismiss="modal"><span class="glyphicon glyphicon-off btn-md"></span> 关闭</a>
+						<a class="btn btn-success btn-md" onclick="javascript:addRole();"><span class="glyphicon glyphicon-save btn-md"></span> 保存</a>
 					</div>
 				</div>
 			</div>
 		</div>
 		<!--弹出框-->
 	</div>
-
-	<script>
-/*
-		$("#remove").on("click", function() {
-			var rows = $("#TableStyle").bootstrapTable('getSelections');
-			console.log(rows);
-			if (rows.length == 0) {// rows 主要是为了判断是否选中，下面的else内容才是主要
-				alert("请先选择要删除的角色!");
-				return;
-			} else {
-				console.log(rows)
-				//var arrays = new Array();// 声明一个数组
-				$(rows).remove();
-			}
-		}) */
-	</script>
 	<!-- 全局js -->
 	<script type="text/javascript" th:src="@{/static/js/jquery-2.0.3.min.js}" src="../../../static/js/jquery-2.0.3.min.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/bootstrap.min.js}" src="../../../static/js/bootstrap.min.js"></script>
@@ -96,84 +82,5 @@
 	<!-- 自定义js -->
 	<script type="text/javascript" th:src="@{/static/js/content.js}" src="../../../static/js/content.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/system/role/role.index.js}" src="../../../static/js/system/role/role.index.js"></script>
-	<script type="text/javascript">
-		//server分页
-		$(function () {
-		    var t = $("#roleListTable").bootstrapTable({
-		        url: '/role/pageList',
-		        method: 'get',
-		        dataType: "json",
-		        cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-		        striped: true,//设置隔行变色效果
-                clickToSelect: true,
-		        undefinedText: "空",//当数据为undefined时显示的字符
-		        showRefresh:true,//显示刷新按钮
-		        showToggle: true,//是否显示切换试图（table/card）按钮
-		        showColumns: true,//是否显示内容列下拉框
-		        pagination: true, //启用分页
-		        showPaginationSwitch:true,//是否显示数据条数选择框
-		        pageNumber: 1,//分页首页页码
-		        pageSize: 10,//分页页面数据条数
-		        pageList: [10, 20, 50, 100],//设置可供选择的页面数据条数；设置为All则显示所有记录
-		        minimumCountColumns: 2,//最少允许的列数
-		        paginationFirstText: "首页",//指定“首页”按钮的图标或文字
-		        paginationPreText: '上一页',//指定“上一页”按钮的图标或文字
-		        paginationNextText: '下一页',//指定“下一页”按钮的图标或文字
-		        paginationLastText: "末页",//指定“末页”按钮的图标或文字
-		        data_local: "zh-US",//表格汉化
-		        sidePagination: "server", //服务端处理分页
-		        queryParamsType:'',//默认值为'limit',在默认情况下传给服务端的参数为：offset,limit,sort;设置为'',在这种情况下传给服务器的参数为：pageSize,pageNumber
-		      	idField: "id",//指定主键列
-		        columns: [
-		            {
-		                checkbox:true,
-		            },
-		            {
-		                visible:false,
-		                field: 'id',//json数据中rows数组中的属性名
-		                align: 'center'//水平居中
-		            },
-		            {
-		                title: '角色名称',
-		                field: 'roleDesc',
-		                align: 'left'
-		            },
-		            {
-		                title: '角色类型',
-		                field: 'roleType',
-		                align: 'left'
-		            },
-		            {
-		                title: '操作',
-		                align: 'center',
-		                formatter: function (value, row, index) {//自定义显示，也可以写标签
-		                	operate=
-		                	'<!-- <shiro:hasPermission name="/role/delete"> -->'+
-							'<a class="btn btn-danger btn-sm" onclick="javascript:deleteById(['+row.id+']);"><span class="glyphicon glyphicon-trash"></span> 删除</a>'+
-							'<!-- </shiro:hasPermission> -->'
-		                    return operate;
-		                }
-		            }
-		        ]
-		    });
-		 
-		    t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
-		        console.log("load success");
-		        $(".pull-right").css("display", "block");
-		    });
-		});
-		 
-	    function deleteSelected(){
-			getIdSelections();
-		}
-	    
-		//获得选中的
-		function getIdSelections() {
-			return $.map($("#roleListTable").bootstrapTable('getSelections'), function(row) {
-				console.log(row.id)
-				return row.id;
-			});
-		}
-	</script>
 </body>
 </html>
