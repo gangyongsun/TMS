@@ -25,19 +25,17 @@
 				<div class="row row-lg">
 					<div class="col-sm-12">
 						<div class="example-wrap">
-							<form method="post" id="formId" class="form-inline">
-								<div class="example">
-									<div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
-										<!-- <shiro:hasPermission name="/member/add"> -->
-										<a class="btn btn-success" id="addUser" onclick="showAddUser()"><span class="glyphicon glyphicon-plus"></span> 添加用户</a>
-										<!-- </shiro:hasPermission>
-										<shiro:hasPermission name="/member/delete"> -->
-										<a class="btn btn-danger" id="deleteSelected" onclick="deleteSelected()"><span class="glyphicon glyphicon-trash"></span> 删除用户</a>
-										<!-- </shiro:hasPermission> -->
-									</div>
-									<table id="memberListTable" class="table table-bordered tab-content"></table>
+							<div class="example">
+								<div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
+									<!-- <shiro:hasPermission name="/member/add"> -->
+									<a class="btn btn-success" id="addUser" onclick="showModal('showAddUser')"><span class="glyphicon glyphicon-plus"></span> 添加用户</a>
+									<!-- </shiro:hasPermission>
+									<shiro:hasPermission name="/member/delete"> -->
+									<a class="btn btn-danger" id="deleteSelected" onclick="deleteSelected()"><span class="glyphicon glyphicon-trash"></span> 删除用户</a>
+									<!-- </shiro:hasPermission> -->
 								</div>
-							</form>
+								<table id="memberListTable" class="table table-bordered tab-content"></table>
+							</div>
 						</div>
 						<!--重置密码弹框start-->
 						<div class="modal fade" id="passwdReset" tabindex="-1" role="dialog" aria-labelledby="passwdResetLabel">
@@ -120,6 +118,7 @@
 	
 	<!-- 自定义js -->
 	<script type="text/javascript" th:src="@{/static/js/content.js}" src="../../../static/js/content.js" ></script>
+	<script type="text/javascript" th:src="@{/static/js/common/mycommon.js}" src="../../../static/js/common/mycommon.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/system/member/member.list.js}" src="../../../static/js/system/member/member.list.js"></script>
 </body>
 </html>

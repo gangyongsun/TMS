@@ -1,6 +1,7 @@
+var tableName="onlineTable";
 //server分页
 $(function () {
-    var t = $("#onlineTable").bootstrapTable({
+    var t = $("#"+tableName+"").bootstrapTable({
         url: '/member/pageOnline',
         method: 'get',
         dataType: "json",
@@ -91,6 +92,7 @@ $(function () {
         $(".pull-right").css("display", "block");
     });
 });
+
 /**
  * 在线用户详情
  * 
@@ -129,18 +131,14 @@ function changeSessionStatus(sessionIds, status) {
 	}
 	
 	var index = layer.confirm(text, function() {
-		var load = layer.load();
 		$.post("changeSessionStatus", {
 			status : status,
 			sessionIds : sessionIds
 		}, function(result) {
-			layer.close(load);
 			if (result) {
 				layer.msg(result.message);
 			}
-			setTimeout(function() {
-				$('#formId').submit();
-			}, 1000);
+			refreshPage(tableName);
 		}, 'json');
 	});
 }

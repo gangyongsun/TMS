@@ -1,6 +1,7 @@
+var tableName="resourceListTable";
 //server分页
 $(function () {
-    var t = $("#resourceListTable").bootstrapTable({
+    var t = $("#"+tableName+"").bootstrapTable({
         url: '/resource/pageList',
         method: 'get',
         dataType: "json",
@@ -89,38 +90,22 @@ $(function () {
  * @returns
  */
 function deleteSelected(){
-	var idArray=getIdSelections();
+	var idArray=getSelections(tableName);
 	if (idArray.length == 0) {
 		layer.msg("请先选择要删除的资源!");
 	}else{
 		console.log(idArray)
 		var index = layer.confirm("确定删除这"+ idArray.length +"个资源？",function(){
-			var load = layer.load();
 			$.post('deleteResourceById',{
 				ids:idArray.join(',')
 			},function(result){
-				layer.close(load);
 				if (result) {
 					layer.msg(result.message);
 				}
-				setTimeout(function() {
-					$('#formId').submit();
-				}, 1000);
+				refreshPage(tableName);
 			},'json');
 		});
 	}
-}
-
-/**
- * 获得选中的
- * 
- * @returns
- */
-function getIdSelections() {
-	return $.map($("#resourceListTable").bootstrapTable('getSelections'), function(row) {
-		console.log(row.id)
-		return row.id;
-	});
 }
 
 /**
@@ -131,28 +116,15 @@ function getIdSelections() {
  */
 function _deleteone(id) {
 	var index = layer.confirm("确定删除该资源？", function() {
-		var load = layer.load();
 		$.post('deleteResourceById', {
 			ids : id
 		}, function(result) {
-			layer.close(load);
 			if (result) {
 				layer.msg(result.message);
 			}
-			setTimeout(function() {
-				$('#formId').submit();
-			}, 1000);
+			refreshPage(tableName);
 		}, 'json');
 	});
-}
-
-/**
- * 添加资源弹框
- * 
- * @returns
- */
-function showAddResource(){
-	$('#showAddResource').modal({backdrop: false,keyboard: true})
 }
 
 /**
@@ -186,8 +158,6 @@ function addResource(){
 		if (result) {
 			layer.msg(result.message);
 		}
-		setTimeout(function() {
-			$('#formId').submit();
-		}, 1000);
+		refreshPage(tableName);
 	},'json');
 }

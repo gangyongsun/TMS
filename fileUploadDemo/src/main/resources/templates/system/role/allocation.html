@@ -22,33 +22,29 @@
 			<div class="ibox-title">
 				<h5>角色分配</h5>
 			</div>
-			<form method="post" action="" id="formId" class="form-inline">
-				<div class="ibox-content">
-					<div class="row row-lg">
-						<div class="col-sm-12">
-							<div class="example-wrap">
-								<div class="col-sm-3">
-									<!--搜索框-->
-									<div class="input-group">
-										<input type="text" placeholder="查找用户" class="input form-control">
-										<span class="input-group-btn">
-											<button type="button" class="btn btn btn-primary">
-												<i class="fa fa-search"></i> 搜索
-											</button>
-										</span>
-									</div>
+			<div class="ibox-content">
+				<div class="row row-lg">
+					<div class="col-sm-12">
+						<div class="example-wrap">
+							<div class="col-sm-3">
+								<!--搜索框-->
+								<div class="input-group">
+									<input type="text" placeholder="查找用户" class="input form-control">
+									<span class="input-group-btn">
+										<button type="button" class="btn btn btn-primary">
+											<i class="fa fa-search"></i> 搜索
+										</button>
+									</span>
 								</div>
-								<a class="btn btn-danger" id="addUser" onclick="deleteSelected()"><span class="glyphicon glyphicon-trash"></span> 清空用户角色</a>
-								<form method="post" id="formId" class="form-inline">
-									<div class="example">
-										<table id="roleListTable4Allocation" class="table table-bordered tab-content"></table>
-									</div>
-								</form>
+							</div>
+							<a class="btn btn-danger" id="addUser" onclick="deleteSelected()"><span class="glyphicon glyphicon-trash"></span> 清空用户角色</a>
+							<div class="example">
+								<table id="roleListTable4Allocation" class="table table-bordered tab-content"></table>
 							</div>
 						</div>
 					</div>
 				</div>
-			</form>
+			</div>
 		</div>
 		<!-- End Panel Other -->
 		<input type="hidden" id="selectedUserId">
@@ -87,6 +83,7 @@
 	<!-- 自定义js -->
 	<script type="text/javascript" th:src="@{/static/js/content.js}" src="../../../static/js/content.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/shiro.demo.js}" src="../../../static/js/shiro.demo.js"></script>
+	<script type="text/javascript" th:src="@{/static/js/common/mycommon.js}" src="../../../static/js/common/mycommon.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/system/role/role.allocation.js}" src="../../../static/js/system/role/role.allocation.js"></script>
 </body>
 </html>

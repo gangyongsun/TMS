@@ -1,6 +1,7 @@
+var tableName="memberListTable";
 //server分页
 $(function () {
-    var t = $("#memberListTable").bootstrapTable({
+    var t = $("#"+tableName+"").bootstrapTable({
         url: '/member/pageList',
         method: 'get',
         dataType: "json",
@@ -120,36 +121,21 @@ $(function () {
  * @returns
  */
 function deleteSelected(){
-	var idArray=getIdSelections();
-	//console.log(idArray)
+	var idArray=getSelections(tableName);
 	if (idArray.length == 0) {
 		layer.msg("请先选择要删除的用户!");
 	}else{
 		var index = layer.confirm("确定删除这" + idArray.length + "个用户？", function() {
-			var load = layer.load();
 			$.post('deleteUserById', {
 				ids : idArray.join(',')
 			}, function(result) {
-				layer.close(load);
 				if (result) {
 					layer.msg(result.message);
 				}
-				setTimeout(function() {
-					$('#formId').submit();
-				}, 1000);
+				refreshPage(tableName);
 			}, 'json');
 		});
 	}
-}
-
-/**
- * 获得选中行的id
- * @returns
- */
-function getIdSelections() {
-	return $.map($("#memberListTable").bootstrapTable('getSelections'), function(row) {
-		return row.id;
-	});
 }
 
 /**
@@ -160,17 +146,13 @@ function getIdSelections() {
  */
 function _deleteone(id) {
 	var index = layer.confirm("确定删除该用户？", function() {
-		var load = layer.load();
 		$.post('deleteUserById', {
 			ids : id
 		}, function(result) {
-			layer.close(load);
 			if (result) {
 				layer.msg(result.message);
 			}
-			setTimeout(function() {
-				$('#formId').submit();
-			}, 1000);
+			refreshPage(tableName);
 		}, 'json');
 	});
 }
@@ -183,10 +165,7 @@ function _deleteone(id) {
  */
 function openResetPasswdWindow(id) {
 	$("#userId").val(id);
-	$('#passwdReset').modal({
-		backdrop : false,
-		keyboard : true
-	})
+	showModal('#passwdReset');
 }
 
 /**
@@ -200,36 +179,20 @@ function resetPasswd() {
 	var reNewPswd = $("#reNewPswd").val();
 	var newPswd = $('#newPswd').val();
 	if (newPswd != reNewPswd) {
-		return layer.msg('2次密码输入不一样！', function() {
-		}), !1;
+		return layer.msg('密码输入不一致！');
 	}
 
-	console.log(userId, newPswd, reNewPswd);
-	var index = layer.confirm("确定为该用户重置密码？", function() {
+	var index = layer.confirm("确定重置该用户的密码？", function() {
 		$.post('resetPasswd', {
 			id : userId,
 			newPswd : newPswd
 		}, function(result) {
-			if (result && result.status != 200) {
-				return layer.msg(result.message), !0;
-			} else {
+			if (result) {
 				layer.msg(result.message);
-				$('#passwdReset').modal("hide");
 			}
+			hideModal('#passwdReset');
 		}, 'json');
 	});
-}
-
-/**
- * 添加用户弹框
- * 
- * @returns
- */
-function showAddUser() {
-	$('#showAddUser').modal({
-		backdrop : false,
-		keyboard : true
-	})
 }
 
 /**
@@ -242,19 +205,15 @@ function addUser() {
 	var password = $("#passWord").val();
 	var userenable = $("#userEnable").val();
 
-	var load = layer.load();
 	$.post('addUser', {
 		userName : username,
 		passWord : password,
 		userEnable : userenable
 	}, function(result) {
-		layer.close(load);
 		if (result) {
 			layer.msg(result.message);
 		}
-		setTimeout(function() {
-			$('#formId').submit();
-		}, 1000);
+		refreshPage(tableName);
 	}, 'json');
 }
 
@@ -268,19 +227,14 @@ function addUser() {
 function activeUserByStatusAndId(userEnable, id) {
 	var text = userEnable ? '激活' : '禁止';
 	var index = layer.confirm("确定" + text + "这个用户？", function() {
-		var load = layer.load();
 		$.post('activeUserByStatusAndId', {
 			userEnable : userEnable,
 			id : id
 		}, function(result) {
-			layer.close(load);
 			if (result) {
 				layer.msg(result.message);
 			}
-			setTimeout(function() {
-				$('#formId').submit();
-			}, 1000);
+			refreshPage(tableName);
 		}, 'json');
-		layer.close(index);
 	});
 }

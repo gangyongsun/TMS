@@ -1,6 +1,11 @@
-//server分页
-$(function () {
-    var t = $("#roleListTable").bootstrapTable({
+var tableName="roleListTable";
+/**
+ * 加载页面
+ * 
+ * @returns
+ */
+function loadPage(){
+	 var t = $("#"+tableName+"").bootstrapTable({
         url: '/role/pageList',
         method: 'get',
         dataType: "json",
@@ -57,11 +62,14 @@ $(function () {
             }
         ]
     });
- 
-    t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
-        console.log("load success");
-        $(".pull-right").css("display", "block");
-    });
+   t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
+	   console.log("load success");
+	   $(".pull-right").css("display", "block");
+   });
+}
+
+$(function () {
+	loadPage();
 });
 
  /**
@@ -69,37 +77,21 @@ $(function () {
   * @returns
   */
 function deleteSelected(){
-	var idArray=getIdSelections();
+	var idArray=getSelections(tableName);
 	if (idArray.length == 0) {
 		layer.msg("请先选择要删除的角色!");
 	}else{
-		console.log(idArray)
 		var index = layer.confirm("确定删除这"+ idArray.length +"个角色？",function(){
-			var load = layer.load();
 			$.post('deleteRoleByIds',{
 				ids:idArray.join(',')
 			},function(result){
-				layer.close(load);
 				if (result) {
 					layer.msg(result.message);
 				}
-				setTimeout(function() {
-					$('#formId').submit();
-				}, 1000);
+				refreshPage(tableName);
 			},'json');
 		});
 	}
-}
-
-/**
- * 获得选中的
- * 
- * @returns
- */
-function getIdSelections() {
-	return $.map($("#roleListTable").bootstrapTable('getSelections'), function(row) {
-		return row.id;
-	});
 }
 
 /**
@@ -110,27 +102,15 @@ function getIdSelections() {
  */
 function _deleteone(id) {
 	var index = layer.confirm("确定删除该角色？", function() {
-		var load = layer.load();
 		$.post('deleteRoleByIds', {
 			ids : id
 		}, function(result) {
-			layer.close(load);
 			if (result) {
 				layer.msg(result.message);
 			}
-			setTimeout(function() {
-				$('#formId').submit();
-			}, 1000);
+			refreshPage(tableName);
 		}, 'json');
 	});
-}
-
-/**
- * 添加用户弹框
- * @returns
- */
-function showAddRole(){
-	$('#showAddRole').modal({backdrop: false,keyboard: true})
 }
 
 /**
@@ -147,17 +127,14 @@ function addRole(){
 	if(!/^[a-z0-9A-Z]{6}$/.test(roleType)){
 		return layer.msg('角色类型为6位置数字字母!');
 	}
-	var load = layer.load();
 	$.post('addRole',{
 		roleDesc:roleName,
 		roleType:roleType
 	},function(result){
-		layer.close(load);
 		if (result) {
 			layer.msg(result.message);
+			hideModal("showAddRole");
 		}
-		setTimeout(function() {
-			$('#formId').submit();
-		}, 1000);
+		refreshPage(tableName);
 	},'json');
 }

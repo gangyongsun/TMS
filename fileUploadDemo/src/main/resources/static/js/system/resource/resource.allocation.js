@@ -1,42 +1,97 @@
+var tableName="resourceListTable4Allocation";
+//server分页
+$(function () {
+    var t = $("#"+tableName+"").bootstrapTable({
+        url: '/resource/pageList4Allocation',
+        method: 'get',
+        dataType: "json",
+        cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+        striped: true,//设置隔行变色效果
+        clickToSelect: true,
+        undefinedText: "空",//当数据为undefined时显示的字符
+        showRefresh:true,//显示刷新按钮
+        showToggle: true,//是否显示切换试图（table/card）按钮
+        showColumns: true,//是否显示内容列下拉框
+        pagination: true, //启用分页
+        showPaginationSwitch:true,//是否显示数据条数选择框
+        pageNumber: 1,//分页首页页码
+        pageSize: 10,//分页页面数据条数
+        pageList: [10, 20, 50, 100],//设置可供选择的页面数据条数；设置为All则显示所有记录
+        minimumCountColumns: 2,//最少允许的列数
+        paginationFirstText: "首页",//指定“首页”按钮的图标或文字
+        paginationPreText: '上一页',//指定“上一页”按钮的图标或文字
+        paginationNextText: '下一页',//指定“下一页”按钮的图标或文字
+        paginationLastText: "末页",//指定“末页”按钮的图标或文字
+        data_local: "zh-US",//表格汉化
+        sidePagination: "server", //服务端处理分页
+        queryParamsType:'',//默认值为'limit',在默认情况下传给服务端的参数为：offset,limit,sort;设置为'',在这种情况下传给服务器的参数为：pageSize,pageNumber
+      	idField: "id",//指定主键列
+        columns: [
+            {
+                checkbox:true,
+            },
+            {
+                visible:false,
+                field: 'id',//json数据中rows数组中的属性名
+                align: 'center'//水平居中
+            },
+            {
+                title: '角色名称',
+                field: 'roleDesc',
+                align: 'left'
+            },
+            {
+                title: '角色类型',
+                field: 'roleType',
+                align: 'left'
+            },
+            {
+                title: '拥有的权限',
+                field: 'resourceNames',
+                align: 'left'
+            },
+            {
+                title: '操作',
+                align: 'center',
+                formatter: function (value, row, index) {//自定义显示，也可以写标签
+                	operate=
+                	'<!-- <shiro:hasPermission name="/resource/allocation"> -->'+
+					'<a class="btn btn-success btn-sm" onclick="javascript:selectResourceById('+row.id+');"><span class="glyphicon glyphicon-eye-close"></span> 选择权限</a>'+
+					'<!-- </shiro:hasPermission> -->'
+                    return operate;
+                }
+            }
+        ]
+    });
+ 
+    t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
+        console.log("load success");
+        $(".pull-right").css("display", "block");
+    });
+});
+ 
 /**
- * 清空多个角色的权限
+ * 清空所选角色的所有权限
  * 
  * @returns
  */
-function deleteAll(){
-	var checkeds = $('[id=subcheckbox]:checked');
-	if(!checkeds.length){
-		return layer.msg('请选择要清除权限的角色！',so.default),!0;
+function deleteSelected(){
+	var idArray=getSelections(tableName);
+	if (idArray.length == 0) {
+		layer.msg("请先选择要清空角色的用户!");
+	}else{
+		console.log(idArray)
+		var index = layer.confirm("确定清空这"+ idArray.length +"个用户的所有角色？",function(){
+			$.post('clearResourceByRoleIds',{
+				ids:idArray.join(',')
+			},function(result){
+				if (result) {
+					layer.msg(result.message);
+				}
+				refreshPage(tableName);
+			},'json');
+		});
 	}
-	var array = [];
-	checkeds.each(function(){
-		array.push(this.value);
-	});
-	return deleteById(array);
-};
-
-/**
- * 根据ID数组清空角色的权限
- * 
- * @param ids
- * @returns
- */
-function deleteById(ids){
-	var index = layer.confirm("确定清除这"+ ids.length +"个角色的权限？",function(){
-		var load = layer.load();
-		$.post('clearResourceByRoleIds',{roleIds:ids.join(',')},function(result){
-			layer.close(load);
-			if(result && result.status != 200){
-				return layer.msg(result.message,so.default),!0;
-			}else{
-				layer.msg(result.message);
-				setTimeout(function(){
-					$('#formId').submit();
-				},1000);
-			}
-		},'json');
-		layer.close(index);
-	});
 }
 
 /**
@@ -52,17 +107,12 @@ function selectResource(){
 		names.push($.trim($(this).attr('name')));
 	});
 	roleId=$('#selectedRoleId').val();
-	console.log(roleId);
 	var index = layer.confirm("确定操作？",function(){
-		var load = layer.load();
 		$.post('addResource2Role',{ids:ids.join(','),roleId:roleId},function(result){
-			layer.close(load);
 			if(result){
-				layer.msg(result.message,so.default),!1;
+				layer.msg(result.message);
 			}
-			setTimeout(function(){
-				$('#formId').submit();
-			},1000);
+			refreshPage(tableName);
 		},'json');
 	});
 }
@@ -93,9 +143,9 @@ function selectResourceById(id){
 			// 初始化全选
 			return so.id('boxRoleForm').html(html.join('')),
 			so.checkBoxInit('[selectAllBox]','[selectBox]'),
-			$('#selectResource').modal({backdrop: false,keyboard: true}),$('#selectedRoleId').val(id),!1;
+			$('#selectResource').modal({backdrop: false,keyboard: true}),$('#selectedRoleId').val(id);
 		}else{
-			return layer.msg('没有获取到权限数据，请先添加权限数据!',so.default);
+			return layer.msg('没有获取到权限数据，请先添加权限数据!');
 		}
 	},'json');
 }

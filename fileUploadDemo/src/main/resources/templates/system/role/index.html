@@ -27,14 +27,12 @@
 					<div class="col-sm-12">
 						<div class="example-wrap">
 							<div class="col-sm-3">
-								<a class="btn btn-success" onclick="showAddRole()"><span class="glyphicon glyphicon-plus"></span> 添加角色</a>
+								<a class="btn btn-success" onclick="showModal('showAddRole')"><span class="glyphicon glyphicon-plus"></span> 添加角色</a>
 								<a class="btn btn-danger" onclick="deleteSelected()"><span class="glyphicon glyphicon-trash"></span> 删除角色</a>
 							</div>
-							<form method="post" id="formId" class="form-inline">
-								<div class="example">
-									<table id="roleListTable" class="table table-bordered tab-content"></table>
-								</div>
-							</form>
+							<div class="example">
+								<table id="roleListTable" class="table table-bordered tab-content"></table>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -81,6 +79,7 @@
 	
 	<!-- 自定义js -->
 	<script type="text/javascript" th:src="@{/static/js/content.js}" src="../../../static/js/content.js"></script>
+	<script type="text/javascript" th:src="@{/static/js/common/mycommon.js}" src="../../../static/js/common/mycommon.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/system/role/role.index.js}" src="../../../static/js/system/role/role.index.js"></script>
 </body>
 </html>

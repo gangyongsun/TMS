@@ -1,6 +1,7 @@
+var tableName="roleListTable4Allocation";
 //server分页
 $(function () {
-    var t = $("#roleListTable4Allocation").bootstrapTable({
+    var t = $("#"+tableName+"").bootstrapTable({
         url: '/role/pageList4Allocation',
         method: 'get',
         dataType: "json",
@@ -84,40 +85,23 @@ $(function () {
  * @returns
  */
 function deleteSelected(){
-	var idArray=getIdSelections();
+	var idArray=getSelections(tableName);
 	if (idArray.length == 0) {
 		layer.msg("请先选择要清空角色的用户!");
 	}else{
 		console.log(idArray)
 		var index = layer.confirm("确定清空这"+ idArray.length +"个用户的所有角色？",function(){
-			var load = layer.load();
 			$.post('clearRoleByUserIds',{
 				ids:idArray.join(',')
 			},function(result){
-				layer.close(load);
 				if (result) {
 					layer.msg(result.message);
 				}
-				setTimeout(function() {
-					$('#formId').submit();
-				}, 1000);
+				refreshPage(tableName);
 			},'json');
 		});
 	}
 }
-
-/**
- * 获得选中的
- * 
- * @returns
- */
-function getIdSelections() {
-	return $.map($("#roleListTable4Allocation").bootstrapTable('getSelections'), function(row) {
-		console.log(row.id)
-		return row.id;
-	});
-}
-
 
 /**
  * 选择角色后保存
@@ -131,15 +115,11 @@ function selectRole(){
 	});
 	userId=$('#selectedUserId').val();
 	var index = layer.confirm("确定操作？",function(){
-		var load = layer.load();
 		$.post('addRole2User',{roleIds:ids.join(','),userId: userId},function(result){
-			layer.close(load);
 			if(result){
 				layer.msg(result.message);
 			}
-			setTimeout(function(){
-				$('#formId').submit();
-			},1000);
+			refreshPage(tableName);
 		},'json');
 	});
 };
