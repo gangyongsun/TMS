@@ -36,7 +36,7 @@ public interface UserService {
 	 * @param pageSize
 	 * @return
 	 */
-	public Pagination<UserRoleAllocationBo> findUserAndRole(ModelMap modelMap, Integer pageNo, Integer pageSize);
+//	public Pagination<UserRoleAllocationBo> findUserAndRole(ModelMap modelMap, Integer pageNo, Integer pageSize);
 
 	/**
 	 * 用户登录，用于密码修改

@@ -7,10 +7,6 @@
 		<result column="user_id" property="userId" jdbcType="INTEGER" />
 		<result column="role_id" property="roleId" jdbcType="INTEGER" />
 	</resultMap>
-	<!-- <insert id="insert" parameterType="cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUserRole">
-		insert into sys_user_role (user_id, role_id)
-		values (#{user_id,jdbcType=BIGINT}, #{role_id,jdbcType=BIGINT})
-	</insert> -->
 	<!-- 根据用户ID删除 -->
 	<delete id="deleteByUserId">
 		delete from sys_user_role where user_id = #{id,jdbcType=BIGINT}
@@ -22,24 +18,4 @@
 	<select id="findUserIdListByRoleId" resultType="java.lang.Integer">
 		select user_id from sys_user_role where role_id = #{id,jdbcType=BIGINT}
 	</select>
-
-	<!-- <insert id="insertSelective" parameterType="cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUserRole">
-		insert into sys_user_role
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="user_id != null">
-				user_id,
-			</if>
-			<if test="role_id != null">
-				role_id,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="user_id != null">
-				#{user_id,jdbcType=BIGINT},
-			</if>
-			<if test="role_id != null">
-				#{role_id,jdbcType=BIGINT},
-			</if>
-		</trim>
-	</insert> -->
 </mapper>

@@ -46,38 +46,8 @@
 		delete from sys_role_resources where role_id = #{id,jdbcType=BIGINT}
 	</delete>
 	
-	<!-- 根据角色ID && 权限ID删除 -->
-	<!-- <delete id="delete">
-		delete from sys_role_resources where role_id = #{role_id,jdbcType=BIGINT}
-		and resources_id = #{resources_id,jdbcType=BIGINT}
-	</delete> -->
-	
 	<!-- 根据角色IDs删除 -->
 	<delete id="deleteByRoleIds">
 		delete from sys_role_resources where role_id in(#{roleIds,jdbcType=VARCHAR})
 	</delete>
-<!-- 
-	<insert id="insert" parameterType="cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysRoleResources">
-		insert into sys_role_resources (role_id, resources_id) values (#{role_id,jdbcType=BIGINT}, #{resources_id,jdbcType=BIGINT})
-	</insert> 
-	
-	<insert id="insertSelective" parameterType="cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysRoleResources">
-		insert into sys_role_resources
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="role_id != null">
-				role_id,
-			</if>
-			<if test="resources_id != null">
-				resources_id,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="role_id != null">
-				#{role_id,jdbcType=BIGINT},
-			</if>
-			<if test="resources_id != null">
-				#{resources_id,jdbcType=BIGINT},
-			</if>
-		</trim>
-	</insert>-->
 </mapper>
