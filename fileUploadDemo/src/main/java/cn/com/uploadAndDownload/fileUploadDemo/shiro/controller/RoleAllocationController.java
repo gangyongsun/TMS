@@ -90,12 +90,12 @@ public class RoleAllocationController extends BaseController {
 	/**
 	 * 根据用户id清空角色
 	 * 
-	 * @param userIds 用户ID ，以‘,’间隔
+	 * @param ids 用户ID ，以‘,’间隔
 	 * @return
 	 */
 	@RequestMapping(value = "clearRoleByUserIds")
 	@ResponseBody
-	public Map<String, Object> clearRoleByUserIds(String userIds) {
-		return roleService.deleteRoleByUserIds(userIds);
+	public Map<String, Object> clearRoleByUserIds(String ids) {
+		return roleService.deleteRoleByUserIds(ids);
 	}
 }

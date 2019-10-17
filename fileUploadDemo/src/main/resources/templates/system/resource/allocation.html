@@ -50,6 +50,27 @@
 		</div>
 		<!-- End Panel Other -->
 		<input type="hidden" id="selectedRoleId">
+		<!--弹框-->
+		<div class="modal fade bs-example-modal-sm" id="selectResource" tabindex="-1" role="dialog" aria-labelledby="selectResourceLabel">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="selectResourceLabel">添加权限</h4>
+					</div>
+					<div class="modal-body">
+						<form id="boxRoleForm">loading...</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" onclick="selectResource();" class="btn btn-primary">保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--弹框-->
 	</div>
 	<!-- 全局js -->
 	<script type="text/javascript" th:src="@{/static/js/jquery-2.0.3.min.js}" src="../../../static/js/jquery-2.0.3.min.js"></script>

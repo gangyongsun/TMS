@@ -25,23 +25,25 @@
 			<form method="post" action="" id="formId" class="form-inline">
 				<div class="ibox-content">
 					<div class="row row-lg">
-						<div class="col-sm-3">
-							<!--搜索框-->
-							<div class="input-group">
-								<input type="text" placeholder="查找用户" class="input form-control">
-								<span class="input-group-btn">
-									<button type="button" class="btn btn btn-primary">
-										<i class="fa fa-search"></i> 搜索
-									</button>
-								</span>
-							</div>
-						</div>
 						<div class="col-sm-12">
 							<div class="example-wrap">
-								<div class="example">
-									<a class="btn btn-danger" id="addUser" onclick="deleteSelected()"><span class="glyphicon glyphicon-trash"></span> 清空用户角色</a>
-									<table id="roleListTable4Allocation" class="table table-bordered tab-content"></table>
+								<div class="col-sm-3">
+									<!--搜索框-->
+									<div class="input-group">
+										<input type="text" placeholder="查找用户" class="input form-control">
+										<span class="input-group-btn">
+											<button type="button" class="btn btn btn-primary">
+												<i class="fa fa-search"></i> 搜索
+											</button>
+										</span>
+									</div>
 								</div>
+								<a class="btn btn-danger" id="addUser" onclick="deleteSelected()"><span class="glyphicon glyphicon-trash"></span> 清空用户角色</a>
+								<form method="post" id="formId" class="form-inline">
+									<div class="example">
+										<table id="roleListTable4Allocation" class="table table-bordered tab-content"></table>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -50,6 +52,27 @@
 		</div>
 		<!-- End Panel Other -->
 		<input type="hidden" id="selectedUserId">
+		<!--弹框-->
+		<div class="modal fade" style="z-index:2051" id="selectRole" tabindex="-1" role="dialog" aria-labelledby="selectRoleLabel" data-backdrop='static'>
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="selectRoleLabel">添加角色</h4>
+					</div>
+					<div class="modal-body">
+						<form id="boxRoleForm">loading...</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" onclick="selectRole();">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/弹框-->
 	</div>
 	<!-- 全局js -->
 	<script type="text/javascript" th:src="@{/static/js/jquery-2.0.3.min.js}" src="../../../static/js/jquery-2.0.3.min.js"></script>
@@ -65,97 +88,5 @@
 	<script type="text/javascript" th:src="@{/static/js/content.js}" src="../../../static/js/content.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/shiro.demo.js}" src="../../../static/js/shiro.demo.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/system/role/role.allocation.js}" src="../../../static/js/system/role/role.allocation.js"></script>
-	<script type="text/javascript">
-		//server分页
-		$(function () {
-		    var t = $("#roleListTable4Allocation").bootstrapTable({
-		        url: '/role/pageList4Allocation',
-		        method: 'get',
-		        dataType: "json",
-		        cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-		        striped: true,//设置隔行变色效果
-                clickToSelect: true,
-		        undefinedText: "空",//当数据为undefined时显示的字符
-		        showRefresh:true,//显示刷新按钮
-		        showToggle: true,//是否显示切换试图（table/card）按钮
-		        showColumns: true,//是否显示内容列下拉框
-		        pagination: true, //启用分页
-		        showPaginationSwitch:true,//是否显示数据条数选择框
-		        pageNumber: 1,//分页首页页码
-		        pageSize: 10,//分页页面数据条数
-		        pageList: [10, 20, 50, 100],//设置可供选择的页面数据条数；设置为All则显示所有记录
-		        minimumCountColumns: 2,//最少允许的列数
-		        paginationFirstText: "首页",//指定“首页”按钮的图标或文字
-		        paginationPreText: '上一页',//指定“上一页”按钮的图标或文字
-		        paginationNextText: '下一页',//指定“下一页”按钮的图标或文字
-		        paginationLastText: "末页",//指定“末页”按钮的图标或文字
-		        data_local: "zh-US",//表格汉化
-		        sidePagination: "server", //服务端处理分页
-		        queryParamsType:'',//默认值为'limit',在默认情况下传给服务端的参数为：offset,limit,sort;设置为'',在这种情况下传给服务器的参数为：pageSize,pageNumber
-		      	idField: "id",//指定主键列
-		        columns: [
-		            {
-		                checkbox:true,
-		            },
-		            {
-		                visible:false,
-		                field: 'id',//json数据中rows数组中的属性名
-		                align: 'center'//水平居中
-		            },
-		            {
-		                title: '用户昵称',
-		                field: 'nickname',
-		                align: 'left'
-		            },
-		            {
-		                title: '用户账户',
-		                field: 'userName',
-		                align: 'left'
-		            },
-		            {
-		                title: '用户可用状态',
-		                field: 'userEnable',
-		                align: 'left',
-		                formatter: function (value, row, index) {//自定义显示，这三个参数分别是：value该行的属性，row该行记录，index该行下标
-		                	 return row.userEnable == 0 ? "无效" : "有效";
-		                }
-		            },
-		            {
-		                title: '拥有的角色',
-		                field: 'roleNames',
-		                align: 'left'
-		            },
-		            {
-		                title: '操作',
-		                align: 'center',
-		                formatter: function (value, row, index) {//自定义显示，也可以写标签
-		                	operate=
-		                	'<!-- <shiro:hasPermission name="/role/selectRole"> -->'+
-							'<a class="btn btn-success btn-sm" onclick="javascript:selectRoleById('+row.id+');"><span class="glyphicon glyphicon-eye-close"></span> 选择角色</a>'+
-							'<!-- </shiro:hasPermission> -->'
-		                    return operate;
-		                }
-		            }
-		        ]
-		    });
-		 
-		    t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
-		        console.log("load success");
-		        $(".pull-right").css("display", "block");
-		    });
-		});
-		 
-	    function deleteSelected(){
-			getIdSelections();
-		}
-	    
-		//获得选中的
-		function getIdSelections() {
-			return $.map($("#roleListTable4Allocation").bootstrapTable('getSelections'), function(row) {
-				console.log(row.id)
-				return row.id;
-			});
-		}
-	</script>
 </body>
 </html>

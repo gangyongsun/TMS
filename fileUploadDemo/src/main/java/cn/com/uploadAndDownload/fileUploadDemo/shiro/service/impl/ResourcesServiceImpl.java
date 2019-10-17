@@ -60,6 +60,7 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 	public SysResources insertSelective(SysResources resource) {
 		resourcesMapper.insertSelective(resource);
 		// 每添加一个权限，都往【系统管理员 100001】里添加一次,保证系统管理员有最大的权限
+		//TODO 逻辑要更新
 		executePermission(new Integer(1), String.valueOf(resource.getId()));
 		return resource;
 	}
@@ -102,9 +103,11 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 	public Map<String, Object> deleteResourceByIds(String ids) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
-			int successCount = 0, errorCount = 0;
-			String resultMsg = "删除%s条，失败%s条";
-			String[] idArray = new String[] {};
+			int successCount = 0;
+			int errorCount = 0;
+			String resultMsg = "删除%s条，失败%s条!";
+			
+			String[] idArray;
 			if (StringUtils.contains(ids, ",")) {
 				idArray = ids.split(",");
 			} else {
@@ -121,15 +124,16 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 					successCount += this.deleteResourceById(id);
 				}
 			}
-			resultMap.put("status", 200);
-			// 如果有成功的，也有失败的，提示清楚。
+			// 如果有成功的，也有失败的，提示清楚
 			if (errorCount > 0) {
 				resultMsg = String.format(resultMsg, successCount, errorCount);
 			} else {
 				resultMsg = "操作成功";
 			}
-			resultMap.put("resultMsg", resultMsg);
+			resultMap.put("status", 200);
+			resultMap.put("message", resultMsg);
 		} catch (Exception e) {
+			e.printStackTrace();
 			LoggerUtils.fmtError(getClass(), e, "根据IDS删除用户出现错误，ids[%s]", ids);
 			resultMap.put("status", 500);
 			resultMap.put("message", "删除出现错误，请刷新后再试！");
@@ -164,23 +168,25 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 					}
 				}
 			}
+			
+			//清空拥有角色Id为：roleId 的用户权限已加载数据，让权限数据重新加载
+			List<Integer> userIds = userRoleMapper.findUserIdListByRoleId(roleId);
+
+//			TokenManager.clearUserAuthByUserId(userIds);
+			for (int userId : userIds) {
+				List<SimplePrincipalCollection> result = customSessionManager.getSimplePrincipalCollectionByUserId(userId);
+				for (SimplePrincipalCollection simplePrincipalCollection : result) {
+					sampleRealm.clearCachedAuthorizationInfo(simplePrincipalCollection);
+				}
+			}
 			resultMap.put("status", 200);
 			resultMap.put("message", "操作成功");
+			resultMap.put("count", count);
 		} catch (Exception e) {
+			e.printStackTrace();
 			resultMap.put("status", 200);
 			resultMap.put("message", "操作失败，请重试！");
 		}
-		//清空拥有角色Id为：roleId 的用户权限已加载数据，让权限数据重新加载
-		List<Integer> userIds = userRoleMapper.findUserIdListByRoleId(roleId);
-
-//		TokenManager.clearUserAuthByUserId(userIds);
-		for (Integer userId : userIds) {
-			List<SimplePrincipalCollection> result = customSessionManager.getSimplePrincipalCollectionByUserId(userId);
-			for (SimplePrincipalCollection simplePrincipalCollection : result) {
-				sampleRealm.clearCachedAuthorizationInfo(simplePrincipalCollection);
-			}
-		}
-		resultMap.put("count", count);
 		return resultMap;
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,7 +75,7 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 		int count = 0;
 		try {
 			// 先删除原有的
-			userRoleMapper.deleteByUserId(userId);
+			userRoleMapper.deleteRoleByUserId(userId);
 			// 如果roleIds有值就添加，roleIds没值象征着把这个用户（userId）所有角色取消
 			if (StringUtils.isNotBlank(roleIds)) {
 				String[] roleIdArray = null;
@@ -91,20 +92,23 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 					}
 				}
 			}
+//			 清空用户的权限，迫使再次获取权限的时候，得重新加载
+//			TokenManager.clearUserAuthByUserId(userId);
+
+			List<SimplePrincipalCollection> result = customSessionManager.getSimplePrincipalCollectionByUserId(userId);
+			for (SimplePrincipalCollection simplePrincipalCollection : result) {
+				sampleRealm.clearCachedAuthorizationInfo(simplePrincipalCollection);
+			}
+			
 			resultMap.put("status", 200);
 			resultMap.put("message", "操作成功");
+			resultMap.put("count", count);
 		} catch (Exception e) {
+			e.printStackTrace();
 			resultMap.put("status", 200);
 			resultMap.put("message", "操作失败，请重试！");
 		}
-//		 清空用户的权限，迫使再次获取权限的时候，得重新加载
-//		TokenManager.clearUserAuthByUserId(userId);
 
-		List<SimplePrincipalCollection> result = customSessionManager.getSimplePrincipalCollectionByUserId(userId);
-		for (SimplePrincipalCollection simplePrincipalCollection : result) {
-			sampleRealm.clearCachedAuthorizationInfo(simplePrincipalCollection);
-		}
-		resultMap.put("count", count);
 		return resultMap;
 	}
 
@@ -112,13 +116,20 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 	public Map<String, Object> deleteRoleByUserIds(String userIds) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
-			resultMap.put("userIds", userIds);
-			userRoleMapper.deleteRoleByUserIds(resultMap);
+			String[] array1 = null;
+			if (StringUtils.contains(userIds, ",")) {
+				array1 = userIds.split(",");
+			} else {
+				array1 = new String[] { userIds };
+			}
+			Integer[] userIdArray = (Integer[])ConvertUtils.convert(array1, Integer.class);
+			userRoleMapper.deleteRoleByUserIds(userIdArray);
 			resultMap.put("status", 200);
-			resultMap.put("message", "操作成功");
+			resultMap.put("message", "清空用户角色成功");
 		} catch (Exception e) {
-			resultMap.put("status", 200);
-			resultMap.put("message", "操作失败，请重试！");
+			e.printStackTrace();
+			resultMap.put("status", 500);
+			resultMap.put("message", "清空用户角色失败，请重试！");
 		}
 		return resultMap;
 	}
