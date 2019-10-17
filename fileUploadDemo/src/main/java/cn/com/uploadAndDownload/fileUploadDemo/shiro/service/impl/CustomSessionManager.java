@@ -166,7 +166,7 @@ public class CustomSessionManager {
 			}
 			for (String sessionId : sessionIdArray) {
 				Session session = shiroSessionRepository.getSession(sessionId);
-
+				//TODO getSession拿不到
 				SessionStatus sessionStatus = new SessionStatus();
 				sessionStatus.setOnlineStatus(status);
 
@@ -174,13 +174,14 @@ public class CustomSessionManager {
 				customShiroSessionDAO.update(session);
 			}
 			map.put("status", 200);
-			map.put("sessionStatus", status ? 1 : 0);
-			map.put("sessionStatusText", status ? "踢出" : "激活");
-			map.put("sessionStatusTextTd", status ? "有效" : "已踢出");
+			map.put("message", "状态改变成功！");
+//			map.put("sessionStatus", status ? 1 : 0);
+//			map.put("sessionStatusText", status ? "踢出" : "激活");
+//			map.put("sessionStatusTextTd", status ? "有效" : "已踢出");
 		} catch (Exception e) {
 			LoggerUtils.fmtError(getClass(), e, "改变Session状态错误，sessionId[%s]", sessionIds);
 			map.put("status", 500);
-			map.put("message", "改变失败，有可能Session不存在，请刷新再试！");
+			map.put("message", "状态改变失败，Session可能不存在，请刷新再试！");
 		}
 		return map;
 	}

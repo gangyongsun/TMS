@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -71,9 +70,40 @@ public class MemberController extends BaseController {
 	}
 
 	/**
+	 * 在线用户管理页面
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "online")
+	public ModelAndView online() {
+		return new ModelAndView("system/member/online");
+	}
+
+	/**
+	 * 查询在线用户列表
+	 * 
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "pageOnline")
+	@ResponseBody
+	public TableSplitResult<List<UserOnlineBo>> pageOnline(Integer pageSize, Integer pageNumber) {
+		TableSplitResult<List<UserOnlineBo>> page = new TableSplitResult<List<UserOnlineBo>>();
+
+		List<UserOnlineBo> list = customSessionManager.getAllUser();
+		page.setRows(list);
+		page.setTotal(list.size());
+
+		page.setPageNo(null == pageNumber ? 1 : pageNumber);
+		page.setPageSize(null == pageSize ? 10 : pageSize);
+
+		return page;
+	}
+
+	/**
 	 * 添加用户
 	 * 
-	 * @param ids 如果有多个，以“,”间隔。
+	 * @param ids 如果有多个，以“,”间隔
 	 * @return
 	 */
 	@RequestMapping(value = "addUser", method = RequestMethod.POST)
@@ -91,44 +121,17 @@ public class MemberController extends BaseController {
 	}
 
 	/**
-	 * 在线用户管理页面
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "online")
-	public ModelAndView online() {
-		return new ModelAndView("system/member/online");
-	}
-	
-	/**
-	 * 查询在线用户列表
-	 * @param map
-	 * @return
-	 */
-	@RequestMapping(value = "pageOnline")
-	@ResponseBody
-	public TableSplitResult<List<UserOnlineBo>> pageOnline(ModelMap map, Integer pageSize, Integer pageNumber) {
-		TableSplitResult<List<UserOnlineBo>> page = new TableSplitResult<List<UserOnlineBo>>();
-		
-		List<UserOnlineBo> list = customSessionManager.getAllUser();
-		page.setRows(list);
-		page.setTotal(list.size());
-		
-		page.setPageNo(null == pageNumber ? 1 : pageNumber);
-		page.setPageSize(null == pageSize ? 10 : pageSize);
-		
-		return page;
-	}
-
-	/**
 	 * 在线用户详情
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "onlineDetails/{sessionId}", method = RequestMethod.GET)
-	public ModelAndView onlineDetails(@PathVariable("sessionId") String sessionId) {
-		UserOnlineBo bo = customSessionManager.getSession(sessionId);
-		return new ModelAndView("system/member/onlineDetails", "bo", bo);
+	@RequestMapping(value = "onlineDetail")
+	public ModelAndView onlineDetail(ModelMap map, String sessionId) {
+		UserOnlineBo onlineUser = customSessionManager.getSession(sessionId);
+		//TODO 有问题
+		
+		map.put("onlineUser", onlineUser);
+		return new ModelAndView("system/member/onlineDetail");
 	}
 
 	/**
@@ -141,7 +144,8 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "changeSessionStatus", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> changeSessionStatus(Boolean status, String sessionIds) {
-		return customSessionManager.changeSessionStatus(status, sessionIds);
+		Map<String, Object> map = customSessionManager.changeSessionStatus(status, sessionIds);
+		return map;
 	}
 
 	/**
@@ -163,9 +167,9 @@ public class MemberController extends BaseController {
 	 * @param status 1:有效，0:禁止登录
 	 * @return
 	 */
-	@RequestMapping(value = "forbidUserById", method = RequestMethod.POST)
+	@RequestMapping(value = "activeUserByStatusAndId", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> forbidUserById(Integer id, Integer userEnable) {
+	public Map<String, Object> activeUserByStatusAndId(Integer id, Integer userEnable) {
 		return userService.updateForbidUserById(id, userEnable);
 	}
 

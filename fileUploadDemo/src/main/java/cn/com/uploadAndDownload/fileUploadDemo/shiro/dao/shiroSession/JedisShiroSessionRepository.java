@@ -83,8 +83,9 @@ public class JedisShiroSessionRepository implements ShiroSessionRepository {
 
 	@Override
 	public Session getSession(Serializable id) {
-		if (id == null)
+		if (id == null) {
 			throw new NullPointerException("session id is empty");
+		}
 		Session session = null;
 		try {
 			byte[] value = getJedisManager().getValueByKey(DB_INDEX, SerializeUtil.serialize(buildRedisSessionKey(id)));
