@@ -165,7 +165,7 @@ function _deleteone(id) {
  */
 function openResetPasswdWindow(id) {
 	$("#userId").val(id);
-	showModal('#passwdReset');
+	showModal('passwdReset');
 }
 
 /**
@@ -190,7 +190,7 @@ function resetPasswd() {
 			if (result) {
 				layer.msg(result.message);
 			}
-			hideModal('#passwdReset');
+			hideModal('passwdReset');
 		}, 'json');
 	});
 }
