@@ -65,7 +65,7 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "pageList")
 	@ResponseBody
 	public TableSplitResult<SysUser> pageList(ModelMap map, Integer pageSize, Integer pageNumber) {
-		TableSplitResult<SysUser> page = userService.findUserInPage(map, pageNumber, pageSize);
+		TableSplitResult<SysUser> page = userService.findUserByPage(map, pageNumber, pageSize);
 		return page;
 	}
 
@@ -110,7 +110,8 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "addUser", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> addUser(SysUser sysUser) {
-		int result = userService.saveUser(sysUser);
+		SysUser user = UserManager.md5Pswd(sysUser);
+		int result = userService.saveUser(user);
 		if (result == 1) {
 			resultMap.put("status", 200);
 			resultMap.put("message", "添加用户成功！");

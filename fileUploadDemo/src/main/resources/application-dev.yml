@@ -24,6 +24,16 @@ spring:
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+    hikari: 
+      readOnly: false
+      connectionTimeout: 10000
+      idleTimeout: 600000
+      validationTimeout: 3000
+      maxLifetime: 1800000
+      loginTimeout: 5
+      maximumPoolSize: 60
+      minimumIdle: 10
+      
   redis:
     host: localhost
     port: 6379

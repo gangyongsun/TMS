@@ -88,7 +88,7 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 			for (SimplePrincipalCollection simplePrincipalCollection : result) {
 				sampleRealm.clearCachedAuthorizationInfo(simplePrincipalCollection);
 			}
-			
+
 			resultMap.put("status", 200);
 			resultMap.put("message", "操作成功");
 			resultMap.put("count", count);
@@ -111,7 +111,7 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 			} else {
 				array1 = new String[] { userIds };
 			}
-			Integer[] userIdArray = (Integer[])ConvertUtils.convert(array1, Integer.class);
+			Integer[] userIdArray = (Integer[]) ConvertUtils.convert(array1, Integer.class);
 			userRoleMapper.deleteUserRoleRelationshipByUserIds(userIdArray);
 			resultMap.put("status", 200);
 			resultMap.put("message", "清空用户角色成功");
@@ -126,9 +126,10 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 	@Override
 	public Map<String, Object> deleteRoleByIds(String ids) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
+		String resultMsg = "删除成功！";
+		int status = 200;
 		try {
 			int count = 0;
-			String resultMsg = "删除成功！";
 			String[] idArray = new String[] {};
 			if (StringUtils.contains(ids, ",")) {
 				idArray = ids.split(",");
@@ -136,22 +137,21 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 				idArray = new String[] { ids };
 			}
 
-			c: for (String idx : idArray) {
-				Integer id = new Integer(idx);
-				if (new Integer(1).equals(id)) {
-					resultMsg = "操作成功，但是<系统管理员>不能删除！";
-					continue c;
+			for (String id : idArray) {
+				if (!"1".equals(id)) {
+					count += roleMapper.deleteByPrimaryKey(new Integer(id));
 				} else {
-					count += roleMapper.deleteByPrimaryKey(id);
+					resultMsg += ",<系统管理员>不能删除！";
 				}
 			}
-			resultMap.put("status", 200);
-			resultMap.put("message",resultMsg);
 			resultMap.put("count", count);
 		} catch (Exception e) {
 			LoggerUtils.fmtError(getClass(), e, "根据IDS删除用户出现错误，ids[%s]", ids);
-			resultMap.put("status", 500);
-			resultMap.put("message", "删除出现错误！");
+			status = 500;
+			resultMsg = "删除出现错误！";
+		} finally {
+			resultMap.put("status", status);
+			resultMap.put("message", resultMsg);
 		}
 		return resultMap;
 	}
@@ -164,12 +164,12 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 	}
 
 	@Override
-	public TableSplitResult<RoleResourceAllocationBo> findRoleAndResourcePage2(ModelMap modelMap, Integer pageNumber, Integer pageSize) {
+	public TableSplitResult<RoleResourceAllocationBo> findRoleAndResourceByPage(ModelMap modelMap, Integer pageNumber, Integer pageSize) {
 		return super.findPage("findRoleAndResources", "findCount", modelMap, pageNumber, pageSize);
 	}
-	
+
 	@Override
-	public TableSplitResult<SysRole> findPage2(ModelMap modelMap, Integer pageNumber, Integer pageSize) {
+	public TableSplitResult<SysRole> findRoleByPage(ModelMap modelMap, Integer pageNumber, Integer pageSize) {
 		return super.findPage(modelMap, pageNumber, pageSize);
 	}
 

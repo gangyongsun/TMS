@@ -58,7 +58,7 @@ public class RoleAllocationController extends BaseController {
 	@ResponseBody
 	public TableSplitResult<UserRoleAllocationBo>  pageList4Allocation(ModelMap modelMap, Integer pageSize, Integer pageNumber) {
 //		modelMap.put("findContent", findContent);
-		TableSplitResult<UserRoleAllocationBo> page = userService.findUserAndRole2(modelMap, pageNumber, pageSize);
+		TableSplitResult<UserRoleAllocationBo> page = userService.findUserAndRoleByPage(modelMap, pageNumber, pageSize);
 		modelMap.put("page", page);
 		return page;
 	}

@@ -83,7 +83,7 @@ public interface UserService {
 	 * @param pageSize
 	 * @return
 	 */
-	public TableSplitResult<SysUser> findUserInPage(Map<String, Object> map, Integer pageNo, Integer pageSize);
+	public TableSplitResult<SysUser> findUserByPage(Map<String, Object> map, Integer pageNo, Integer pageSize);
 
 	/**
 	 * bootstrap table 分页查询用户列表
@@ -93,6 +93,6 @@ public interface UserService {
 	 * @param pageSize
 	 * @return
 	 */
-	public TableSplitResult<UserRoleAllocationBo> findUserAndRole2(ModelMap modelMap, Integer pageNumber, Integer pageSize);
+	public TableSplitResult<UserRoleAllocationBo> findUserAndRoleByPage(ModelMap modelMap, Integer pageNumber, Integer pageSize);
 
 }

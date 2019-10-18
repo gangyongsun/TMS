@@ -53,7 +53,7 @@ public class ResourcesController extends BaseController {
 	@ResponseBody
 	public TableSplitResult<SysResources> pageList(ModelMap modelMap, Integer pageSize, Integer pageNumber) {
 //		modelMap.put("findContent", findContent);
-		TableSplitResult<SysResources> page = resourcesService.findPage2(modelMap, pageNumber, pageSize);
+		TableSplitResult<SysResources> page = resourcesService.findResourceByPage(modelMap, pageNumber, pageSize);
 		modelMap.put("page", page);
 		return page;
 	}

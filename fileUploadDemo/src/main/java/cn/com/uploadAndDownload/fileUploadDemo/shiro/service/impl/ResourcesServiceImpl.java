@@ -69,7 +69,7 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 	}
 
 	@Override
-	public TableSplitResult<SysResources> findPage2(ModelMap modelMap, Integer pageNumber, Integer pageSize) {
+	public TableSplitResult<SysResources> findResourceByPage(ModelMap modelMap, Integer pageNumber, Integer pageSize) {
 		return super.findPage(modelMap, pageNumber, pageSize);
 	}
 

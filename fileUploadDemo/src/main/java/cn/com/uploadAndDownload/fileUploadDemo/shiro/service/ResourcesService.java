@@ -60,7 +60,7 @@ public interface ResourcesService {
 	 * @param pageSize
 	 * @return
 	 */
-	TableSplitResult<SysResources> findPage2(ModelMap modelMap, Integer pageNumber, Integer pageSize);
+	TableSplitResult<SysResources> findResourceByPage(ModelMap modelMap, Integer pageNumber, Integer pageSize);
 
 	/**
 	 * 根据角色ID查询角色权限

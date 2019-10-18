@@ -85,7 +85,7 @@ public interface RoleService {
 	 * @param pageSize
 	 * @return
 	 */
-	TableSplitResult<SysRole> findPage2(ModelMap modelMap, Integer pageNumber, Integer pageSize);
+	TableSplitResult<SysRole> findRoleByPage(ModelMap modelMap, Integer pageNumber, Integer pageSize);
 
 	/**
 	 * 分页查询角色资源关系列表
@@ -95,7 +95,7 @@ public interface RoleService {
 	 * @param pageSize
 	 * @return
 	 */
-	TableSplitResult<RoleResourceAllocationBo> findRoleAndResourcePage2(ModelMap modelMap, Integer pageNumber, Integer pageSize);
+	TableSplitResult<RoleResourceAllocationBo> findRoleAndResourceByPage(ModelMap modelMap, Integer pageNumber, Integer pageSize);
 
 	/**
 	 * 根据用户id清空用户拥有的角色

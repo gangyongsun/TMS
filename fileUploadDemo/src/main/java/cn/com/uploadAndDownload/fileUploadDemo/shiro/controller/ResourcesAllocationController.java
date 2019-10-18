@@ -59,7 +59,7 @@ public class ResourcesAllocationController extends BaseController {
 	@ResponseBody
 	public TableSplitResult<RoleResourceAllocationBo>  pageList4Allocation(ModelMap modelMap, Integer pageSize, Integer pageNumber) {
 //		modelMap.put("findContent", findContent);
-		TableSplitResult<RoleResourceAllocationBo> page = roleService.findRoleAndResourcePage2(modelMap, pageNumber, pageSize);
+		TableSplitResult<RoleResourceAllocationBo> page = roleService.findRoleAndResourceByPage(modelMap, pageNumber, pageSize);
 		modelMap.put("page", page);
 		return page;
 	}

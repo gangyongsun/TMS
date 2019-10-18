@@ -54,7 +54,7 @@ public class RoleController extends BaseController {
 	@ResponseBody
 	public TableSplitResult<SysRole>  pageList(ModelMap modelMap, Integer pageSize, Integer pageNumber) {
 //		modelMap.put("findContent", findContent);
-		TableSplitResult<SysRole> page = roleService.findPage2(modelMap, pageNumber, pageSize);
+		TableSplitResult<SysRole> page = roleService.findRoleByPage(modelMap, pageNumber, pageSize);
 		modelMap.put("page", page);
 		return page;
 	}
