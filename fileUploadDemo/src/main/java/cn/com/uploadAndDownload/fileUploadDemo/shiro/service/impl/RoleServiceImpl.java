@@ -165,12 +165,12 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 
 	@Override
 	public TableSplitResult<RoleResourceAllocationBo> findRoleAndResourcePage2(ModelMap modelMap, Integer pageNumber, Integer pageSize) {
-		return super.findPage2("findRoleAndResources", "findCount", modelMap, pageNumber, pageSize);
+		return super.findPage("findRoleAndResources", "findCount", modelMap, pageNumber, pageSize);
 	}
 	
 	@Override
 	public TableSplitResult<SysRole> findPage2(ModelMap modelMap, Integer pageNumber, Integer pageSize) {
-		return super.findPage2(modelMap, pageNumber, pageSize);
+		return super.findPage(modelMap, pageNumber, pageSize);
 	}
 
 	@Override

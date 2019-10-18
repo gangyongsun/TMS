@@ -23,12 +23,12 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
-    initialSize: 3
-    minIdle: 100
-    maxActive: 1000
-    maxWait: 60000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 30000
+    initialSize: 10
+    minIdle: 8
+    maxActive: 100
+    maxWait: 30000
+    timeBetweenEvictionRunsMillis: 5000
+    minEvictableIdleTimeMillis: 60000
     validationQuery: SELECT 'x'
     testWhileIdle: true
     testOnBorrow: false
@@ -42,12 +42,12 @@ spring:
     
     hikari: 
       readOnly: false
-      connectionTimeout: 600000
+      connectionTimeout: 30000
       idleTimeout: 600000
       validationTimeout: 3000
-      maxLifetime: 600000
+      maxLifetime: 1800000
       loginTimeout: 5
-      maximumPoolSize: 60
+      maximumPoolSize: 10
       minimumIdle: 10
 
   redis:

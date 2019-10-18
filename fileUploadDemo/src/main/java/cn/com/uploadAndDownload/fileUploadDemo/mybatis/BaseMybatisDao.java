@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,9 +21,7 @@ import org.mybatis.spring.SqlSessionUtils;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.MysqlDialect;
-import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.TableSplitResult;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;
 
@@ -62,166 +59,8 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 		super.setSqlSessionFactory(sqlSessionFactory);
 	}
 
-	/**
-	 * 根据Sql id 去查询 分页对象
-	 * 
-	 * @param sqlId    对应mapper.xml 里的Sql Id
-	 * @param paramMap   参数<String,Object>
-	 * @param pageNo   number
-	 * @param pageSize size
-	 * @return
-	 */
-	public Pagination findByPageBySqlId(String sqlId, Map<String, Object> paramMap, Integer pageNo, Integer pageSize) {
-		Pagination page = new Pagination();
-		pageNo = null == pageNo ? 1 : pageNo;
-		pageSize = null == pageSize ? 10 : pageSize;
-		page.setPageNo(pageNo);
-		page.setPageSize(pageSize);
-		
-		int offset = (page.getPageNo() - 1) * page.getPageSize();
-		String page_sql = String.format(" limit %s , %s", offset, pageSize);
-		paramMap.put("page_sql", page_sql);
-
-		Configuration configuration = this.getSqlSession().getConfiguration();
-		sqlId = String.format("%s.%s", NAMESPACE, sqlId);
-		BoundSql boundSql = configuration.getMappedStatement(sqlId).getBoundSql(paramMap);
-		String sqlcode = boundSql.getSql();
-
-		LoggerUtils.fmtDebug(SELF, "findByPageBySqlId sql : %s", sqlcode);
-		
-		String countCode = "";
-		String countId = "";
-		BoundSql countSql = null;
-		// sql id 和 count id 用同一个
-		if (StringUtils.isBlank(sqlId)) {
-			countCode = sqlcode;
-			countSql = boundSql;
-		} else {
-			countId = sqlId;
-
-			Map<String, Object> countMap = new HashMap<String, Object>();
-			countMap.putAll(paramMap);
-			countMap.remove("page_sql");// 去掉，分页的参数
-			countSql = configuration.getMappedStatement(countId).getBoundSql(countMap);
-			countCode = countSql.getSql();
-		}
-		
-		try {
-			Connection conn = this.getSqlSession().getConnection();
-
-			List<?> resultList = this.getSqlSession().selectList(sqlId, paramMap);
-			page.setList(resultList);
-			PreparedStatement ps = getPreparedStatement(countCode, countSql.getParameterMappings(), paramMap, conn);
-			ps.execute();
-			ResultSet set = ps.getResultSet();
-
-			while (set.next()) {
-				page.setTotalCount(set.getInt(1));
-			}
-		} catch (Exception e) {
-			LoggerUtils.error(SELF, "jdbc.error.code.findByPageBySqlId", e);
-		}
-		return page;
-	}
-
-	/**
-	 * 根据Sql ID 查询List，而不要查询分页的页码
-	 * 
-	 * @param sqlId    对应mapper.xml 里的Sql Id[主语句]
-	 * @param paramMap   参数<String,Object>
-	 * @param pageNo   number
-	 * @param pageSize size
-	 * @return
-	 */
-	public List findList(String sqlId, Map<String, Object> paramMap, Integer pageNo, Integer pageSize) {
-		pageNo = null == pageNo ? 1 : pageNo;
-		pageSize = null == pageSize ? 10 : pageSize;
-		int offset = (pageNo - 1) * pageSize;
-		
-		String page_sql = String.format(" limit %s , %s", offset, pageSize);
-		paramMap.put("page_sql", page_sql);
-		sqlId = String.format("%s.%s", NAMESPACE, sqlId);
-
-		List resultList = this.getSqlSession().selectList(sqlId, paramMap);
-		return resultList;
-	}
-
-	/**
-	 * 当Sql ID 是 default findAll的情况下
-	 * 
-	 * @param paramMap
-	 * @param pageNo
-	 * @param pageSize
-	 * @param requiredType 返回的类型[可以不传参]
-	 * @return
-	 */
-	public List findList(Map<String, Object> paramMap, Integer pageNo, Integer pageSize) {
-		return findList(SQL_ID_FINDALL, paramMap, pageNo, pageSize);
-	}
-
-	/**
-	 * 
-	 * @param sqlId    主语句
-	 * @param countId  Count语句
-	 * @param paramMap   参数
-	 * @param pageNo   第几页
-	 * @param pageSize 每页显示多少条
-	 * @return
-	 */
-	public Pagination findPage(String sqlId, String countId, Map<String, Object> paramMap, Integer pageNo, Integer pageSize) {
-		Pagination page = new Pagination();
-		pageNo = null == pageNo ? 1 : pageNo;
-		pageSize = null == pageSize ? 10 : pageSize;
-		page.setPageNo(pageNo);
-		page.setPageSize(pageSize);
-		int offset = (page.getPageNo() - 1) * page.getPageSize();
-		
-		String page_sql = String.format(" limit  %s , %s ", offset, pageSize);
-		paramMap.put("page_sql", page_sql);
-
-		sqlId = String.format("%s.%s", NAMESPACE, sqlId);
-
-		Configuration configuration = this.getSqlSession().getConfiguration();
-		BoundSql boundSql = configuration.getMappedStatement(sqlId).getBoundSql(paramMap);
-		String sqlcode = boundSql.getSql();
-		LoggerUtils.fmtDebug(SELF, "findPage sql : %s", sqlcode);
-		String countCode = "";
-		BoundSql countSql = null;
-		if (StringUtils.isBlank(countId)) {
-			countCode = sqlcode;
-			countSql = boundSql;
-		} else {
-			countId = String.format("%s.%s", NAMESPACE, countId);
-			countSql = configuration.getMappedStatement(countId).getBoundSql(paramMap);
-			countCode = countSql.getSql();
-		}
-		try {
-//			Connection conn = this.getSqlSession().getConnection();
-
-			SqlSessionTemplate st = (SqlSessionTemplate) getSqlSession();
-			Connection conn = SqlSessionUtils.getSqlSession(st.getSqlSessionFactory(), st.getExecutorType(), st.getPersistenceExceptionTranslator()).getConnection();
-
-//			System.out.println(conn.isClosed());
-
-			List resultList = this.getSqlSession().selectList(sqlId, paramMap);
-			page.setList(resultList);
-
-			// 处理Count
-			PreparedStatement ps = getPreparedStatement4Count(countCode, countSql.getParameterMappings(), paramMap, conn);
-			ps.execute();
-			ResultSet set = ps.getResultSet();
-
-			while (set.next()) {
-				page.setTotalCount(set.getInt(1));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			LoggerUtils.error(SELF, "jdbc.error.code.findByPageBySqlId", e);
-		}
-		return page;
-	}
 	
-	public TableSplitResult findPage2(String sqlId, String countId, Map<String, Object> paramMap, Integer pageNo, Integer pageSize) {
+	public TableSplitResult findPage(String sqlId, String countId, Map<String, Object> paramMap, Integer pageNo, Integer pageSize) {
 		TableSplitResult page = new TableSplitResult();
 		pageNo = null == pageNo ? 1 : pageNo;
 		pageSize = null == pageSize ? 10 : pageSize;
@@ -275,20 +114,8 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 	}
 	
 
-	/**
-	 * 重载减少参数DEFAULT_SQL_ID, "findCount"
-	 * 
-	 * @param params
-	 * @param pageNo
-	 * @param pageSize
-	 * @return
-	 */
-	public Pagination findPage(Map<String, Object> params, Integer pageNo, Integer pageSize) {
-		return findPage(SQL_ID_FINDALL, SQL_ID_FINDCOUNT, params, pageNo, pageSize);
-	}
-
-	public TableSplitResult findPage2(Map<String, Object> params, Integer pageNo, Integer pageSize) {
-		return findPage2(SQL_ID_FINDALL, SQL_ID_FINDCOUNT, params,pageNo, pageSize);
+	public TableSplitResult findPage(Map<String, Object> params, Integer pageNo, Integer pageSize) {
+		return findPage(SQL_ID_FINDALL, SQL_ID_FINDCOUNT, params,pageNo, pageSize);
 	}
 	
 	/**

@@ -32,6 +32,14 @@ public class LoginController extends BaseController {
 		return "auth/login";
 	}
 
+	/**
+	 * 登录
+	 * 
+	 * @param user
+	 * @param rememberMe
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "submitLogin", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> submitLogin(SysUser user, Boolean rememberMe, HttpServletRequest request) {
