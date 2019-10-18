@@ -107,7 +107,7 @@ function deleteSelected(){
 /**
  * 选择角色后保存
  */
-function selectRole(){
+function grantRoles(){
 	var checked = $("#boxRoleForm  :checked");
 	var ids=[],names=[];
 	$.each(checked,function(){
@@ -121,6 +121,7 @@ function selectRole(){
 				layer.msg(result.message);
 			}
 			refreshPage(tableName);
+			hideModal("selectRole");
 		},'json');
 	});
 };
