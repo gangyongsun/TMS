@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.springframework.ui.ModelMap;
 
-import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.TableSplitResult;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.UserRoleAllocationBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
@@ -29,16 +28,6 @@ public interface UserService {
 	public Set<String> findResourcesByUserId(int userId);
 
 	/**
-	 * 用户角色权限分配分页查询
-	 * 
-	 * @param modelMap
-	 * @param pageNo
-	 * @param pageSize
-	 * @return
-	 */
-//	public Pagination<UserRoleAllocationBo> findUserAndRole(ModelMap modelMap, Integer pageNo, Integer pageSize);
-
-	/**
 	 * 用户登录，用于密码修改
 	 * 
 	 * @param username
@@ -52,17 +41,7 @@ public interface UserService {
 	 * 
 	 * @param user
 	 */
-	public int updateUserOnSelective(SysUser user);
-
-	/**
-	 * 分页查询用户列表
-	 * 
-	 * @param map
-	 * @param pageNo
-	 * @param pageSize
-	 * @return
-	 */
-//	public Pagination<SysUser> findUserByPage(Map<String, Object> map, Integer pageNo, Integer pageSize);
+	public int updateUser(SysUser user);
 
 	/**
 	 * 根据用户id删除用户,ids 如果有多个则以“,”间隔。
@@ -73,21 +52,13 @@ public interface UserService {
 	public Map<String, Object> deleteUserByIds(String ids);
 
 	/**
-	 * 根据主键删除
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	public int deleteUserById(Integer userId);
-
-	/**
-	 * 根据ID禁止登录
+	 * 根据ID改变用户有效状态
 	 * 
 	 * @param id
-	 * @param status
+	 * @param userEnable
 	 * @return
 	 */
-	public Map<String, Object> updateForbidUserById(Integer id, Integer userEnable);
+	public Map<String, Object> updateUserOnUserEnable(Integer id, Integer userEnable);
 
 	/**
 	 * 根据ID查找用户
@@ -103,7 +74,7 @@ public interface UserService {
 	 * @param sysUser
 	 * @return
 	 */
-	public int insertUser(SysUser sysUser);
+	public int saveUser(SysUser sysUser);
 
 	/**
 	 * bootstrap table 分页查询用户列表
@@ -114,6 +85,14 @@ public interface UserService {
 	 */
 	public TableSplitResult<SysUser> findUserInPage(Map<String, Object> map, Integer pageNo, Integer pageSize);
 
+	/**
+	 * bootstrap table 分页查询用户列表
+	 * 
+	 * @param modelMap
+	 * @param pageNumber
+	 * @param pageSize
+	 * @return
+	 */
 	public TableSplitResult<UserRoleAllocationBo> findUserAndRole2(ModelMap modelMap, Integer pageNumber, Integer pageSize);
 
 }

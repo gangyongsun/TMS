@@ -13,14 +13,14 @@ public interface SysUserRoleMapper extends Mapper<SysUserRole> {
 	 * @param resultMap
 	 * @return
 	 */
-	int deleteRoleByUserIds(Integer[] userIds);
+	int deleteUserRoleRelationshipByUserIds(Integer[] userIds);
 
 	/**
 	 * 根据用户主键ID删除用户角色关系
 	 * 
 	 * @param userId
 	 */
-	int deleteRoleByUserId(Integer userId);
+	int deleteUserRoleRelationshipByUserId(Integer userId);
 
 	/**
 	 * 根据角色ID查询用户IDs

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.BaseMybatisDao;
-import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.TableSplitResult;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysResourcesBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysResourcesMapper;
@@ -46,18 +45,7 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 	private SysRoleResourcesMapper roleResourceMapper;
 
 	@Override
-	public int deleteResourceById(Integer id) {
-		return resourcesMapper.deleteByPrimaryKey(id);
-	}
-
-	@Override
-	public SysResources insert(SysResources resources) {
-		resourcesMapper.insert(resources);
-		return resources;
-	}
-
-	@Override
-	public SysResources insertSelective(SysResources resource) {
+	public SysResources saveResource(SysResources resource) {
 		resourcesMapper.insertSelective(resource);
 		// 每添加一个权限，都往【系统管理员 100001】里添加一次,保证系统管理员有最大的权限
 		//TODO 逻辑要更新
@@ -67,7 +55,7 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 
 	@Override
 	public Set<String> findResourceByUserId(Integer userId) {
-		return resourcesMapper.findResourceByUserId(userId);
+		return resourcesMapper.findResourceNameByUserId(userId);
 	}
 
 	/**
@@ -75,23 +63,14 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 	 */
 	@Override
 	public Map<String, Object> addResource2Role(Integer roleId, String ids) {
-		roleResourceMapper.deleteByRoleId(roleId);
+		roleResourceMapper.deleteRoleResourceRelationshipByRoleId(roleId);
 		Map<String, Object> resultMap = executePermission(roleId, ids);
 		return resultMap;
 	}
 
 	@Override
-	public Pagination<SysResources> findPage(Map<String, Object> modelMap, Integer pageNo, int pageSize) {
-		return super.findPage(modelMap, pageNo, pageSize);
-	}
-	@Override
 	public TableSplitResult<SysResources> findPage2(ModelMap modelMap, Integer pageNumber, Integer pageSize) {
 		return super.findPage2(modelMap, pageNumber, pageSize);
-	}
-
-	@Override
-	public int updateByPrimaryKeySelective(SysResources resources) {
-		return resourcesMapper.updateByPrimaryKeySelective(resources);
 	}
 
 	@Override
@@ -121,7 +100,7 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 				if (null != roleResources && roleResources.size() > 0) {
 					errorCount += roleResources.size();
 				} else {
-					successCount += this.deleteResourceById(id);
+					successCount += resourcesMapper.deleteByPrimaryKey(id);
 				}
 			}
 			// 如果有成功的，也有失败的，提示清楚
@@ -192,12 +171,17 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 
 	@Override
 	public List<SysResourcesBo> selectResourceByRoleId(Integer id) {
-		return resourcesMapper.selectResourceByRoleId(id);
+		return resourcesMapper.findResourceByRoleId(id);
 	}
 
 	@Override
 	public int updateResource(SysResources resource) {
 		return resourcesMapper.updateByPrimaryKeySelective(resource);
+	}
+
+	@Override
+	public int clearRoleResourceRelationshipByRoleIds(Integer[] roleIds) {
+		return roleResourceMapper.deleteRoleResourceRelationshipByRoleIds(roleIds);
 	}
 
 }

@@ -41,7 +41,8 @@
 		select count(id) from sys_user
 		<include refid="where_all" />
 	</select>
-	<!-- 根据帐号查询 -->
+	
+	<!-- 根据userName查询用户 -->
 	<select id="findUserByName" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
@@ -64,7 +65,6 @@
 			</if>
 		</where>
 		group by sysUser.id
-		
 		<include refid="limit_sql" />
 	</select>
 	

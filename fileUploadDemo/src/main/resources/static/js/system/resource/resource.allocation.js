@@ -83,8 +83,8 @@ function deleteSelected(){
 	}else{
 		console.log(idArray)
 		var index = layer.confirm("确定清空这"+ idArray.length +"个用户的所有角色？",function(){
-			$.post('clearResourceByRoleIds',{
-				ids:idArray.join(',')
+			$.post('clearRoleResourceRelationshipByRoleIds',{
+				roleIds:idArray.join(',')
 			},function(result){
 				if (result) {
 					layer.msg(result.message);
@@ -107,13 +107,14 @@ function selectResource(){
 		ids.push(this.id);
 		names.push($.trim($(this).attr('name')));
 	});
-	roleId=$('#selectedRoleId').val();
+	roleId=$('#selectedResourceId').val();
 	var index = layer.confirm("确定操作？",function(){
 		$.post('addResource2Role',{ids:ids.join(','),roleId:roleId},function(result){
 			if(result){
 				layer.msg(result.message);
 			}
 			refreshPage(tableName);
+			hideModal("selectResource");
 		},'json');
 	});
 }
@@ -144,7 +145,7 @@ function selectResourceById(id){
 			// 初始化全选
 			return so.id('boxRoleForm').html(html.join('')),
 			so.checkBoxInit('[selectAllBox]','[selectBox]'),
-			$('#selectResource').modal({backdrop: false,keyboard: true}),$('#selectedRoleId').val(id);
+			$('#selectResource').modal({backdrop: false,keyboard: true}),$('#selectedResourceId').val(id);
 		}else{
 			return layer.msg('没有获取到权限数据，请先添加权限数据!');
 		}

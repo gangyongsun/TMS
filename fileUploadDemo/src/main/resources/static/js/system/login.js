@@ -50,7 +50,7 @@ function() {
 			passWord : password,
 			rememberMe : $("#rememberMe").is(':checked')
 		};
-		console.log(data);
+		//console.log(data);
 		var load = layer.load();
 
 		$.ajax({

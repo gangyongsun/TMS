@@ -92,8 +92,8 @@ function deleteSelected(){
 	}else{
 		console.log(idArray)
 		var index = layer.confirm("确定清空这"+ idArray.length +"个用户的所有角色？",function(){
-			$.post('clearRoleByUserIds',{
-				ids:idArray.join(',')
+			$.post('clearUserRoleRelationshipByUserIds',{
+				userIds:idArray.join(',')
 			},function(result){
 				if (result) {
 					layer.msg(result.message);

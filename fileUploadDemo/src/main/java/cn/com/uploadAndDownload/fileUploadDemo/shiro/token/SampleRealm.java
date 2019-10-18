@@ -57,7 +57,7 @@ public class SampleRealm extends AuthorizingRealm {
 		} else {
 			// 更新最后登录时间
 			user.setLastLoginTime(new Date());
-			userService.updateUserOnSelective(user);
+			userService.updateUser(user);
 		}
 		return new SimpleAuthenticationInfo(user, user.getPassWord(), getName());
 	}
@@ -71,7 +71,7 @@ public class SampleRealm extends AuthorizingRealm {
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
 		// 根据用户ID查询role，放入到Authorization里
-		Set<String> roles = roleService.findRoleByUserId(userId);
+		Set<String> roles = roleService.findRoleNameByUserId(userId);
 		info.setRoles(roles);
 
 		// 根据用户ID查询permission，放入到Authorization里

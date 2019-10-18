@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.springframework.ui.ModelMap;
 
-import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.TableSplitResult;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.RoleResourceAllocationBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysRoleBo;
@@ -15,38 +14,20 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysRole;
 public interface RoleService {
 
 	/**
-	 * 根据userId查询用户的角色名称列表
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	Set<String> findRoleNameByUserId(int userId);
-
-	/**
-	 * 分页查询角色列表
-	 * 
-	 * @param modelMap
-	 * @param pageNo
-	 * @param pageSize
-	 * @return
-	 */
-	Pagination<SysRole> findPage(Map<String, Object> modelMap, int pageNo, int pageSize);
-
-	/**
 	 * 根据用户ID查询权限
 	 * 
 	 * @param id
 	 * @return
 	 */
-	public List<SysRoleBo> selectRoleByUserId(int id);
+	public List<SysRoleBo> findRoleByUserId(int id);
 
 	/**
-	 * 根据用户ID查询用户角色
+	 * 根据用户ID查询用户角色名称列表
 	 * 
 	 * @param userId
 	 * @return
 	 */
-	Set<String> findRoleByUserId(Integer userId);
+	Set<String> findRoleNameByUserId(Integer userId);
 
 	/**
 	 * 为用户添加角色
@@ -63,15 +44,15 @@ public interface RoleService {
 	 * @param role
 	 * @return
 	 */
-	int insertSelective(SysRole role);
+	int saveRole(SysRole role);
 
 	/**
-	 * 根据角色ID删除角色
+	 * 更新角色
 	 * 
-	 * @param roleId
+	 * @param role
 	 * @return
 	 */
-	int deleteRoleById(Integer roleId);
+	int updateRole(SysRole role);
 
 	/**
 	 * 根据ID删除角色信息
@@ -97,17 +78,7 @@ public interface RoleService {
 	List<SysRole> findNowAllPermission();
 
 	/**
-	 * 分页查询角色资源信息
-	 * 
-	 * @param modelMap
-	 * @param pageNo
-	 * @param pageSize
-	 * @return
-	 */
-	Pagination<RoleResourceAllocationBo> findRoleAndResourcePage(ModelMap modelMap, Integer pageNo, int pageSize);
-
-	/**
-	 * bootstrap table 分页查询
+	 * 分页查询角色列表
 	 * 
 	 * @param modelMap
 	 * @param pageNumber
@@ -116,8 +87,22 @@ public interface RoleService {
 	 */
 	TableSplitResult<SysRole> findPage2(ModelMap modelMap, Integer pageNumber, Integer pageSize);
 
+	/**
+	 * 分页查询角色资源关系列表
+	 * 
+	 * @param modelMap
+	 * @param pageNumber
+	 * @param pageSize
+	 * @return
+	 */
 	TableSplitResult<RoleResourceAllocationBo> findRoleAndResourcePage2(ModelMap modelMap, Integer pageNumber, Integer pageSize);
 
-	int updateRole(SysRole role);
+	/**
+	 * 根据用户id清空用户拥有的角色
+	 * 
+	 * @param userIds
+	 * @return
+	 */
+	public int clearUserRoleRelationshipByUserIds(Integer[] userIds);
 
 }

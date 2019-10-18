@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.BaseMybatisDao;
-import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.Pagination;
 import cn.com.uploadAndDownload.fileUploadDemo.mybatis.page.TableSplitResult;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.RoleResourceAllocationBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysRoleBo;
@@ -45,28 +44,18 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 	private SysUserRoleMapper userRoleMapper;
 
 	@Override
-	public Pagination<SysRole> findPage(Map<String, Object> modelMap, int pageNo, int pageSize) {
-		return super.findPage(modelMap, pageNo, pageSize);
-	}
-	
-	@Override
-	public int insertSelective(SysRole role) {
+	public int saveRole(SysRole role) {
 		return roleMapper.insertSelective(role);
 	}
 
 	@Override
-	public Set<String> findRoleNameByUserId(int userId) {
-		return roleMapper.findRoleByUserId(userId);
+	public List<SysRoleBo> findRoleByUserId(int id) {
+		return roleMapper.findRoleByUserId(id);
 	}
 
 	@Override
-	public List<SysRoleBo> selectRoleByUserId(int id) {
-		return roleMapper.selectRoleByUserId(id);
-	}
-
-	@Override
-	public Set<String> findRoleByUserId(Integer userId) {
-		return roleMapper.findRoleByUserId(userId);
+	public Set<String> findRoleNameByUserId(Integer userId) {
+		return roleMapper.findRoleNameByUserId(userId);
 	}
 
 	@Override
@@ -74,8 +63,8 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		int count = 0;
 		try {
-			// 先删除原有的
-			userRoleMapper.deleteRoleByUserId(userId);
+			// 先删除原有的关系
+			userRoleMapper.deleteUserRoleRelationshipByUserId(userId);
 			// 如果roleIds有值就添加，roleIds没值象征着把这个用户（userId）所有角色取消
 			if (StringUtils.isNotBlank(roleIds)) {
 				String[] roleIdArray = null;
@@ -123,7 +112,7 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 				array1 = new String[] { userIds };
 			}
 			Integer[] userIdArray = (Integer[])ConvertUtils.convert(array1, Integer.class);
-			userRoleMapper.deleteRoleByUserIds(userIdArray);
+			userRoleMapper.deleteUserRoleRelationshipByUserIds(userIdArray);
 			resultMap.put("status", 200);
 			resultMap.put("message", "清空用户角色成功");
 		} catch (Exception e) {
@@ -153,7 +142,7 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 					resultMsg = "操作成功，但是<系统管理员>不能删除！";
 					continue c;
 				} else {
-					count += this.deleteRoleById(id);
+					count += roleMapper.deleteByPrimaryKey(id);
 				}
 			}
 			resultMap.put("status", 200);
@@ -175,20 +164,10 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 	}
 
 	@Override
-	public Pagination<RoleResourceAllocationBo> findRoleAndResourcePage(ModelMap modelMap, Integer pageNo, int pageSize) {
-		return super.findPage("findRoleAndResources", "findCount", modelMap, pageNo, pageSize);
-	}
-
-	@Override
 	public TableSplitResult<RoleResourceAllocationBo> findRoleAndResourcePage2(ModelMap modelMap, Integer pageNumber, Integer pageSize) {
 		return super.findPage2("findRoleAndResources", "findCount", modelMap, pageNumber, pageSize);
 	}
 	
-	@Override
-	public int deleteRoleById(Integer roleId) {
-		return roleMapper.deleteByPrimaryKey(roleId);
-	}
-
 	@Override
 	public TableSplitResult<SysRole> findPage2(ModelMap modelMap, Integer pageNumber, Integer pageSize) {
 		return super.findPage2(modelMap, pageNumber, pageSize);
@@ -197,6 +176,11 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 	@Override
 	public int updateRole(SysRole role) {
 		return roleMapper.updateByPrimaryKeySelective(role);
+	}
+
+	@Override
+	public int clearUserRoleRelationshipByUserIds(Integer[] userIds) {
+		return userRoleMapper.deleteUserRoleRelationshipByUserIds(userIds);
 	}
 
 }

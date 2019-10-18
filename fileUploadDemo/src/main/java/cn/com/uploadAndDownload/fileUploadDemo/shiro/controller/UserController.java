@@ -80,7 +80,7 @@ public class UserController extends BaseController {
 		pswd = UserManager.md5Password(username, pswd);
 		SysUser user = userService.login(username, pswd);
 
-		Set<String> roleSet = roleService.findRoleByUserId(TokenManager.getUserId());
+		Set<String> roleSet = roleService.findRoleNameByUserId(TokenManager.getUserId());
 		String admin_role_type = PropertiesUtil.getValueByKey("ADMIN_ROLE_TYPE", "config.properties");
 		if (null != roleSet && roleSet.contains(admin_role_type)) {
 			resultMap.put("status", 300);
@@ -94,7 +94,7 @@ public class UserController extends BaseController {
 		} else {
 			user.setPassWord(newPswd);
 			user = UserManager.md5Pswd(user);
-			userService.updateUserOnSelective(user);
+			userService.updateUser(user);
 			resultMap.put("status", 200);
 			resultMap.put("message", "修改成功!");
 			/**
@@ -114,7 +114,7 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Map<String, Object> updateSelf(SysUser sysUser, HttpServletRequest request) {
 		try {
-			userService.updateUserOnSelective(sysUser);
+			userService.updateUser(sysUser);
 			resultMap.put("status", 200);
 			resultMap.put("message", "修改成功!");
 			// 更新token的Nickname

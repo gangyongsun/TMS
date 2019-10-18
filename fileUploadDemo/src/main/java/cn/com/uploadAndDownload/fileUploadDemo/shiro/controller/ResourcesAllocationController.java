@@ -3,6 +3,7 @@ package cn.com.uploadAndDownload.fileUploadDemo.shiro.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.ConvertUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.RoleResourceAllocationBo
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysResourcesBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.ResourcesService;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.RoleService;
+import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;
 
 /**
  * 用户权限分配
@@ -36,7 +38,7 @@ public class ResourcesAllocationController extends BaseController {
 	RoleService roleService;
 
 	/**
-	 * 权限分配
+	 * 权限分配页面
 	 * 
 	 * @return
 	 */
@@ -90,14 +92,30 @@ public class ResourcesAllocationController extends BaseController {
 	}
 
 	/**
-	 * 根据角色id清空权限
+	 * 根据角色id清空角色所拥有的权限
 	 * 
 	 * @param roleIds 角色ID ，以‘,’间隔
 	 * @return
 	 */
-	@RequestMapping(value = "clearResourceByRoleIds")
+	@RequestMapping(value = "clearRoleResourceRelationshipByRoleIds")
 	@ResponseBody
-	public Map<String, Object> clearResourceByRoleIds(String roleIds) {
-		return resourcesService.deleteResourceByIds(roleIds);
+	public Map<String, Object> clearRoleResourceRelationshipByRoleIds(String roleIds) {
+		String[] array1 = null;
+		if (StringUtils.contains(roleIds, ",")) {
+			array1 = roleIds.split(",");
+		} else {
+			array1 = new String[] { roleIds };
+		}
+		Integer[] roleIdsArray = (Integer[])ConvertUtils.convert(array1, Integer.class);
+		
+		try {
+			resourcesService.clearRoleResourceRelationshipByRoleIds(roleIdsArray);
+			resultMap.put("status", 200);
+			resultMap.put("message", "清空角色权限成功！");
+		} catch (Exception e) {
+			resultMap.put("status", 500);
+			resultMap.put("message", "清空角色权限失败！");
+		}
+		return resultMap;
 	}
 }

@@ -42,13 +42,8 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	}
 
 	@Override
-	public int deleteUserById(Integer id) {
-		return userMapper.deleteByPrimaryKey(id);
-	}
-
-	@Override
 	public Set<String> findResourcesByUserId(int userId) {
-		Set<String> resourceSet = resourcesMapper.findResourceByUserId(userId);
+		Set<String> resourceSet = resourcesMapper.findResourceNameByUserId(userId);
 		Set<String> result = new HashSet<>();
 		for (String permission : resourceSet) {
 			if (StringUtils.isBlank(permission)) {
@@ -59,11 +54,6 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 		}
 		return result;
 	}
-
-//	@Override
-//	public Pagination<UserRoleAllocationBo> findUserAndRole(ModelMap modelMap, Integer pageNo, Integer pageSize) {
-//		return super.findPage("findUserAndRole", "findCount", modelMap, pageNo, pageSize);
-//	}
 
 	@Override
 	public TableSplitResult<UserRoleAllocationBo> findUserAndRole2(ModelMap modelMap, Integer pageNumber, Integer pageSize) {
@@ -80,14 +70,9 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	}
 
 	@Override
-	public int updateUserOnSelective(SysUser sysUser) {
+	public int updateUser(SysUser sysUser) {
 		return userMapper.updateByPrimaryKeySelective(sysUser);
 	}
-
-//	@Override
-//	public Pagination<SysUser> findUserByPage(Map<String, Object> map, Integer pageNo, Integer pageSize) {
-//		return super.findPage(map, pageNo, pageSize);
-//	}
 
 	@Override
 	public Map<String, Object> deleteUserByIds(String ids) {
@@ -102,7 +87,7 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 			}
 
 			for (String id : idArray) {
-				count += this.deleteUserById(new Integer(id));
+				count += userMapper.deleteByPrimaryKey(new Integer(id));
 			}
 			resultMap.put("status", 200);
 			resultMap.put("message", "删除成功！");
@@ -116,12 +101,12 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	}
 
 	@Override
-	public Map<String, Object> updateForbidUserById(Integer id, Integer userEnable) {
+	public Map<String, Object> updateUserOnUserEnable(Integer id, Integer userEnable) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			SysUser user = findUserById(id);
 			user.setUserEnable(userEnable);
-			updateUserOnSelective(user);
+			updateUser(user);
 
 			// 如果当前用户在线，需要标记并且踢出
 			customSessionManager.forbidUserById(id, userEnable);
@@ -142,7 +127,7 @@ public class UserServiceImpl extends BaseMybatisDao<SysUserMapper> implements Us
 	}
 
 	@Override
-	public int insertUser(SysUser sysUser) {
+	public int saveUser(SysUser sysUser) {
 		sysUser.setCreateTime(new Date());
 		return userMapper.insertSelective(sysUser);
 	}

@@ -3,6 +3,7 @@ package cn.com.uploadAndDownload.fileUploadDemo.shiro.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.ConvertUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.SysRoleBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.UserRoleAllocationBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.RoleService;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.UserService;
+import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;
 
 /**
  * 用户角色分配
@@ -70,7 +72,7 @@ public class RoleAllocationController extends BaseController {
 	@RequestMapping(value = "selectRoleByUserId")
 	@ResponseBody
 	public List<SysRoleBo> selectRoleByUserId(Integer id) {
-		List<SysRoleBo> sysRoleBoList = roleService.selectRoleByUserId(id);
+		List<SysRoleBo> sysRoleBoList = roleService.findRoleByUserId(id);
 		return sysRoleBoList;
 	}
 
@@ -88,14 +90,30 @@ public class RoleAllocationController extends BaseController {
 	}
 
 	/**
-	 * 根据用户id清空角色
+	 * 根据用户id清空用户拥有的角色
 	 * 
-	 * @param ids 用户ID ，以‘,’间隔
+	 * @param userIds 用户ID ，以‘,’间隔
 	 * @return
 	 */
-	@RequestMapping(value = "clearRoleByUserIds")
+	@RequestMapping(value = "clearUserRoleRelationshipByUserIds")
 	@ResponseBody
-	public Map<String, Object> clearRoleByUserIds(String ids) {
-		return roleService.deleteRoleByUserIds(ids);
+	public Map<String, Object> clearUserRoleRelationshipByUserIds(String userIds) {
+		String[] array1 = null;
+		if (StringUtils.contains(userIds, ",")) {
+			array1 = userIds.split(",");
+		} else {
+			array1 = new String[] { userIds };
+		}
+		Integer[] userIdArray = (Integer[])ConvertUtils.convert(array1, Integer.class);
+		
+		try {
+			roleService.clearUserRoleRelationshipByUserIds(userIdArray);
+			resultMap.put("status", 200);
+			resultMap.put("message", "清空用户角色成功！");
+		} catch (Exception e) {
+			resultMap.put("status", 500);
+			resultMap.put("message", "清空用户角色失败！");
+		}
+		return resultMap;
 	}
 }

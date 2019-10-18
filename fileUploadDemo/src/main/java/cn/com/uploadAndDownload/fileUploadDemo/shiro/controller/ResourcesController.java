@@ -32,21 +32,26 @@ public class ResourcesController extends BaseController {
 	ResourcesService resourcesService;
 
 	/**
-	 * 资源列表
+	 * 资源列表页面
 	 * 
-	 * @param findContent 查询内容
-	 * @param pageNo      页码
-	 * @param modelMap    参数回显
 	 * @return
 	 */
 	@RequestMapping(value = "index")
 	public ModelAndView index() {
 		return new ModelAndView("system/resource/index");
 	}
-	
+
+	/**
+	 * 资源列表分页查询
+	 * 
+	 * @param modelMap
+	 * @param pageSize
+	 * @param pageNumber
+	 * @return
+	 */
 	@RequestMapping(value = "pageList")
 	@ResponseBody
-	public TableSplitResult<SysResources>  pageList(ModelMap modelMap, Integer pageSize, Integer pageNumber) {
+	public TableSplitResult<SysResources> pageList(ModelMap modelMap, Integer pageSize, Integer pageNumber) {
 //		modelMap.put("findContent", findContent);
 		TableSplitResult<SysResources> page = resourcesService.findPage2(modelMap, pageNumber, pageSize);
 		modelMap.put("page", page);
@@ -63,7 +68,7 @@ public class ResourcesController extends BaseController {
 	@ResponseBody
 	public Map<String, Object> addResource(SysResources resource) {
 		try {
-			SysResources entity = resourcesService.insertSelective(resource);
+			SysResources entity = resourcesService.saveResource(resource);
 			resultMap.put("status", 200);
 			resultMap.put("message", "添加成功！");
 			resultMap.put("entity", entity);
@@ -74,7 +79,7 @@ public class ResourcesController extends BaseController {
 		}
 		return resultMap;
 	}
-	
+
 	/**
 	 * 更新资源信息
 	 * 
@@ -98,9 +103,11 @@ public class ResourcesController extends BaseController {
 	}
 
 	/**
-	 * 根据ID删除资源，但是删除资源的时候，需要查询是否有赋予给角色，如果有角色在使用，那么就不能删除
+	 * 根据资源IDs删除资源
+	 * <p>
+	 * 如果有角色在使用资源，那么就不能删除
 	 * 
-	 * @param id
+	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(value = "deleteResourceById", method = RequestMethod.POST)

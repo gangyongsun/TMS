@@ -216,6 +216,7 @@ function addUser() {
 			layer.msg(result.message);
 		}
 		refreshPage(tableName);
+		hideModal("showAddUser")
 	}, 'json');
 }
 

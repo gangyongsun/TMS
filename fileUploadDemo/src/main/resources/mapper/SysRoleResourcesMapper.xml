@@ -7,11 +7,10 @@
 		<result column="role_id" property="roleId" jdbcType="INTEGER" />
 		<result column="resources_id" property="resourcesId" jdbcType="INTEGER" />
 	</resultMap>
-	
 	<sql id="Base_Column_List">
 		role_id, resources_id
 	</sql>
-	<!-- 根据权限ID查找 -->
+	<!-- 根据权限ID查找角色资源对应 -->
 	<select id="findRoleResourceByResourceId" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
@@ -19,35 +18,15 @@
 		where resources_id = #{id,jdbcType=BIGINT}
 	</select>
 	
-	<!-- 根据角色ID查找 -->
-	<select id="findRoleResourceByRoleId" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from sys_role_resources
-		where role_id = #{id,jdbcType=BIGINT}
-	</select>
-	
-	<!-- 根据权限 && 角色ID查找 -->
-	<select id="find" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from sys_role_resources
-		where role_id = #{role_id,jdbcType=BIGINT}
-		and resources_id = #{resources_id,jdbcType=BIGINT}
-	</select>
-	
-	<!-- 根据权限ID删除 -->
-	<delete id="deleteByResourceId">
-		delete from sys_role_resources where resources_id = #{id,jdbcType=BIGINT}
+	<!-- 根据角色ID删除角色资源对应 -->
+	<delete id="deleteRoleResourceRelationshipByRoleId">
+		delete from sys_role_resources where role_id = #{roleId,jdbcType=BIGINT}
 	</delete>
-	
-	<!-- 根据角色ID删除 -->
-	<delete id="deleteByRoleId">
-		delete from sys_role_resources where role_id = #{id,jdbcType=BIGINT}
-	</delete>
-	
-	<!-- 根据角色IDs删除 -->
-	<delete id="deleteByRoleIds">
-		delete from sys_role_resources where role_id in(#{roleIds,jdbcType=VARCHAR})
+	<!-- 根据角色ID删除角色资源对应 -->
+	<delete id="deleteRoleResourceRelationshipByRoleIds">
+		delete from sys_role_resources where role_id in
+		<foreach collection="array" item="roleIds" index="index" open="(" close=")" separator=",">
+	      #{roleIds}
+	    </foreach>
 	</delete>
 </mapper>

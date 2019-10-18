@@ -80,9 +80,10 @@ public class MemberController extends BaseController {
 	}
 
 	/**
-	 * 查询在线用户列表
+	 * 查询在线用户列表分页查询
 	 * 
-	 * @param map
+	 * @param pageSize
+	 * @param pageNumber
 	 * @return
 	 */
 	@RequestMapping(value = "pageOnline")
@@ -109,7 +110,7 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "addUser", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> addUser(SysUser sysUser) {
-		int result = userService.insertUser(sysUser);
+		int result = userService.saveUser(sysUser);
 		if (result == 1) {
 			resultMap.put("status", 200);
 			resultMap.put("message", "添加用户成功！");
@@ -169,8 +170,8 @@ public class MemberController extends BaseController {
 	 */
 	@RequestMapping(value = "activeUserByStatusAndId", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> activeUserByStatusAndId(Integer id, Integer userEnable) {
-		return userService.updateForbidUserById(id, userEnable);
+	public Map<String, Object> updateUserOnUserEnable(Integer id, Integer userEnable) {
+		return userService.updateUserOnUserEnable(id, userEnable);
 	}
 
 	/**
@@ -187,7 +188,7 @@ public class MemberController extends BaseController {
 		}
 		SysUser user = userService.findUserById(userId);
 
-		Set<String> roleSet = roleService.findRoleByUserId(userId);
+		Set<String> roleSet = roleService.findRoleNameByUserId(userId);
 		String admin_role_type = PropertiesUtil.getValueByKey("ADMIN_ROLE_TYPE", "config.properties");
 		if (null != roleSet && roleSet.contains(admin_role_type)) {
 			resultMap.put("status", 300);
@@ -197,7 +198,7 @@ public class MemberController extends BaseController {
 
 		user.setPassWord(newPswd);
 		user = UserManager.md5Pswd(user);
-		userService.updateUserOnSelective(user);
+		userService.updateUser(user);
 		resultMap.put("status", 200);
 		resultMap.put("message", "密码重置成功!");
 		return resultMap;

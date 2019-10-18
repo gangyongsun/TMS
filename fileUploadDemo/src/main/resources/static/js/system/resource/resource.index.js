@@ -207,5 +207,6 @@ function addResource(){
 			layer.msg(result.message);
 		}
 		refreshPage(tableName);
+		hideModal("showAddResource");
 	},'json');
 }
