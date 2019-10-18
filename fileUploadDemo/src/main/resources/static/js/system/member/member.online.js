@@ -62,6 +62,7 @@ $(function () {
             {
                 title: '操作',
                 align: 'center',
+                width:200,
                 formatter: function (value, row, index) {
                 	var detail_content=
                 		//'<!-- <shiro:hasPermission name="/users/detail"> -->'+

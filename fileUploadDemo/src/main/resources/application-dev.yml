@@ -24,8 +24,8 @@ spring:
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
     initialSize: 3
-    minIdle: 2
-    maxActive: 60
+    minIdle: 100
+    maxActive: 1000
     maxWait: 60000
     timeBetweenEvictionRunsMillis: 60000
     minEvictableIdleTimeMillis: 30000
@@ -42,10 +42,10 @@ spring:
     
     hikari: 
       readOnly: false
-      connectionTimeout: 60000
-      idleTimeout: 60000
+      connectionTimeout: 600000
+      idleTimeout: 600000
       validationTimeout: 3000
-      maxLifetime: 60000
+      maxLifetime: 600000
       loginTimeout: 5
       maximumPoolSize: 60
       minimumIdle: 10

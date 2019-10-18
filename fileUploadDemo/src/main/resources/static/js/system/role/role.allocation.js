@@ -61,6 +61,7 @@ $(function () {
             {
                 title: '操作',
                 align: 'center',
+                width:200,
                 formatter: function (value, row, index) {//自定义显示，也可以写标签
                 	operate=
                 	'<!-- <shiro:hasPermission name="/role/selectRole"> -->'+
