@@ -83,6 +83,7 @@ $(function () {
             {
                 title: '操作',
                 align: 'center',
+                clickToSelect:false,
                 formatter: function (value, row, index) {//自定义显示，也可以写标签
                 	var forbid_content=
                 		'<!-- <shiro:hasPermission name="/users/deactive"> -->'+
