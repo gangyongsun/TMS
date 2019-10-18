@@ -71,7 +71,7 @@ public class RoleController extends BaseController {
 		try {
 			int count = roleService.insertSelective(role);
 			resultMap.put("status", 200);
-			resultMap.put("message", "角色添加成功！");
+			resultMap.put("message", "添加成功！");
 			resultMap.put("successCount", count);
 		} catch (Exception e) {
 			resultMap.put("status", 500);
@@ -81,6 +81,28 @@ public class RoleController extends BaseController {
 		return resultMap;
 	}
 
+	/**
+	 * 更新角色
+	 * 
+	 * @param role
+	 * @return
+	 */
+	@RequestMapping(value = "updateRole", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> updateRole(SysRole role) {
+		try {
+			int count = roleService.updateRole(role);
+			resultMap.put("status", 200);
+			resultMap.put("message", "更新成功！");
+			resultMap.put("count", count);
+		} catch (Exception e) {
+			resultMap.put("status", 500);
+			resultMap.put("message", "更新失败，请刷新后再试！");
+			LoggerUtils.fmtError(getClass(), e, "更新角色报错!source[%s]", role.toString());
+		}
+		return resultMap;
+	}
+	
 	/**
 	 * 删除角色，根据ID，但是删除角色的时候，需要查询是否有赋予给用户，如果有用户在使用，那么就不能删除。
 	 * 

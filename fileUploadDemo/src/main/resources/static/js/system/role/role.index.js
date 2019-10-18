@@ -56,7 +56,7 @@ function loadPage(){
                 formatter: function (value, row, index) {//自定义显示，也可以写标签
                 	operate=
             		'<!-- <shiro:hasPermission name="/role/edit"> -->'+
-            		'<a class="btn btn-primary btn-sm" onclick="javascript:edit('+row.id+');"><span class="glyphicon glyphicon-edit"></span> 编辑</a>'+
+            		'<a class="btn btn-primary btn-sm" onclick="javascript:edit('+row.id +',\''+row.roleDesc +'\',\''+row.roleType +'\');"><span class="glyphicon glyphicon-edit"></span> 编辑</a>'+
             		'<!-- </shiro:hasPermission> -->'+
                 	'<!-- <shiro:hasPermission name="/role/delete"> -->'+
 					'<a class="btn btn-danger btn-sm" onclick="javascript:_deleteone('+row.id+');"><span class="glyphicon glyphicon-trash"></span> 删除</a>'+
@@ -75,6 +75,39 @@ function loadPage(){
 $(function () {
 	loadPage();
 });
+
+
+/**
+ * 弹出编辑角色弹框
+ * 
+ * @param id
+ * @returns
+ */
+function edit(id,roleName,roleType) {
+	$("#showEditRole input[name='id_edit']").val(id);
+	$("#showEditRole input[name='roleName_edit']").val(roleName);
+	$("#showEditRole input[name='roleType_edit']").val(roleType);
+	showModal("showEditRole");
+}
+
+/**
+ * 更新角色
+ * 
+ * @returns
+ */
+function updateRole() {
+	$.post('updateRole', {
+		id : $("#showEditRole input[name='id_edit']").val(),
+		roleDesc : $("#showEditRole input[name='roleName_edit']").val(),
+		roleType : $("#showEditRole input[name='roleType_edit']").val()
+	}, function(result) {
+		if (result) {
+			layer.msg(result.message);
+		}
+		hideModal("showEditRole");
+		refreshPage(tableName);
+	}, 'json');
+}
 
  /**
   * 删除选择角色

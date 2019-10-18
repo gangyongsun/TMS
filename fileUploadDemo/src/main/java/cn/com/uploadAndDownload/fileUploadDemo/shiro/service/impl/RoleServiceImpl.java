@@ -194,4 +194,9 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 		return super.findPage2(modelMap, pageNumber, pageSize);
 	}
 
+	@Override
+	public int updateRole(SysRole role) {
+		return roleMapper.updateByPrimaryKeySelective(role);
+	}
+
 }

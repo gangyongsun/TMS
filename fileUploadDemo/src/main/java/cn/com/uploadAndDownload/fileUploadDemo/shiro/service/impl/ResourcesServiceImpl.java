@@ -195,6 +195,9 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 		return resourcesMapper.selectResourceByRoleId(id);
 	}
 
-	
+	@Override
+	public int updateResource(SysResources resource) {
+		return resourcesMapper.updateByPrimaryKeySelective(resource);
+	}
 
 }

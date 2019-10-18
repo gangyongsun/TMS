@@ -46,6 +46,11 @@ $(function () {
                 align: 'left'
             },
             {
+            	title: '父ID',
+            	field: 'parentId',
+            	align: 'left'
+            },
+            {
                 title: '权限类型',
                 field: 'resourceType',
                 align: 'left',
@@ -71,7 +76,7 @@ $(function () {
                 formatter: function (value, row, index) {//自定义显示，也可以写标签
                 	operate=
             		'<!-- <shiro:hasPermission name="/resource/edit"> -->'+
-            		'<a class="btn btn-primary btn-sm" onclick="javascript:edit('+row.id+');"><span class="glyphicon glyphicon-edit"></span> 编辑</a>'+
+            		'<a class="btn btn-primary btn-sm" onclick="javascript:edit('+row.id +',\''+row.resourceName +'\',\''+row.resourceUrl +'\','+row.resourceType +','+row.parentId +','+row.resourceSort +');"><span class="glyphicon glyphicon-edit"></span> 编辑</a>'+
             		'<!-- </shiro:hasPermission> -->'+
                 	'<!-- <shiro:hasPermission name="/resource/delete"> -->'+
 					'<a class="btn btn-danger btn-sm" onclick="javascript:_deleteone('+row.id+');"><span class="glyphicon glyphicon-trash"></span> 删除</a>'+
@@ -88,6 +93,45 @@ $(function () {
     });
 });
  
+
+/**
+ * 弹出编辑资源弹框
+ * 
+ * @param id
+ * @returns
+ */
+function edit(id,resourceName,resourceUrl,resourceType,parentId,resourceSort) {
+	$("#showEditResource input[name='id_edit']").val(id);
+	$("#showEditResource input[name='resourceName_edit']").val(resourceName);
+	$("#showEditResource input[name='resourceUrl_edit']").val(resourceUrl);
+	$("#showEditResource select[name='resourceType_edit']").val(resourceType);
+	$("#showEditResource input[name='parentId_edit']").val(parentId);
+	$("#showEditResource input[name='resourceSort_edit']").val(resourceSort);
+	showModal("showEditResource");
+}
+
+/**
+ * 更新资源
+ * 
+ * @returns
+ */
+function updateResource() {
+	$.post('updateResource', {
+		id:$("#showEditResource input[name='id_edit']").val(),
+		resourceName:$("#showEditResource input[name='resourceName_edit']").val(),
+		resourceUrl:$("#showEditResource input[name='resourceUrl_edit']").val(),
+		resourceType:$("#showEditResource select[name='resourceType_edit']").find("option:selected").val(),
+		parentId:$("#showEditResource input[name='parentId_edit']").val(),
+		resourceSort:$("#showEditResource input[name='resourceSort_edit']").val()
+	}, function(result) {
+		if (result) {
+			layer.msg(result.message);
+		}
+		hideModal("showEditResource");
+		refreshPage(tableName);
+	}, 'json');
+}
+
 /**
  * 删除选择资源
  * 

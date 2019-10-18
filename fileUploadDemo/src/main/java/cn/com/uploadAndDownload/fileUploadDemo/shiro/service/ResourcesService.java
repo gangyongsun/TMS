@@ -97,4 +97,6 @@ public interface ResourcesService {
 	List<SysResourcesBo> selectResourceByRoleId(Integer id);
 
 	TableSplitResult<SysResources> findPage2(ModelMap modelMap, Integer pageNumber, Integer pageSize);
+
+	int updateResource(SysResources resource);
 }

@@ -65,11 +65,34 @@ public class ResourcesController extends BaseController {
 		try {
 			SysResources entity = resourcesService.insertSelective(resource);
 			resultMap.put("status", 200);
+			resultMap.put("message", "添加成功！");
 			resultMap.put("entity", entity);
 		} catch (Exception e) {
 			resultMap.put("status", 500);
 			resultMap.put("message", "添加失败，请刷新后再试！");
 			LoggerUtils.fmtError(getClass(), e, "添加资源报错！source[%s]", resource.toString());
+		}
+		return resultMap;
+	}
+	
+	/**
+	 * 更新资源信息
+	 * 
+	 * @param resource
+	 * @return
+	 */
+	@RequestMapping(value = "updateResource", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> updateResource(SysResources resource) {
+		try {
+			int count = resourcesService.updateResource(resource);
+			resultMap.put("status", 200);
+			resultMap.put("message", "更新成功！");
+			resultMap.put("count", count);
+		} catch (Exception e) {
+			resultMap.put("status", 500);
+			resultMap.put("message", "更新失败！");
+			LoggerUtils.fmtError(getClass(), e, "更新权限报错！source[%s]", resource.toString());
 		}
 		return resultMap;
 	}

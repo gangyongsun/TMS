@@ -118,4 +118,6 @@ public interface RoleService {
 
 	TableSplitResult<RoleResourceAllocationBo> findRoleAndResourcePage2(ModelMap modelMap, Integer pageNumber, Integer pageSize);
 
+	int updateRole(SysRole role);
+
 }

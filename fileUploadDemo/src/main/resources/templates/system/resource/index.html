@@ -35,7 +35,7 @@
 								</span>
 							</div>
 						</div>
-						<a class="btn btn-success" onclick="showModal('')"><span class="glyphicon glyphicon-plus"></span> 添加权限</a>
+						<a class="btn btn-success" onclick="showModal('showAddResource')"><span class="glyphicon glyphicon-plus"></span> 添加权限</a>
 						<a class="btn btn-danger" onclick="deleteSelected()"><span class="glyphicon glyphicon-trash"></span> 删除权限</a>
 					</div>
 					<table id="resourceListTable" class="table table-bordered tab-content"></table>
@@ -76,6 +76,50 @@
 					<div class="modal-footer">
 						<a class="btn btn-default btn-md" data-dismiss="modal"><span class="glyphicon glyphicon-off"></span> 关闭</a>
 						<a class="btn btn-success btn-md" onclick="javascript:addResource();"><span class="glyphicon glyphicon-save"></span> 保存</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--弹出框-->
+		<!--弹出框-->
+		<div class="modal fade" id="showEditResource" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="editResourceModal">添加权限</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="resourceName">权限名称</label>
+							<input type="hidden" id="id" name="id_edit">
+							<input type="text" class="form-control" id="resourceName" name="resourceName_edit" placeholder="请输入权限名称">
+						</div>
+						<div class="form-group">
+							<label for="resourceURL">权限URL地址</label>
+							<input type="text" class="form-control" id="resourceUrl" name="resourceUrl_edit" placeholder="请输入权限URL地址">
+						</div>
+						<div class="form-group">
+							<label class="control-label">权限类型</label>
+							<select class="form-control" id="resourceType" name="resourceType_edit">
+								<option value="1">菜单</option>
+								<option value="2">按钮</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="resourceURL">父ID</label>
+							<input type="text" class="form-control" id="parentId" name="parentId_edit" placeholder="请输入父ID">
+						</div>
+						<div class="form-group">
+							<label for="resourceURL">权限排序号</label>
+							<input type="text" class="form-control" id="resourceSort" name="resourceSort_edit" placeholder="请输入权限排序号码[1-5位数字]">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<a class="btn btn-default btn-md" data-dismiss="modal"><span class="glyphicon glyphicon-off"></span> 关闭</a>
+						<a class="btn btn-success btn-md" onclick="javascript:updateResource();"><span class="glyphicon glyphicon-save"></span> 保存</a>
 					</div>
 				</div>
 			</div>
