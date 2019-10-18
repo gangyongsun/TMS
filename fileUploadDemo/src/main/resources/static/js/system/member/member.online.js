@@ -66,15 +66,15 @@ $(function () {
                 formatter: function (value, row, index) {
                 	var detail_content=
                 		//'<!-- <shiro:hasPermission name="/users/detail"> -->'+
-                		'<a class="btn btn-success btn-sm" onclick="onlineDetail(\''+ row.sessionId +'\')"><span class="glyphicon glyphicon-info-sign"></span> 详情</a>';//+
+                		'<a class="btn btn-info btn-sm" onclick="onlineDetail(\''+ row.sessionId +'\')"><span class="glyphicon glyphicon-info-sign"></span> 详情</a>';//+
                 		//'<!-- </shiro:hasPermission>';
 					var deactive_content=
 						//'<shiro:hasPermission name="/users/kickout"> -->'+
-						'<a class="btn btn-danger btn-sm" onclick="changeSessionStatus(\''+row.sessionId +'\',\''+ false +'\')"><span class="glyphicon glyphicon-eye-close"></span> 踢出</a>';//+
+						'<a class="btn btn-primary btn-sm" onclick="changeSessionStatus(\''+row.sessionId +'\',\''+ false +'\')"><span class="glyphicon glyphicon-flash"></span> 踢出</a>';//+
 						//'<!-- </shiro:hasPermission>';
 					var active_content=
 						//'<shiro:hasPermission name="/users/kickin"> -->'+
-						'<a class="btn btn-danger btn-sm" onclick="changeSessionStatus(\''+row.sessionId +'\',\''+ true +'\')"><span class="glyphicon glyphicon-eye"></span> 激活</a>';//+
+						'<a class="btn btn-danger btn-sm" onclick="changeSessionStatus(\''+row.sessionId +'\',\''+ true +'\')"><span class="glyphicon glyphicon-ok"></span> 激活</a>';//+
 						//'<!-- </shiro:hasPermission>  -->';
 					
 					var operate=detail_content;

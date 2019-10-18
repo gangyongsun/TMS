@@ -88,11 +88,11 @@ $(function () {
                 formatter: function (value, row, index) {//自定义显示，也可以写标签
                 	var forbid_content=
                 		'<!-- <shiro:hasPermission name="/users/deactive"> -->'+
-						'<a class="btn btn-primary btn-sm" th:id="'+row.id+'" onclick="activeUserByStatusAndId(0,'+ row.id +')"><span class="glyphicon glyphicon-eye-close"></span> 禁止登录</a>'+
+						'<a class="btn btn-primary btn-sm" th:id="'+row.id+'" onclick="activeUserByStatusAndId(0,'+ row.id +')"><span class="glyphicon glyphicon-lock"></span> 禁止登录</a>'+
 						'<!--</shiro:hasPermission> -->';
                 	var active_content=
                 		'<!-- <shiro:hasPermission name="/users/deactive"> -->'+
-						'<a class="btn btn-success btn-sm" th:id="'+row.id+'" onclick="activeUserByStatusAndId(1,'+ row.id +')"><span class="glyphicon glyphicon-eye-open"></span> 激活登录</a>'+
+						'<a class="btn btn-success btn-sm" th:id="'+row.id+'" onclick="activeUserByStatusAndId(1,'+ row.id +')"><span class="glyphicon glyphicon-ok"></span> 激活登录</a>'+
 						'<!--</shiro:hasPermission> -->';
 					var resetPwd_content=
 						'<!-- <shiro:hasPermission name="/users/resetPassword"> -->'+

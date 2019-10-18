@@ -57,7 +57,7 @@ $(function () {
                 formatter: function (value, row, index) {//自定义显示，也可以写标签
                 	operate=
                 	'<!-- <shiro:hasPermission name="/resource/allocation"> -->'+
-					'<a class="btn btn-success btn-sm" onclick="javascript:selectResourceById('+row.id+');"><span class="glyphicon glyphicon-eye-close"></span> 选择权限</a>'+
+					'<a class="btn btn-info btn-sm" onclick="javascript:selectResourceById('+row.id+');"><span class="glyphicon glyphicon-cog"></span> 选择权限</a>'+
 					'<!-- </shiro:hasPermission> -->'
                     return operate;
                 }

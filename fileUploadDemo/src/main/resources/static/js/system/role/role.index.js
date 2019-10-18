@@ -56,7 +56,7 @@ function loadPage(){
                 formatter: function (value, row, index) {//自定义显示，也可以写标签
                 	operate=
             		'<!-- <shiro:hasPermission name="/role/edit"> -->'+
-            		'<a class="btn btn-primary btn-sm" onclick="javascript:edit('+row.id +',\''+row.roleDesc +'\',\''+row.roleType +'\');"><span class="glyphicon glyphicon-edit"></span> 编辑</a>'+
+            		'<a class="btn btn-info btn-sm" onclick="javascript:edit('+row.id +',\''+row.roleDesc +'\',\''+row.roleType +'\');"><span class="glyphicon glyphicon-edit"></span> 编辑</a>'+
             		'<!-- </shiro:hasPermission> -->'+
                 	'<!-- <shiro:hasPermission name="/role/delete"> -->'+
 					'<a class="btn btn-danger btn-sm" onclick="javascript:_deleteone('+row.id+');"><span class="glyphicon glyphicon-trash"></span> 删除</a>'+
