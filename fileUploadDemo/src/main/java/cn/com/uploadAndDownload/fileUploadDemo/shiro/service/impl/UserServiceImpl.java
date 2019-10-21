@@ -19,6 +19,7 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysResourcesMapper;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysUserMapper;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.UserService;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.session.CustomSessionManager;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 
 @Service

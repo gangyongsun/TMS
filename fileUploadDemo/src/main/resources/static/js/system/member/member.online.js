@@ -103,6 +103,7 @@ $(function () {
  * @returns
  */
 function onlineDetail(sessionId){
+	console.log(sessionId);
 	$.ajax({
 		type : "POST",
 		url : 'onlineDetail',

@@ -17,7 +17,6 @@ import cn.com.uploadAndDownload.fileUploadDemo.utils.SerializeUtil;
  * @param <K>
  * @param <V>
  */
-@SuppressWarnings("unchecked")
 public class JedisShiroCache<K, V> implements Cache<K, V> {
 
 	/**
@@ -35,6 +34,7 @@ public class JedisShiroCache<K, V> implements Cache<K, V> {
 
     
 	static final Class<JedisShiroCache> SELF = JedisShiroCache.class;
+	
     public JedisShiroCache(String name, JedisManager jedisManager) {
         this.name = name;
         this.jedisManager = jedisManager;

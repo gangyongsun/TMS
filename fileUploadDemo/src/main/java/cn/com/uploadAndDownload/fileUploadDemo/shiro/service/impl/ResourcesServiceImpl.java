@@ -19,6 +19,7 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysUserRoleMapper;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysResources;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysRoleResources;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.ResourcesService;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.session.CustomSessionManager;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.SampleRealm;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;

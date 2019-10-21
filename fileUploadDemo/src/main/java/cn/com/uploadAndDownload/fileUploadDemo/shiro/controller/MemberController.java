@@ -19,7 +19,7 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.UserOnlineBo;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.RoleService;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.UserService;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.impl.CustomSessionManager;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.session.CustomSessionManager;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.utils.UserManager;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.PropertiesUtil;
 

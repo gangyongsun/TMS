@@ -24,43 +24,25 @@ import org.apache.shiro.web.util.WebUtils;
 import com.alibaba.fastjson.JSON;
 
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@Data
+@EqualsAndHashCode(callSuper=false)
 public class KickoutSessionControlFilter extends AccessControlFilter {
 
-	/**
-	 * 踢出后到的地址
-	 */
+	//踢出后到的地址
 	private String kickoutUrl;
 
-	/**
-	 * 踢出之前/之后登录的用户,默认踢出之前登录的用户
-	 */
+	//踢出之前/之后登录的用户,默认踢出之前登录的用户
 	private boolean kickoutAfter = false;
 
-	/**
-	 * 同一个帐号最大会话数,默认1
-	 */
+	//同一个帐号最大会话数,默认1
 	private int maxSession = 1;
 
 	private SessionManager sessionManager;
 
 	private Cache<String, Deque<Serializable>> cache;
-
-	public void setKickoutUrl(String kickoutUrl) {
-		this.kickoutUrl = kickoutUrl;
-	}
-
-	public void setKickoutAfter(boolean kickoutAfter) {
-		this.kickoutAfter = kickoutAfter;
-	}
-
-	public void setMaxSession(int maxSession) {
-		this.maxSession = maxSession;
-	}
-
-	public void setSessionManager(SessionManager sessionManager) {
-		this.sessionManager = sessionManager;
-	}
 
 	/**
 	 * 设置Cache的key的前缀

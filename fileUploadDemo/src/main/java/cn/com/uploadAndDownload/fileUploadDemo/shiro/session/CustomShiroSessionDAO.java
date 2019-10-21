@@ -1,4 +1,4 @@
-package cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.shiroSession;
+package cn.com.uploadAndDownload.fileUploadDemo.shiro.session;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -7,8 +7,8 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.ShiroSessionRepository;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,16 +21,23 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Component 
 public class CustomShiroSessionDAO extends AbstractSessionDAO {
 	
 	@Autowired
 	private ShiroSessionRepository shiroSessionRepository;
 
+	/**
+	 * 更新session
+	 */
 	@Override
 	public void update(Session session) throws UnknownSessionException {
 		shiroSessionRepository.saveSession(session);
 	}
 
+	/**
+	 * 删除session
+	 */
 	@Override
 	public void delete(Session session) {
 		if (session == null) {
@@ -43,6 +50,9 @@ public class CustomShiroSessionDAO extends AbstractSessionDAO {
 		}
 	}
 
+	/**
+	 * 获取活跃状态的session
+	 */
 	@Override
 	public Collection<Session> getActiveSessions() {
 		return shiroSessionRepository.getAllSessions();

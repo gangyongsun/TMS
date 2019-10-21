@@ -1,9 +1,10 @@
-package cn.com.uploadAndDownload.fileUploadDemo.shiro.dao;
-
-import org.apache.shiro.session.Session;
+package cn.com.uploadAndDownload.fileUploadDemo.shiro.session;
 
 import java.io.Serializable;
 import java.util.Collection;
+
+import org.apache.shiro.session.Session;
+import org.springframework.stereotype.Component;
 
 /**
  * Session操作
@@ -11,6 +12,7 @@ import java.util.Collection;
  * @author alvin
  *
  */
+@Component 
 public interface ShiroSessionRepository {
 
 	/**

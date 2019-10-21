@@ -1,4 +1,4 @@
-package cn.com.uploadAndDownload.fileUploadDemo.shiro.service.impl;
+package cn.com.uploadAndDownload.fileUploadDemo.shiro.session;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,13 +12,10 @@ import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.bo.UserOnlineBo;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.ShiroSessionRepository;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.shiroSession.CustomShiroSessionDAO;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.vo.SessionStatus;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;
 
@@ -28,12 +25,9 @@ import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;
  * @author alvin
  *
  */
-@Service
+@Component
 public class CustomSessionManager {
 
-	/**
-	 * session status
-	 */
 	public static final String SESSION_STATUS = "tms-online-status";
 
 	@Autowired
@@ -48,7 +42,6 @@ public class CustomSessionManager {
 	 * @return
 	 */
 	public List<UserOnlineBo> getAllUser() {
-		// 获取所有session
 		Collection<Session> sessions = customShiroSessionDAO.getActiveSessions();
 		List<UserOnlineBo> userOnlineList = new ArrayList<UserOnlineBo>();
 
@@ -68,25 +61,22 @@ public class CustomSessionManager {
 	 * @return
 	 */
 	public List<SimplePrincipalCollection> getSimplePrincipalCollectionByUserId(Integer... userIds) {
-		// 把userIds 转成Set，好判断
-		Set<Integer> idset = (Set<Integer>) StringUtils.array2Set(userIds);
-		// 获取所有session
+		Set<Integer> userIdSet = (Set<Integer>) StringUtils.array2Set(userIds);
 		Collection<Session> sessions = customShiroSessionDAO.getActiveSessions();
-		// 定义返回
 		List<SimplePrincipalCollection> list = new ArrayList<SimplePrincipalCollection>();
 		for (Session session : sessions) {
 			// 获取SimplePrincipalCollection
 			Object obj = session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
 			if (null != obj && obj instanceof SimplePrincipalCollection) {
 				// 强转
-				SimplePrincipalCollection spc = (SimplePrincipalCollection) obj;
+				SimplePrincipalCollection simplePrincipalCollection = (SimplePrincipalCollection) obj;
 				// 判断用户，匹配用户ID
-				obj = spc.getPrimaryPrincipal();
+				obj = simplePrincipalCollection.getPrimaryPrincipal();
 				if (null != obj && obj instanceof SysUser) {
 					SysUser user = (SysUser) obj;
 					// 比较用户ID，符合即加入集合
-					if (null != user && idset.contains(user.getId())) {
-						list.add(spc);
+					if (null != user && userIdSet.contains(user.getId())) {
+						list.add(simplePrincipalCollection);
 					}
 				}
 			}
@@ -102,8 +92,8 @@ public class CustomSessionManager {
 	 */
 	public UserOnlineBo getSession(String sessionId) {
 		Session session = shiroSessionRepository.getSession(sessionId);
-		UserOnlineBo bo = getSessionBo(session);
-		return bo;
+		UserOnlineBo userOnlineBo = getSessionBo(session);
+		return userOnlineBo;
 	}
 
 	private UserOnlineBo getSessionBo(Session session) {
@@ -111,14 +101,14 @@ public class CustomSessionManager {
 		Object obj = session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
 		// 确保是 SimplePrincipalCollection对象
 		if (null != obj && obj instanceof SimplePrincipalCollection) {
-			SimplePrincipalCollection spc = (SimplePrincipalCollection) obj;
+			SimplePrincipalCollection simplePrincipalCollection = (SimplePrincipalCollection) obj;
 			/**
 			 * 获取用户登录
 			 * 
 			 * @link SampleRealm.doGetAuthenticationInfo(...)方法中 return new
 			 *       SimpleAuthenticationInfo(user,user.getPswd(), getName()); 的user 对象。
 			 */
-			obj = spc.getPrimaryPrincipal();
+			obj = simplePrincipalCollection.getPrimaryPrincipal();
 
 			if (null != obj && obj instanceof SysUser) {
 				// 存储session + user 综合信息
@@ -193,7 +183,6 @@ public class CustomSessionManager {
 	 * @param status 用户状态
 	 */
 	public void forbidUserById(Integer id, Integer status) {
-		// 获取所有在线用户
 		List<UserOnlineBo> userOnlineList = getAllUser();
 		if (null != userOnlineList) {
 			for (UserOnlineBo userOnlineBo : userOnlineList) {

@@ -24,11 +24,6 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.secutity.MyShiroRealm;
 
 @Configuration
 public class ShiroConfig {
-	
-//	@Bean
-//	public CustomSessionManager customSessionManager() {
-//		return new CustomSessionManager();
-//	}
 
 	@Bean(name = "shiroDialect")
 	public ShiroDialect shiroDialect() {
@@ -84,8 +79,7 @@ public class ShiroConfig {
 	 */
 	@Bean
 	public MyShiroRealm myShiroRealm() {
-		MyShiroRealm myShiroRealm = new MyShiroRealm();
-		return myShiroRealm;
+		return new MyShiroRealm();
 	}
 
 	/**

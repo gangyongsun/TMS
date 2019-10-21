@@ -5,11 +5,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.shiro.session.Session;
+import org.springframework.stereotype.Component;
 
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.shiroSession.JedisShiroSessionRepository;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.SerializeUtil;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;
+import lombok.Data;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.exceptions.JedisConnectionException;
@@ -20,43 +21,79 @@ import redis.clients.jedis.exceptions.JedisConnectionException;
  * @author alvin
  *
  */
+@Component
+@Data
 public class JedisManager {
 
+	/**
+	 * 这个地方尝试让spring注入，但是spring要求在配置里配置jedisPool Bean
+	 */
 	private JedisPool jedisPool;
 
+	/**
+	 * 从Redis池获取Redis对象
+	 * @return
+	 */
 	public Jedis getJedis() {
 		Jedis jedis = null;
 		try {
-			jedis = getJedisPool().getResource();
+			jedis = jedisPool.getResource();
 		} catch (JedisConnectionException e) {
+			e.printStackTrace();
 			String message = StringUtils.trim(e.getMessage());
 			if ("Could not get a resource from the pool".equalsIgnoreCase(message)) {
-				System.out.println("++++++++++请检查你的redis服务++++++++");
-				System.out.println("|①.请检查是否安装redis服务|");
-				System.out.println("|②.请检查redis 服务是否启动|");
-				System.out.println("|③.请检查redis启动是否带配置文件启动，也就是是否有密码，是否端口有变化（默认6379）。解决方案，参考第二点。如果需要配置密码和改变端口，请修改spring-cache.xml配置。|");
-
-				System.out.println("|PS.如果对Redis表示排斥，请使用Ehcache版本：http://www.sojson.com/jc_shiro_ssm_ehcache.html");
+				System.out.println("++++++++++请检查是否安装并启动redis服务++++++++");
+				System.out.println("|①.请检查redis启动是否带配置文件启动，也就是是否有密码，是否端口有变化（默认6379）|");
 				System.out.println("项目退出中....生产环境中，请删除这些东西");
 				System.exit(0);// 停止项目
 			}
 			throw new JedisConnectionException(e);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 		return jedis;
 	}
 
+	/**
+	 * 获取所有Session
+	 * 
+	 * @param dbIndex
+	 * @param redisShiroSession
+	 * @return
+	 * @throws Exception
+	 */
+	public Collection<Session> AllSession(int dbIndex, String redisShiroSession) {
+		Jedis jedis = null;
+		boolean isBroken = false;
+		Set<Session> sessions = new HashSet<Session>();
+		try {
+			jedis = getJedis();
+			jedis.select(dbIndex);
+
+			Set<byte[]> byteKeys = jedis.keys((JedisShiroSessionRepository.REDIS_SHIRO_ALL).getBytes());
+			if (byteKeys != null && byteKeys.size() > 0) {
+				for (byte[] byteKey : byteKeys) {
+					Session obj = SerializeUtil.deserialize(jedis.get(byteKey), Session.class);
+					if (obj instanceof Session) {
+						sessions.add(obj);
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			isBroken = true;
+			e.printStackTrace();
+		} finally {
+			returnResource(jedis, isBroken);
+		}
+		return sessions;
+	}
+
 	public void returnResource(Jedis jedis, boolean isBroken) {
-		if (jedis == null)
+		if (jedis == null) {
 			return;
-		/**
-		 * @deprecated starting from Jedis 3.0 this method will not be exposed. Resource
-		 *             cleanup should be done using @see
-		 *             {@link redis.clients.jedis.Jedis#close()} if (isBroken){
-		 *             getJedisPool().returnBrokenResource(jedis); }else{
-		 *             getJedisPool().returnResource(jedis); }
-		 */
+		}
 		jedis.close();
 	}
 
@@ -69,6 +106,7 @@ public class JedisManager {
 			jedis.select(dbIndex);
 			result = jedis.get(key);
 		} catch (Exception e) {
+			e.printStackTrace();
 			isBroken = true;
 			throw e;
 		} finally {
@@ -86,6 +124,7 @@ public class JedisManager {
 			Long result = jedis.del(key);
 			LoggerUtils.fmtDebug(getClass(), "删除Session结果：%s", result);
 		} catch (Exception e) {
+			e.printStackTrace();
 			isBroken = true;
 			throw e;
 		} finally {
@@ -103,6 +142,7 @@ public class JedisManager {
 			if (expireTime > 0)
 				jedis.expire(key, expireTime);
 		} catch (Exception e) {
+			e.printStackTrace();
 			isBroken = true;
 			throw e;
 		} finally {
@@ -110,46 +150,4 @@ public class JedisManager {
 		}
 	}
 
-	public JedisPool getJedisPool() {
-		return jedisPool;
-	}
-
-	public void setJedisPool(JedisPool jedisPool) {
-		this.jedisPool = jedisPool;
-	}
-
-	/**
-	 * 获取所有Session
-	 * 
-	 * @param dbIndex
-	 * @param redisShiroSession
-	 * @return
-	 * @throws Exception
-	 */
-	@SuppressWarnings("unchecked")
-	public Collection<Session> AllSession(int dbIndex, String redisShiroSession) {
-		Jedis jedis = null;
-		boolean isBroken = false;
-		Set<Session> sessions = new HashSet<Session>();
-		try {
-			jedis = getJedis();
-			jedis.select(dbIndex);
-
-			Set<byte[]> byteKeys = jedis.keys((JedisShiroSessionRepository.REDIS_SHIRO_ALL).getBytes());
-			if (byteKeys != null && byteKeys.size() > 0) {
-				for (byte[] bs : byteKeys) {
-					Session obj = SerializeUtil.deserialize(jedis.get(bs), Session.class);
-					if (obj instanceof Session) {
-						sessions.add(obj);
-					}
-				}
-			}
-		} catch (Exception e) {
-			isBroken = true;
-			e.printStackTrace();
-		} finally {
-			returnResource(jedis, isBroken);
-		}
-		return sessions;
-	}
 }
