@@ -30,40 +30,36 @@
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-sm-12">
+					<div class="col-sm-11">
 						<dl class="dl-horizontal">
-							<dt>中文定义：</dt>
-							<dd th:text="${keyInfo.definationCN}"></dd>
-							<dt>中文定义来源：</dt>
-							<dd th:text="${keyInfo.definationCNResource}"></dd>
-							<dt>中文例句：</dt>
-							<dd th:text="${keyInfo.sentenceCN}"></dd>
-							<dt>中文例句来源：</dt>
-							<dd th:text="${keyInfo.sentenceCNResource}"></dd>
-							<dt>英文定义：</dt>
-							<dd th:text="${keyInfo.definationEN}"></dd>
-							<dt>英文定义来源：</dt>
-							<dd th:text="${keyInfo.definationENResource}"></dd>
-							<dt>英文例句：</dt>
-							<dd th:text="${keyInfo.sentenceEN}"></dd>
-							<dt>英文例句来源：</dt>
-							<dd th:text="${keyInfo.sentenceENResource}"></dd>
+							<dt th:if="${keyInfo.definationCN !='' || keyInfo.definationEN !=''}">术语定义：</dt>
+							<dd class="text-navy" th:if="${keyInfo.definationCN !=''}" th:text="${keyInfo.definationCN +'【来源: '+ keyInfo.definationCNResource +'】' }"></dd>
+							<dd class="text-navy" th:if="${keyInfo.definationEN !=''}" th:text="${keyInfo.definationEN +'【SOURCE: '+ keyInfo.definationENResource +'】' }"></dd>
 							
-							<dt>分类一：</dt>
-							<dd th:text="${keyInfo.classification1}"></dd>
-							<dt>分类二：</dt>
-							<dd th:text="${keyInfo.classification2}"></dd>
-							<dt>分类三：</dt>
-							<dd th:text="${keyInfo.classification3}"></dd>
-							<dt>备注：</dt>
-							<dd th:text="${keyInfo.remark}"></dd>
+							<dt th:if="${sentenceList !=null}">例句参考：</dt>
+							<dl th:if="${sentenceList !=null}" th:each="sentence:${sentenceList}">
+								<dd th:text="${'★️. '+sentence}"></dd>
+							</dl>
+							<dt th:if="${keyInfo.remark !=''}">备注：</dt>
+							<dd th:if="${keyInfo.remark !=''}" th:text="${keyInfo.remark}"></dd>
+							<dt th:if="${keyInfo.source !=''}">术语来源：</dt>
+							<dd th:if="${keyInfo.source !=''}" th:text="${keyInfo.source}"></dd>
 						</dl>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-12">
+					<div class="col-sm-4">
 						<dl class="dl-horizontal">
-							<dt>图片:</dt>
+							<dt th:if="${keyInfo.classification1 !=''}">一级分类：</dt>
+							<dd th:if="${keyInfo.classification1 !=''}" th:text="${keyInfo.classification1}"></dd>
+							<dt th:if="${keyInfo.classification2 !=''}">二级分类：</dt>
+							<dd th:if="${keyInfo.classification2 !=''}" th:text="${keyInfo.classification2}"></dd>
+							<dt th:if="${keyInfo.classification3 !=''}">三级分类：</dt>
+							<dd th:text="${keyInfo.classification3}"></dd>
+						</dl>
+					</div>
+					<div class="col-sm-7">
+						<dl class="dl-horizontal">
 							<dd>
 								<!-- <img alt="image" class="img-responsive" src="http://10.12.9.34:8010/404.png" width="251" height="201" /> -->
 								<img th:if="${keyInfo.image !=''}" alt="image" class="img-responsive" th:src="'http://10.12.9.34:8010/'+${keyInfo.image}" width="376" height="301" />
@@ -72,13 +68,14 @@
 						</dl>
 					</div>
 				</div>
-				<!--  <div class="row">
-                         <div class="col-sm-12">
-					<div class="pull-right">
-					     <a class="btn btn-xs btn-white"><i class="fa fa-thumbs-up"></i> 赞 </a>
-					     <a class="btn btn-xs btn-white"><i class="fa fa-heart"></i> 收藏</a>
-					     <a class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> 评论</a>
-					 </div>
+					<div th:if="${keyInfo.contributor !=''}" th:text="${'该术语由【'+keyInfo.contributor+'】收集'}"></div>
+				<!-- <div class="row">
+                    <div class="col-sm-12">
+						<div class="pull-right">
+						     <a class="btn btn-xs btn-white"><i class="fa fa-thumbs-up"></i> 赞 </a>
+						     <a class="btn btn-xs btn-white"><i class="fa fa-heart"></i> 收藏</a>
+						     <a class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> 评论</a>
+						 </div>
                 	</div>
                 </div> -->
 			</div>
