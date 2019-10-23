@@ -30,6 +30,7 @@ public class KeyInfoController {
 	 */
 	@RequestMapping(value = "index")
 	public ModelAndView index(ModelMap map, String termType, String findContent) {
+		System.out.println("findContent="+findContent);
 		// 查询所有术语类型
 		List<String> keyInfoTypeList = keyInfoService.findTermTypes();
 

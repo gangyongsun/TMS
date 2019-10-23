@@ -1,6 +1,10 @@
 #生产环境
 server:
-  port: 8080
+  port: 8443
+  ssl:
+    key-store: classpath:2678385_o2xygen.fun.pfx
+    key-store-password: vL1UE0LE
+    keyStoreType: PKCS12
 
 spring:
   datasource:

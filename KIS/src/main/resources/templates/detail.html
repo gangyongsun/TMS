@@ -23,29 +23,38 @@
 					<span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
 				</button>
 				<!-- <i class="fa fa-laptop modal-icon"></i> -->
-				<h4 class="modal-title" th:text="${keyInfo.chinese}"></h4>
-				<h4 class="font-bold" th:text="${keyInfo.english}"></h4>
+				<h4 th:if="${keyInfo.abbreviationCN} !=''" class="modal-title" th:text="${keyInfo.chinese+' [简称: '+keyInfo.abbreviationCN+' ]'}"></h4>
+				<h4 th:unless="${keyInfo.abbreviationCN} !=''" class="modal-title" th:text="${keyInfo.chinese}"></h4>
+				<h4 th:if="${keyInfo.abbreviationEN} !=''" class="font-bold" th:text="${keyInfo.english+' [简称: '+keyInfo.abbreviationEN+' ]'}"></h4>
+				<h4 th:unless="${keyInfo.abbreviationEN} !=''" class="font-bold" th:text="${keyInfo.english}"></h4>
 			</div>
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-sm-12">
 						<dl class="dl-horizontal">
-							<dt>定义：</dt>
-							<dd>短路是指电源正负极相接</dd>
-							<dt>定义来源：</dt>
-							<dd>百度百科</dd>
-							<dt>例句：</dt>
-							<dd>短路的后果很严重，可能会造成火灾</dd>
-							<dt>例句来源：</dt>
-							<dd>百度百科</dd>
+							<dt>中文定义：</dt>
+							<dd th:text="${keyInfo.definationCN}"></dd>
+							<dt>中文定义来源：</dt>
+							<dd th:text="${keyInfo.definationCNResource}"></dd>
+							<dt>中文例句：</dt>
+							<dd th:text="${keyInfo.sentenceCN}"></dd>
+							<dt>中文例句来源：</dt>
+							<dd th:text="${keyInfo.sentenceCNResource}"></dd>
+							<dt>英文定义：</dt>
+							<dd th:text="${keyInfo.definationEN}"></dd>
+							<dt>英文定义来源：</dt>
+							<dd th:text="${keyInfo.definationENResource}"></dd>
+							<dt>英文例句：</dt>
+							<dd th:text="${keyInfo.sentenceEN}"></dd>
+							<dt>英文例句来源：</dt>
+							<dd th:text="${keyInfo.sentenceENResource}"></dd>
+							
 							<dt>分类一：</dt>
-							<dd th:text="${keyInfo.subject}"></dd>
+							<dd th:text="${keyInfo.classification1}"></dd>
 							<dt>分类二：</dt>
-							<dd th:text="${keyInfo.function}"></dd>
+							<dd th:text="${keyInfo.classification2}"></dd>
 							<dt>分类三：</dt>
-							<dd th:text="${keyInfo.position}"></dd>
-							<dt>类型：</dt>
-							<dd th:text="${keyInfo.form}"></dd>
+							<dd th:text="${keyInfo.classification3}"></dd>
 							<dt>备注：</dt>
 							<dd th:text="${keyInfo.remark}"></dd>
 						</dl>
@@ -56,8 +65,9 @@
 						<dl class="dl-horizontal">
 							<dt>图片:</dt>
 							<dd>
-								<img alt="image" class="img-responsive" src="http://10.12.9.34:8010/404.png" width="251" height="201" />
-								<!--<img alt="image" class="img-responsive" th:src="'http://10.12.9.34:8010/'+${image}+'.png'" width="376" height="301" /> -->
+								<!-- <img alt="image" class="img-responsive" src="http://10.12.9.34:8010/404.png" width="251" height="201" /> -->
+								<img th:if="${keyInfo.image !=''}" alt="image" class="img-responsive" th:src="'http://10.12.9.34:8010/'+${keyInfo.image}" width="376" height="301" />
+								<img th:unless="${keyInfo.image !=''}" alt="image" class="img-responsive" th:src="'http://10.12.9.34:8010/404.png'" width="376" height="301" />
 							</dd>
 						</dl>
 					</div>

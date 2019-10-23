@@ -1,6 +1,5 @@
 package cn.com.goldwind.kis.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,28 +15,35 @@ public class KeyInfo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "key_info_id")
 	private String id;
-
 	private String chinese;
-
 	private String english;
 
-	private String form;
+	private String classification1;
+	private String classification2;
+	private String classification3;
 
-	@Column(name = "key_info_image")
+	private String sentenceCN;
+	private String sentenceEN;
+	private String sentenceCNResource;
+	private String sentenceENResource;
+	
+	private String abbreviationCN;
+	private String abbreviationEN;
+	
+	private String synonymCN;
+	private String synonymEN;
+	
+	private String definationCN;
+	private String definationEN;
+	private String definationCNResource;
+	private String definationENResource;
+	
 	private String image;
-
-	@Column(name = "key_info_remark")
 	private String remark;
-
-	@Column(name = "key_info_subject")
-	private String subject;
-
-	@Column(name = "key_info_function")
-	private String function;
-
-	@Column(name = "key_info_position")
-	private String position;
-
+	private String status;
+	private String source;
+	private String contributor;
+	
+	private int hitCount;
 }

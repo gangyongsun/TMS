@@ -26,11 +26,6 @@ public class KeyInfoDto {
 	private String english;
 
 	/**
-	 * 关键词格式
-	 */
-	private String form;
-
-	/**
 	 * 图片地址链接
 	 */
 	private String image;

@@ -20,16 +20,39 @@ public interface KeyInfoRepository extends JpaRepository<KeyInfo, String>, Seria
 	@Query(value = "select * from t_key_info where chinese like CONCAT('%',:keyInfo,'%') or english like CONCAT('%',:keyInfo,'%')", nativeQuery = true)
 	public List<KeyInfo> findByKeyInfo(@Param("keyInfo") String keyInfo);
 
-	@Query(value = "select distinct key_info_function from t_key_info", nativeQuery = true)
+	/**
+	 * 搜索二级分类
+	 * 
+	 * @return
+	 */
+	@Query(value = "select distinct classification2 from t_key_info", nativeQuery = true)
 	public List<String> findTermTypes();
 
-	@Query(value = "select * from t_key_info where key_info_function = :termType", nativeQuery = true)
+	/**
+	 * 按二级类型搜索
+	 * 
+	 * @param termType
+	 * @return
+	 */
+	@Query(value = "select * from t_key_info where classification2 = :termType", nativeQuery = true)
 	public List<KeyInfo> findByTermType(@Param("termType") String termType);
 
-	@Query(value = "select count(1) from t_key_info where key_info_function= :termType", nativeQuery = true)
+	/**
+	 * 搜索二级分类术语的数量
+	 * 
+	 * @param termType
+	 * @return
+	 */
+	@Query(value = "select count(1) from t_key_info where classification2= :termType", nativeQuery = true)
 	public int getNumByType(@Param("termType") String termType);
 
-	@Query(value = "select * from t_key_info where key_info_id= :id", nativeQuery = true)
+	/**
+	 * 根据ID搜索术语详细信息
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@Query(value = "select * from t_key_info where id= :id", nativeQuery = true)
 	public KeyInfo findTermById(@Param("id") String id);
 
 }
