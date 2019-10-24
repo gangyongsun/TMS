@@ -1,5 +1,6 @@
 package cn.com.goldwind.kis;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -9,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 
 @SpringBootApplication
 @ComponentScan("cn.com.goldwind.kis")
+@MapperScan("cn.com.goldwind.kis.repository")
 public class KISApplication extends WebMvcConfigurationSupport {
 
 	public static void main(String[] args) {

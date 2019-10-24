@@ -26,3 +26,7 @@ spring:
     mode: HTML5
     servlet:
       content-type: text/html
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: cn.com.goldwind.kis.entity

@@ -63,16 +63,21 @@ public class KeyInfoController {
 	 * @return
 	 */
 	@RequestMapping(value = "showDetail")
-	public ModelAndView index(ModelMap map, String id) {
+	public ModelAndView index(ModelMap map, Integer id) {
 		KeyInfo keyInfo = keyInfoService.findTermById(id);
+		System.out.println(keyInfo.getTotalClick());
 		if (null != keyInfo) {
 			map.put("keyInfo", keyInfo);
+			keyInfo.setTotalClick(keyInfo.getTotalClick()+1);
+			keyInfoService.updateTerm(keyInfo);
 		}
 		List<String> sentenceList = getSentenceArrayList(keyInfo);
 		if (null != sentenceList && sentenceList.size() > 0) {
 			map.put("sentenceList", sentenceList);
 		}
-
+		
+		
+		
 		return new ModelAndView("detail");
 	}
 

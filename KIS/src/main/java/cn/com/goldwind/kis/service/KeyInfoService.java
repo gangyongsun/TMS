@@ -9,17 +9,19 @@ public interface KeyInfoService {
 	/**
 	 * 根据给出的中文或英文模糊查询相关的关键词信息
 	 * 
-	 * @param keyInfo
+	 * @param findContent
 	 * @return
 	 */
-	public List<KeyInfo> findByKeyInfo(String keyInfo);
+	public List<KeyInfo> findByKeyInfo(String findContent);
 
 	public List<String> findTermTypes();
 
 	public List<KeyInfo> findByTermType(String termType);
-	
+
 	public int getNumByType(String termType);
 
-	public KeyInfo findTermById(String id);
+	public KeyInfo findTermById(Integer id);
+
+	public void updateTerm(KeyInfo keyInfo);
 
 }
