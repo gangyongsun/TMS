@@ -24,4 +24,6 @@ public interface KeyInfoService {
 
 	public void updateTerm(KeyInfo keyInfo);
 
+	public List<String> findHotTerms(Integer num);
+
 }

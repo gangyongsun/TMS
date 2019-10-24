@@ -99,5 +99,11 @@
 		select count(1) from t_key_info where classification2= #{termType,jdbcType=VARCHAR}
 	</select>
 
+	<select id="findHotTerms" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_key_info
+		order by totalClick desc  limit 0,#{num,jdbcType=INTEGER};
+	</select>
 
 </mapper>

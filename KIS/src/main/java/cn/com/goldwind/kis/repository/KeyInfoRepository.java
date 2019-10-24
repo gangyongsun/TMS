@@ -40,4 +40,12 @@ public interface KeyInfoRepository extends Mapper<KeyInfo> {
 	 */
 	public int getNumByType(String termType);
 
+	/**
+	 * 搜索热词
+	 * 
+	 * @param num
+	 * @return
+	 */
+	public List<String> findHotTerms(Integer num);
+
 }

@@ -15,6 +15,7 @@
 <link rel="stylesheet" th:href="@{/static/css/font-awesome.css}" href="../static/css/font-awesome.css">
 <link rel="stylesheet" th:href="@{/static/css/bootstrap-table/bootstrap-table.min.css}" href="../static/css/bootstrap-table/bootstrap-table.min.css">
 <link rel="stylesheet" th:href="@{/static/css/main.css}" href="../static/css/main.css">
+<link rel="stylesheet" th:href="@{/static/css/animate.css}" href="../static/css/animate.css">
 <link rel="stylesheet" th:href="@{/static/css/style.css}" href="../static/css/style.css">
 </head>
 <body id="indexMain">
@@ -48,37 +49,58 @@
 		</div>
 	</section>
 	<section class="about-area">
-		<div class="col-lg-8 col-xs-8 col-md-8 col-sm-8 col-lg-offset-2">
-			<div class="wrapper wrapper-content animated fadeInRight" id="termSummary">
-		        <div class="row">
-		            <div class="col-sm-6">
-		                <div class="ibox float-e-margins">
-		                    <div class="ibox-title">
-		                        <h5>术语统计</h5>
+		<div class="container">
+			<div class="col-lg-12 col-xs-12 col-md-12 col-sm-12">
+				<div class="wrapper wrapper-content animated fadeInRight" id="termSummary">
+			        <div class="row">
+			            <div class="col-lg-5 col-xs-5 col-md-5 col-sm-5">
+			            	<div class="echarts" id="echarts-pie-chart"></div>
+			            </div>
+			             <div class="col-lg-7 col-xs-7 col-md-7 col-sm-7" id="hotTermArea">
+			                <div class="row">
+		                        <div class="col-sm-4" th:each="hotKeyInfo:${hotKeyInfoList}">
+		                            <div class="file-box ">
+			                            <div class="file">
+			                                <a th:id="${hotKeyInfo.id}" onclick="javascript:showDetail(this);return false;">
+			                                    <span class="corner"></span>
+		                                        <img th:if="${hotKeyInfo.image !=''}" alt="image" class="img-responsive img-rounded" th:src="${'http://10.12.9.34:8010/'+hotKeyInfo.image}" width="198" height="138.27">
+		                                        <img th:unless="${hotKeyInfo.image !=''}" alt="image" class="img-rounded" src="http://10.12.9.34:8010/404.png" width="198" height="138.27">
+		                                        <small th:text="${hotKeyInfo.chinese}"></small>
+		                                        <small th:if="${hotKeyInfo.totalClick >=1 &&hotKeyInfo.totalClick <10}">★</small>
+		                                        <small th:if="${hotKeyInfo.totalClick >=10 &&hotKeyInfo.totalClick <100}">★★</small>
+		                                        <small th:if="${hotKeyInfo.totalClick >=100 &&hotKeyInfo.totalClick <1000}">★★★</small>
+		                                        <small th:if="${hotKeyInfo.totalClick >=1000 &&hotKeyInfo.totalClick <10000}">★★★★</small>
+		                                        <small th:if="${hotKeyInfo.totalClick >=10000}">★★★★★</small>
+			                                </a>
+			                            </div>
+		                            </div>
+		                        </div>
+			                </div>
+			                <div class="row">
+		                        <div class="text-center">
+			                    	<a th:id="${hotKeyInfoList.size()}" onclick="javascript:showMoreHotTerms(this);return false;">查看更多热词</a>
+		                        </div>
 		                    </div>
-		                    <div class="ibox-content">
-		                        <div class="echarts" id="echarts-pie-chart"></div>
-		                    </div>
-		                </div>
-		            </div>
-		        </div>
-		    </div>
-			<table th:if="${keyInfoList !=null}" class="table table-bordered tab-content" id="termTable">
-				<tbody>
-					<tr class="gradeA" th:each="keyInfo:${keyInfoList}">
-						<td data-toggle="modal"><a th:text="${keyInfo.chinese}" th:id="${keyInfo.id}" onclick="javascript:showDetail(this);return false;"></a></td>
-						<td th:text="${keyInfo.english}" th:id="${keyInfo.classification1}+'>'+${keyInfo.classification2}+'>'+${keyInfo.classification3}"></td>
-					</tr>
-				</tbody>
-			</table>
+			            </div>
+			        </div>
+			    </div>
+				<table th:if="${keyInfoList !=null}" class="table" id="termTable">
+					<tbody>
+						<tr class="gradeA" th:each="keyInfo:${keyInfoList}">
+							<td data-toggle="modal"><a th:text="${keyInfo.chinese}" th:id="${keyInfo.id}" onclick="javascript:showDetail(this);return false;"></a></td>
+							<td th:text="${keyInfo.english}" th:id="${keyInfo.classification1}+'>'+${keyInfo.classification2}+'>'+${keyInfo.classification3}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
         <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
 	</section>
 	<!-- Start Footer Area -->
-	<footer class=" section-gap">
+	<footer>
 		<div class="container">
 			<div class="footer-bottom row align-items-center">
-				<p class="footer-text m-0 col-lg-8 col-md-12">
+				<p class="footer-text col-lg-12 col-md-12">
 					Copyright &copy;<label id="_datetime"></label>
 					- <a href="http://www.goldwind.com.cn" target="_blank" title="GoldWind">Goldwind</a> All rights reserved
 				</p>
@@ -91,15 +113,13 @@
 	<script type="text/javascript" th:src="@{/static/js/bootstrap-table/bootstrap-table.js}" src="../static/js/bootstrap-table/bootstrap-table.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/bootstrap-table/bootstrap-table-mobile.min.js}" src="../static/js/bootstrap-table/bootstrap-table-mobile.min.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}" src="../static/js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-	<!-- <script type="text/javascript" th:src="@{/static/js/tableExport/tableExport.min.js}" src="../static/js/tableExport/tableExport.min.js"></script>
-	<script type="text/javascript" th:src="@{/static/js/bootstrap-table/extensions/export/bootstrap-table-export.js}" src="../static/js/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
-	 -->
     <script type="text/javascript" th:src="@{/static/js/echarts/echarts-all.js}" src="../static/js/echarts/echarts-all.js"></script>
 	
     <!-- 自定义js -->
+	<script type="text/javascript" th:src="@{/static/js/content.js}" src="../static/js/content.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/kis/search.js}" src="../static/js/kis/search.js"></script>
 	<script>
 		document.getElementById("_datetime").innerText=new Date().getFullYear();
-	</script>
+    </script>
 </body>
 </html>

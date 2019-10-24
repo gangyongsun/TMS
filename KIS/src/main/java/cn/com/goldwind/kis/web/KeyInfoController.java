@@ -31,7 +31,7 @@ public class KeyInfoController {
 	 */
 	@RequestMapping(value = "index")
 	public ModelAndView index(ModelMap map, String termType, String findContent) {
-		System.out.println("findContent=" + findContent);
+//		System.out.println("findContent=" + findContent);
 		// 查询所有术语类型
 		List<String> keyInfoTypeList = keyInfoService.findTermTypes();
 
@@ -45,12 +45,19 @@ public class KeyInfoController {
 				keyInfoList = keyInfoService.findByTermType(termType);
 			}
 		}
+		
+		//热词展示
+		List<String> hotKeyInfoList =keyInfoService.findHotTerms(9);
+		
 
 		if (null != keyInfoTypeList && keyInfoTypeList.size() > 0) {
 			map.put("keyInfoTypeList", keyInfoTypeList);
 		}
 		if (null != keyInfoList && keyInfoList.size() > 0) {
 			map.put("keyInfoList", keyInfoList);
+		}
+		if (null != hotKeyInfoList && hotKeyInfoList.size() > 0) {
+			map.put("hotKeyInfoList", hotKeyInfoList);
 		}
 		return new ModelAndView("index");
 	}
@@ -65,7 +72,7 @@ public class KeyInfoController {
 	@RequestMapping(value = "showDetail")
 	public ModelAndView index(ModelMap map, Integer id) {
 		KeyInfo keyInfo = keyInfoService.findTermById(id);
-		System.out.println(keyInfo.getTotalClick());
+//		System.out.println(keyInfo.getTotalClick());
 		if (null != keyInfo) {
 			map.put("keyInfo", keyInfo);
 			keyInfo.setTotalClick(keyInfo.getTotalClick()+1);
@@ -75,9 +82,6 @@ public class KeyInfoController {
 		if (null != sentenceList && sentenceList.size() > 0) {
 			map.put("sentenceList", sentenceList);
 		}
-		
-		
-		
 		return new ModelAndView("detail");
 	}
 
@@ -155,6 +159,22 @@ public class KeyInfoController {
 			}
 		}
 		return termTypeNumMap;
+	}
+	
+	/**
+	 * 查询更多热词
+	 * 
+	 * @param number
+	 * @return
+	 */
+	@RequestMapping(value = "showMoreHotTerms")
+	public ModelAndView showMoreHotTerms(ModelMap map,Integer number) {
+		//热词展示
+		List<String> hotKeyInfoList =keyInfoService.findHotTerms(number);
+		if (null != hotKeyInfoList && hotKeyInfoList.size() > 0) {
+			map.put("hotKeyInfoList", hotKeyInfoList);
+		}
+		return new ModelAndView("hotTerms");
 	}
 
 }

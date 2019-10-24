@@ -46,4 +46,9 @@ public class KeyInfoServiceImpl extends BaseMybatisDao<KeyInfoRepository> implem
 		keyInforRepository.updateByPrimaryKeySelective(keyInfo);
 	}
 
+	@Override
+	public List<String> findHotTerms(Integer num) {
+		return keyInforRepository.findHotTerms(num);
+	}
+
 }

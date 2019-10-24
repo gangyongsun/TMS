@@ -1,4 +1,7 @@
 $(function() {
+	$('.file-box').each(function () {
+		animationHover(this, 'pulse');
+	 });
 	/**
 	 * 表格初始化
 	 */
@@ -140,6 +143,7 @@ function searchTerminology(obj) {
 		}
 	});
 }
+
 /**
  * 显示详情
  * 
@@ -161,7 +165,33 @@ function showDetail(obj) {
 			$('#myModal').modal('show');
 		},
 		error : function(data) {
-			console.log("搜索失败");
+			console.log("搜索失败！");
+		}
+	});
+}
+
+/**
+ * 查看更多热词
+ * 
+ * @returns
+ */
+function showMoreHotTerms(obj){
+	if (null != obj) {
+		var num = $(obj).attr("id");
+	}else{
+		var num=9;
+	}
+	$.ajax({
+		type : "POST",
+		url : 'showMoreHotTerms',
+		data : {
+			number : num*2
+		},
+		success : function(data) {
+			$("#hotTermArea").html(data);
+		},
+		error : function(data) {
+			console.log("搜索更多热词失败！");
 		}
 	});
 }
