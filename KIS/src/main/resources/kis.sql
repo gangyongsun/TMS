@@ -27,6 +27,6 @@ CREATE TABLE `t_key_info` (
   `definationEN` varchar(1024) DEFAULT NULL COMMENT '英文词条定义的内容',
   `definationENResource` varchar(512) DEFAULT NULL COMMENT '英文定义的来源或者出处',
   `status` varchar(64) DEFAULT NULL COMMENT '有两种状态：\nreviewed和unreviewed\r\n',
-  `hitCount` int(11) DEFAULT NULL COMMENT '词语的点击和搜索次数，用于计算热词使用'
+  `totalClick` int(11) DEFAULT NULL COMMENT '词语的点击和搜索次数，用于计算热词使用'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 

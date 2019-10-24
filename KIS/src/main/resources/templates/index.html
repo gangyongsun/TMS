@@ -64,7 +64,7 @@
 			                                <a th:id="${hotKeyInfo.id}" onclick="javascript:showDetail(this);return false;">
 			                                    <span class="corner"></span>
 		                                        <img th:if="${hotKeyInfo.image !=''}" alt="image" class="img-responsive img-rounded" th:src="${'http://10.12.9.34:8010/'+hotKeyInfo.image}" width="198" height="138.27">
-		                                        <img th:unless="${hotKeyInfo.image !=''}" alt="image" class="img-rounded" src="http://10.12.9.34:8010/404.png" width="198" height="138.27">
+		                                        <!-- <img th:unless="${hotKeyInfo.image !=''}" alt="image" class="img-rounded" src="http://10.12.9.34:8010/404.png" width="198" height="138.27"> -->
 		                                        <small th:text="${hotKeyInfo.chinese}"></small>
 		                                        <small th:if="${hotKeyInfo.totalClick >=1 &&hotKeyInfo.totalClick <10}">★</small>
 		                                        <small th:if="${hotKeyInfo.totalClick >=10 &&hotKeyInfo.totalClick <100}">★★</small>
