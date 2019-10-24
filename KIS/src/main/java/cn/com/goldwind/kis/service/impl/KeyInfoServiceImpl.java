@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.com.goldwind.kis.entity.AccessSummary;
 import cn.com.goldwind.kis.entity.KeyInfo;
 import cn.com.goldwind.kis.mybatis.BaseMybatisDao;
 import cn.com.goldwind.kis.repository.KeyInfoRepository;
@@ -49,6 +50,11 @@ public class KeyInfoServiceImpl extends BaseMybatisDao<KeyInfoRepository> implem
 	@Override
 	public List<String> findHotTerms(Integer num) {
 		return keyInforRepository.findHotTerms(num);
+	}
+
+	@Override
+	public List<AccessSummary> findAccessSummary() {
+		return keyInforRepository.findAccessSummary();
 	}
 
 }

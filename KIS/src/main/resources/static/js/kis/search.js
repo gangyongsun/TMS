@@ -74,6 +74,27 @@ $(function() {
 			console.log("summary failure!");
 		}
 	});
+	
+	// 请求accessSummary
+	$.ajax({
+		type : "POST",
+		url : 'accessSummary',
+		success : function(data) {
+			var keyArray = [];
+			var keyValueMapJsonArray = [];
+			for ( var key in data) {
+				keyArray.push(key);
+				keyValueMapJsonArray.push({
+					value : data[key],
+					name : key
+				});
+			}
+			init_funnel(keyArray, keyValueMapJsonArray);
+		},
+		error : function(data) {
+			console.log("accessSummary failure!");
+		}
+	});
 
 	/**
 	 * 初始化饼图
@@ -194,4 +215,48 @@ function showMoreHotTerms(obj){
 			console.log("搜索更多热词失败！");
 		}
 	});
+}
+
+function init_funnel(keyData, displayData){
+	var funnelChart = echarts.init(document.getElementById("echarts-funnel-chart"));
+    var funneloption = {
+        title : {
+            text: '各类术语点击率',
+            subtext: '结果'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c}%"
+        },
+        legend: {
+            data : keyData
+        },
+        calculable : true,
+        series : [
+            {
+                name:'漏斗图',
+                type:'funnel',
+                width: '40%',
+                data: displayData
+            },
+            {
+                name:'金字塔',
+                type:'funnel',
+                x : '50%',
+                sort : 'ascending',
+                itemStyle: {
+                    normal: {
+                        // color: 各异,
+                        label: {
+                            position: 'left'
+                        }
+                    }
+                },
+                data:displayData
+            }
+        ]
+    };
+
+    funnelChart.setOption(funneloption);
+    $(window).resize(funnelChart.resize);
 }

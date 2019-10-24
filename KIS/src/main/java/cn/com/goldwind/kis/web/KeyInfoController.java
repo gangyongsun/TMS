@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.com.goldwind.kis.entity.AccessSummary;
 import cn.com.goldwind.kis.entity.KeyInfo;
 import cn.com.goldwind.kis.service.KeyInfoService;
 
@@ -49,7 +50,6 @@ public class KeyInfoController {
 		//热词展示
 		List<String> hotKeyInfoList =keyInfoService.findHotTerms(9);
 		
-
 		if (null != keyInfoTypeList && keyInfoTypeList.size() > 0) {
 			map.put("keyInfoTypeList", keyInfoTypeList);
 		}
@@ -146,7 +146,7 @@ public class KeyInfoController {
 	 */
 	@RequestMapping(value = "summary")
 	@ResponseBody
-	public Map<String, Integer> summary(ModelMap map) {
+	public Map<String, Integer> summary() {
 		// 查询所有术语类型
 		List<String> keyInfoTypeList = keyInfoService.findTermTypes();
 
@@ -159,6 +159,24 @@ public class KeyInfoController {
 			}
 		}
 		return termTypeNumMap;
+	}
+	
+	/**
+	 * 查询术语类型对应的数量
+	 * 
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "accessSummary")
+	@ResponseBody
+	public Map<String, Integer> accessSummary() {
+		List<AccessSummary> accessSummaryList=keyInfoService.findAccessSummary();
+		Map<String, Integer> accessSummaryMap = new HashMap<String, Integer>();
+		
+		for (AccessSummary accessSummary : accessSummaryList) {
+			accessSummaryMap.put(accessSummary.getClassification(),accessSummary.getTotalAccess());
+		}
+		return accessSummaryMap;
 	}
 	
 	/**

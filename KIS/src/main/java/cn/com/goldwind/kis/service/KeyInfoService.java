@@ -2,6 +2,7 @@ package cn.com.goldwind.kis.service;
 
 import java.util.List;
 
+import cn.com.goldwind.kis.entity.AccessSummary;
 import cn.com.goldwind.kis.entity.KeyInfo;
 
 public interface KeyInfoService {
@@ -26,4 +27,5 @@ public interface KeyInfoService {
 
 	public List<String> findHotTerms(Integer num);
 
+	public List<AccessSummary> findAccessSummary();
 }

@@ -56,9 +56,14 @@
 			            <div class="col-lg-5 col-xs-5 col-md-5 col-sm-5">
 			            	<div class="echarts" id="echarts-pie-chart"></div>
 			            </div>
-			             <div class="col-lg-7 col-xs-7 col-md-7 col-sm-7" id="hotTermArea">
+			            <div class="col-sm-7">
+					   		<div class="echarts" id="echarts-funnel-chart"></div>
+					    </div>
+			        </div>
+			        <div class="row">
+					    <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12" id="hotTermArea">
 			                <div class="row">
-		                        <div class="col-sm-4" th:each="hotKeyInfo:${hotKeyInfoList}">
+		                        <div class="col-sm-3" th:each="hotKeyInfo:${hotKeyInfoList}">
 		                            <div class="file-box ">
 			                            <div class="file">
 			                                <a th:id="${hotKeyInfo.id}" onclick="javascript:showDetail(this);return false;">

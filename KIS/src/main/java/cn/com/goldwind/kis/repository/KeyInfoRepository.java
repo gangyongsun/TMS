@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.com.goldwind.kis.entity.AccessSummary;
 import cn.com.goldwind.kis.entity.KeyInfo;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -15,7 +16,7 @@ public interface KeyInfoRepository extends Mapper<KeyInfo> {
 	 * @param findContent
 	 * @return
 	 */
-	public List<KeyInfo> findByTermName(@Param("findContent")  String findContent);
+	public List<KeyInfo> findByTermName(@Param("findContent") String findContent);
 
 	/**
 	 * 搜索二级分类
@@ -47,5 +48,13 @@ public interface KeyInfoRepository extends Mapper<KeyInfo> {
 	 * @return
 	 */
 	public List<String> findHotTerms(Integer num);
+
+	/**
+	 * 不同类型术语访问量统计
+	 * 
+	 * @param num
+	 * @return
+	 */
+	public List<AccessSummary> findAccessSummary();
 
 }

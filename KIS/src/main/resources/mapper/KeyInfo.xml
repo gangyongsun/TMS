@@ -103,7 +103,14 @@
 		select
 		<include refid="Base_Column_List" />
 		from t_key_info
-		order by totalClick desc  limit 0,#{num,jdbcType=INTEGER};
+		order by totalClick desc  limit 0,#{num,jdbcType=INTEGER}
+	</select>
+	
+	<select id="findAccessSummary" resultType="cn.com.goldwind.kis.entity.AccessSummary">
+		SELECT classification2 classification,sum(totalClick) totalAccess 
+		FROM kis.t_key_info 
+		group by classification2 
+		order by totalAccess desc
 	</select>
 
 </mapper>
