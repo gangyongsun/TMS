@@ -10,7 +10,7 @@
 	<sql id="Base_Column_List">
 		id,
 		searchContent,
-		searchNumber,
+		searchNumber
 	</sql>
 	
 	<sql id="limit_sql">

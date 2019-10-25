@@ -26,7 +26,7 @@ public class NonSearchController {
 	 */
 	@RequestMapping(value = "index")
 	public ModelAndView index(ModelMap map) {
-		return new ModelAndView("index");
+		return new ModelAndView("console");
 	}
 
 	/**
