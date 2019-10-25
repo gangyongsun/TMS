@@ -31,42 +31,40 @@
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-sm-12">
-						<dl class="dl-horizontal">
-							<dt>分类信息：</dt>
-							<dd th:text="${keyInfo.classification1+'>'+keyInfo.classification2+'>'+keyInfo.classification3}"></dd>
+						<dl>
+							<dt th:text="${'分类信息: '+keyInfo.classification1+'>'+keyInfo.classification2+'>'+keyInfo.classification3}"></dt>
+							<dt th:if="${keyInfo.source !=''}" th:text="${'术语来源: '+keyInfo.source}"></dt>
 						</dl>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-11">
-						<dl class="dl-horizontal">
-							<dt th:if="${keyInfo.definationCN !='' || keyInfo.definationEN !=''}">术语定义：</dt>
-							<dd class="text-navy" th:if="${keyInfo.definationCN !=''}" th:text="${keyInfo.definationCN +'【来源: '+ keyInfo.definationCNResource +'】' }"></dd>
-							<dd class="text-navy" th:if="${keyInfo.definationEN !=''}" th:text="${keyInfo.definationEN +'【SOURCE: '+ keyInfo.definationENResource +'】' }"></dd>
-							
-							<dt th:if="${sentenceList !=null}">例句参考：</dt>
+					<div class="col-sm-12">
+						<dl>
+							<dt class="text-navy"th:if="${keyInfo.definationCN !='' || keyInfo.definationEN !=''}">术语定义：</dt>
+							<dd th:if="${keyInfo.definationCN !=''}" th:text="${keyInfo.definationCN +'【来源: '+ keyInfo.definationCNResource +'】' }"></dd>
+							<dd th:if="${keyInfo.definationEN !=''}" th:text="${keyInfo.definationEN +'【SOURCE: '+ keyInfo.definationENResource +'】' }"></dd>
+						</dl>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<dl>
+							<dt class="text-navy" th:if="${sentenceList !=null}">例句参考：</dt>
 							<dl th:if="${sentenceList !=null}" th:each="sentence:${sentenceList}">
 								<dd th:text="${'★️. '+sentence}"></dd>
 							</dl>
-							<dt th:if="${keyInfo.remark !=''}">备注：</dt>
-							<dd th:if="${keyInfo.remark !=''}" th:text="${keyInfo.remark}"></dd>
-							<dt th:if="${keyInfo.source !=''}">术语来源：</dt>
-							<dd th:if="${keyInfo.source !=''}" th:text="${keyInfo.source}"></dd>
+							<!-- <dt class="text-navy" th:if="${keyInfo.remark !=''}">备注：</dt>
+							<dd th:if="${keyInfo.remark !=''}" th:text="${keyInfo.remark}"></dd> -->
 						</dl>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-7">
-						<dl class="dl-horizontal">
-							<dd>
-								<!-- <img alt="image" class="img-responsive" src="http://10.12.9.34:8010/404.png" width="251" height="201" /> -->
-								<img th:if="${keyInfo.image !=''}" alt="image" class="img-responsive" th:src="'http://10.12.9.34:8010/'+${keyInfo.image}" width="376" height="301" />
-								<!-- <img th:unless="${keyInfo.image !=''}" alt="image" class="img-responsive" th:src="'http://10.12.9.34:8010/404.png'" width="376" height="301" /> -->
-							</dd>
-						</dl>
+					<div class="col-sm-12">
+						<img th:if="${keyInfo.image !=''}" alt="image" class="img-responsive" th:src="'http://10.12.9.34:8010/'+${keyInfo.image}" width="376" height="301" />
+						<!-- <img th:unless="${keyInfo.image !=''}" alt="image" class="img-responsive" th:src="'http://10.12.9.34:8010/404.png'" width="376" height="301" /> -->
 					</div>
 				</div>
-					<div th:if="${keyInfo.contributor !=''}" th:text="${'该术语由【'+keyInfo.contributor+'】收集'}"></div>
+				<!-- <div th:if="${keyInfo.contributor !=''}" th:text="${'该术语由【'+keyInfo.contributor+'】收集'}"></div> -->
 				<!-- <div class="row">
                     <div class="col-sm-12">
 						<div class="pull-right">
@@ -76,9 +74,6 @@
 						 </div>
                 	</div>
                 </div> -->
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
 			</div>
 		</div>
 	</div>
