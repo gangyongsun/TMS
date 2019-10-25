@@ -58,7 +58,6 @@ $(function() {
 });
 
 
-
 /**
  * 分页查询术语
  * 
@@ -80,8 +79,8 @@ function searchTerminology(obj) {
         method: 'get',
         dataType: "json",
         cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-        striped: true,//设置隔行变色效果
-        clickToSelect: true,
+        detailView:true,
+        detailFormatter:"showTermDetailView",
         undefinedText: "空",//当数据为undefined时显示的字符
         pagination: true, //启用分页
         pageNumber: 1,//分页首页页码
@@ -133,6 +132,21 @@ function searchTerminology(obj) {
         $("#chartPanel").hide();
         $(".pull-right").css("display", "block");
     });
+}
+
+function showTermDetailView(index, row) {
+	var html = []
+	//html.push('<p><b>分类信息:</b> ' + row.classification1 +'>'+row.classification2+'>'+row.classification3+ '</p>');
+
+	if (row.definationCN != "") {
+		html.push('<p><b>中文定义:</b> ' + row.definationCN + '</p>');
+	}
+	if (row.definationEN != "") {
+		html.push('<p><b>English Defination:</b> ' + row.definationEN + '</p>');
+	}
+	html.push('<p><b>热度系数:</b> ' + row.totalClick + '</p>');
+
+	return html.join('');
 }
 
 /**
