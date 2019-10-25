@@ -51,43 +51,65 @@
 	<section class="about-area">
 		<div class="container">
 			<div class="col-lg-12 col-xs-12 col-md-12 col-sm-12">
-				<div class="wrapper wrapper-content animated fadeInRight" id="termSummary">
-			        <div class="row">
-			            <div class="col-lg-5 col-xs-5 col-md-5 col-sm-5">
-			            	<div class="echarts" id="echarts-pie-chart"></div>
-			            </div>
-			            <div class="col-sm-7">
-					   		<div class="echarts" id="echarts-funnel-chart"></div>
-					    </div>
-			        </div>
-			        <div class="row">
-					    <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12" id="hotTermArea">
-			                <div class="row">
-		                        <div class="col-sm-3" th:each="hotKeyInfo:${hotKeyInfoList}">
-		                            <div class="file-box ">
-			                            <div class="file">
-			                                <a th:id="${hotKeyInfo.id}" onclick="javascript:showDetail(this.id);return false;">
-			                                    <span class="corner"></span>
-		                                        <img th:if="${hotKeyInfo.image !=''}" alt="image" class="img-responsive img-rounded" th:src="${'http://10.12.9.34:8010/'+hotKeyInfo.image}" width="198" height="138.27">
-		                                        <!-- <img th:unless="${hotKeyInfo.image !=''}" alt="image" class="img-rounded" src="http://10.12.9.34:8010/404.png" width="198" height="138.27"> -->
-		                                        <small th:text="${hotKeyInfo.chinese}"></small>
-		                                        <small th:if="${hotKeyInfo.totalClick >=1 &&hotKeyInfo.totalClick <10}">★</small>
-		                                        <small th:if="${hotKeyInfo.totalClick >=10 &&hotKeyInfo.totalClick <100}">★★</small>
-		                                        <small th:if="${hotKeyInfo.totalClick >=100 &&hotKeyInfo.totalClick <1000}">★★★</small>
-		                                        <small th:if="${hotKeyInfo.totalClick >=1000 &&hotKeyInfo.totalClick <10000}">★★★★</small>
-		                                        <small th:if="${hotKeyInfo.totalClick >=10000}">★★★★★</small>
-			                                </a>
-			                            </div>
-		                            </div>
-		                        </div>
-			                </div>
-			                <div class="row">
-		                        <div class="text-center">
-			                    	<a th:id="${hotKeyInfoList.size()}" onclick="javascript:showMoreHotTerms(this);return false;">查看更多热词</a>
-		                        </div>
-		                    </div>
-			            </div>
-			        </div>
+				<div class="wrapper wrapper-content animated fadeInRight">
+					<div class="panel panel-info" id="chartPanel">
+                        <div class="panel-heading">
+                        	<h5 class="panel-title">
+                            	<a data-toggle="collapse" href="#chartCollapse"><i class="fa fa-area-chart"></i> 统计图表</a>
+                            </h5>
+                        </div>
+                        <div class="panel-body">
+	                        <div id="chartCollapse" class="panel-collapse collapse in">
+						        <div class="row">
+						            <div class="col-lg-5 col-xs-5 col-md-5 col-sm-5">
+						            	<div class="echarts" id="echarts-pie-chart"></div>
+						            </div>
+						            <div class="col-sm-7">
+								   		<div class="echarts" id="echarts-funnel-chart"></div>
+								    </div>
+						        </div>
+					        </div>
+				        </div>
+                    </div>
+					<div class="panel panel-info" id="hotTermPanel">
+                        <div class="panel-heading">
+                        	<h5 class="panel-title">
+                            	<a data-toggle="collapse" href="#hotTermCollapse"><i class="fa fa-list-alt"></i> 热词推荐</a>
+                            </h5>
+                        </div>
+                        <div class="panel-body">
+	                        <div id="hotTermCollapse" class="panel-collapse collapse in">
+						        <div class="row">
+								    <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12" id="hotTermArea">
+						                <div class="row">
+					                        <div class="col-sm-3" th:each="hotKeyInfo:${hotKeyInfoList}">
+					                            <div class="file-box ">
+						                            <div class="file">
+						                                <a th:id="${hotKeyInfo.id}" onclick="javascript:showDetail(this.id);return false;">
+						                                    <span class="corner"></span>
+					                                        <img th:if="${hotKeyInfo.image !=''}" alt="image" class="img-responsive img-rounded" th:src="${'http://10.12.9.34:8010/'+hotKeyInfo.image}" width="198" height="138.27">
+					                                        <!-- <img th:unless="${hotKeyInfo.image !=''}" alt="image" class="img-rounded" src="http://10.12.9.34:8010/404.png" width="198" height="138.27"> -->
+					                                        <small th:text="${hotKeyInfo.chinese}"></small>
+					                                        <small th:if="${hotKeyInfo.totalClick >=1 &&hotKeyInfo.totalClick <10}">★</small>
+					                                        <small th:if="${hotKeyInfo.totalClick >=10 &&hotKeyInfo.totalClick <100}">★★</small>
+					                                        <small th:if="${hotKeyInfo.totalClick >=100 &&hotKeyInfo.totalClick <1000}">★★★</small>
+					                                        <small th:if="${hotKeyInfo.totalClick >=1000 &&hotKeyInfo.totalClick <10000}">★★★★</small>
+					                                        <small th:if="${hotKeyInfo.totalClick >=10000}">★★★★★</small>
+						                                </a>
+						                            </div>
+					                            </div>
+					                        </div>
+						                </div>
+						                <div class="row">
+					                        <div class="text-center">
+						                    	<a th:id="${hotKeyInfoList.size()}" onclick="javascript:showMoreHotTerms(this);return false;">查看更多热词</a>
+					                        </div>
+					                    </div>
+						            </div>
+						        </div>
+					        </div>
+				        </div>
+                    </div>
 			    </div>
 			    <table id="termTable" class="table table-bordered tab-content"></table>
 			</div>

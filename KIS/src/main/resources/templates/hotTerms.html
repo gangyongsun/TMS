@@ -19,7 +19,7 @@
 </head>
 <body>
  	<div class="row">
-		<div class="col-sm-4" th:each="hotKeyInfo:${hotKeyInfoList}">
+		<div class="col-sm-3" th:each="hotKeyInfo:${hotKeyInfoList}">
 	   		<div class="file-box ">
 	        	<div class="file">
 	            	<a th:id="${hotKeyInfo.id}" onclick="javascript:showDetail(this.id);return false;">

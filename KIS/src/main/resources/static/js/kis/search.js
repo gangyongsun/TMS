@@ -129,9 +129,8 @@ function searchTerminology(obj) {
     });
     t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
         console.log("load success");
-        $("#hotTermArea").hide();
-        $("#echarts-pie-chart").hide();
-        $("#echarts-funnel-chart").hide();
+        $("#hotTermPanel").hide();
+        $("#chartPanel").hide();
         $(".pull-right").css("display", "block");
     });
 }
