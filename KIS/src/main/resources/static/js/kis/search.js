@@ -66,6 +66,8 @@ $(function() {
  * @returns
  */
 function searchTerminology(obj) {
+	var t=$("#termTable");
+	t.bootstrapTable('destroy');
 	// 获取类型
 	var termTypeValue = "";
 	if (null != obj) {
@@ -73,7 +75,7 @@ function searchTerminology(obj) {
 	}
 	// 获取搜索关键词
 	var findContentVal = $("#findContent").val();
-	var t = $("#termTable").bootstrapTable({
+	var t = t.bootstrapTable({
 		url: '/kis/search',
         method: 'get',
         dataType: "json",
