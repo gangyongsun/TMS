@@ -102,6 +102,9 @@ function searchTerminology(obj) {
 	        };
 	        return temp;
 	    },
+	    onClickRow:function (row,element) {
+	    	showDetail(row.id);
+        },
       	idField: "id",//指定主键列
         columns: [
             {
@@ -132,13 +135,10 @@ function searchTerminology(obj) {
 /**
  * 显示详情
  * 
- * @param obj
+ * @param id
  * @returns
  */
-function showDetail(obj) {
-	if (null != obj) {
-		var id = $(obj).attr("id");
-	}
+function showDetail(id) {
 	$.ajax({
 		type : "POST",
 		url : 'showDetail',

@@ -121,7 +121,7 @@
 	
 	<select id="findAccessSummary" resultType="cn.com.goldwind.kis.entity.AccessSummary">
 		SELECT classification2 classification,sum(totalClick) totalAccess 
-		FROM kis.t_key_info 
+		FROM t_key_info 
 		group by classification2 
 		order by totalAccess desc
 	</select>
