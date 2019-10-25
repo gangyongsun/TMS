@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
 import cn.com.goldwind.kis.entity.AccessSummary;
 import cn.com.goldwind.kis.entity.KeyInfo;
 import cn.com.goldwind.kis.mybatis.BaseMybatisDao;
+import cn.com.goldwind.kis.mybatis.page.TableSplitResult;
 import cn.com.goldwind.kis.repository.KeyInfoRepository;
 import cn.com.goldwind.kis.service.KeyInfoService;
 
@@ -55,6 +57,11 @@ public class KeyInfoServiceImpl extends BaseMybatisDao<KeyInfoRepository> implem
 	@Override
 	public List<AccessSummary> findAccessSummary() {
 		return keyInforRepository.findAccessSummary();
+	}
+
+	@Override
+	public TableSplitResult<KeyInfo> findPagedTermByKeyInfo(ModelMap map, Integer pageNumber, Integer pageSize) {
+		return super.findPage(map, pageNumber, pageSize);
 	}
 
 }

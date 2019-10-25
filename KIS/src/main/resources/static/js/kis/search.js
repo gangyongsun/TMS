@@ -2,47 +2,6 @@ $(function() {
 	$('.file-box').each(function () {
 		animationHover(this, 'pulse');
 	 });
-	/**
-	 * 表格初始化
-	 */
-	function initTable() {
-		$("#termTable").bootstrapTable({
-			striped : true,// 设置为 true 会有隔行变色效果
-			pagination : true,// 设置为 true 会在表格底部显示分页条
-			cache : false,// 是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性
-			pageNumber : 1,// 初始化加载第一页，默认第一页
-			pageSize : 20,// 每页的记录行数
-			pageList : [ 10, 15, 20, 50, 100 ],// 可供选择的每页的行数
-			sortable : true, // 设置为false 将禁止所有列的排序
-			search : true,// 是否显示右上角的搜索框
-			trimOnSearch: true,//搜索内容是否自动去除前后空格
-//			showToggle : true,// 是否显示切换视图（table/card）按钮
-//			showExport : true, // 是否显示导出按钮
-//			buttonsAlign : "right", // 按钮位置
-//			exportDataType : 'all', // 导出的方式 all全部 selected已选择的  basic', 'all', 'selected'.
-//			Icons : 'glyphicon glyphicon-export', // 导出图标
-//			exportTypes : [ 'txt' ],
-//			exportOptions: {
-//	            ignoreColumn: [0,1],  //忽略某一列的索引
-//	            fileName: 'terminology',  //文件名称设置
-//	            worksheetName: 'sheet1',  //表格工作区名称
-//	            tableName: 'termTable',
-//	            excelstyles: ['background-color', 'color', 'font-size', 'font-weight']
-//	        },
-	        columns: [
-	        	{
-		        	title: '中文', // 表格表头显示文字
-		        	align: 'left', // 左右居中
-		        	valign: 'middle' // 上下居中
-	        	}, {
-		        	title: '英文',
-		        	align: 'left',
-		        	valign: 'middle'
-	        	}
-	        ]
-		});
-	}
-	initTable();
 
 	/**
 	 * 回车事件绑定
@@ -54,7 +13,7 @@ $(function() {
 		}
 	}
 
-	// 请求summary
+	// 请求饼图summary
 	$.ajax({
 		type : "POST",
 		url : 'summary',
@@ -68,10 +27,10 @@ $(function() {
 					name : key
 				});
 			}
-			init_pieChart(keyArray, keyValueMapJsonArray);
+			init_pieChart(keyArray, keyValueMapJsonArray);//初始化饼图
 		},
 		error : function(data) {
-			console.log("summary failure!");
+			console.log("饼图初始化失败!");
 		}
 	});
 	
@@ -89,80 +48,85 @@ $(function() {
 					name : key
 				});
 			}
-			init_funnel(keyArray, keyValueMapJsonArray);
+			init_funnel(keyArray, keyValueMapJsonArray);//初始化漏斗图
 		},
 		error : function(data) {
-			console.log("accessSummary failure!");
+			console.log("漏斗图初始化失败!");
 		}
 	});
-
-	/**
-	 * 初始化饼图
-	 */
-	function init_pieChart(keyData, displayData) {
-		var pieChart = echarts.init(document
-				.getElementById("echarts-pie-chart"));
-		var pieoption = {
-			title : {
-				text : '术语构成比例',
-				subtext : '数据统计',
-				x : 'center'
-			},
-			tooltip : {
-				trigger : 'item',
-				formatter : "{a} <br/>{b} : {c} ({d}%)"
-			},
-			legend : {
-				orient : 'vertical',
-				x : 'left',
-				data : keyData
-			},
-			calculable : true,
-			series : [ {
-				name : '比例',
-				type : 'pie',
-				radius : '55%',
-				center : [ '50%', '60%' ],
-				data : displayData
-			} ]
-		};
-		pieChart.setOption(pieoption);
-		$(window).resize(pieChart.resize);
-	}
+	
 });
 
+
+
 /**
- * 查询术语
+ * 分页查询术语
  * 
  * @param obj
  * @returns
  */
 function searchTerminology(obj) {
 	// 获取类型
-	var termTypeValue = null;
+	var termTypeValue = "";
 	if (null != obj) {
 		var termTypeValue = $(obj).attr("value");
 	}
 	// 获取搜索关键词
 	var findContentVal = $("#findContent").val();
-
-	$.ajax({
-		type : "POST",
-		url : 'index',
-		data : {
-			termType : termTypeValue,
-			findContent : findContentVal
-		},
-		success : function(data) {
-			$("#indexMain").html(data);
-			$("#findContent").val(findContentVal);
-			$("#findContent").focus();
-			$("#termSummary").hide();
-		},
-		error : function(data) {
-			console.log("搜索失败");
-		}
-	});
+	var t = $("#termTable").bootstrapTable({
+		url: '/kis/search',
+        method: 'get',
+        dataType: "json",
+        cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+        striped: true,//设置隔行变色效果
+        clickToSelect: true,
+        undefinedText: "空",//当数据为undefined时显示的字符
+        pagination: true, //启用分页
+        pageNumber: 1,//分页首页页码
+        pageSize: 10,//分页页面数据条数
+        pageList: [10, 20, 50, 100],//设置可供选择的页面数据条数；设置为All则显示所有记录
+        paginationFirstText: "首页",//指定“首页”按钮的图标或文字
+        paginationPreText: '上一页',//指定“上一页”按钮的图标或文字
+        paginationNextText: '下一页',//指定“下一页”按钮的图标或文字
+        paginationLastText: "末页",//指定“末页”按钮的图标或文字
+        data_local: "zh-US",//表格汉化
+        sidePagination: "server", //服务端处理分页
+        queryParamsType:'',//默认值为'limit',在默认情况下传给服务端的参数为：offset,limit,sort;设置为'',在这种情况下传给服务器的参数为：pageSize,pageNumber
+        queryParams:function (params) {
+	        //这里的键的名字和控制器的变量名必须一致，这边改动，控制器也需要改成一样的
+	        var temp = {   
+	        	pageNumber: params.pageNumber,//当前页(开始页)
+	    	    pageSize: params.pageSize,//每页的数量
+	    	    termType : termTypeValue,
+				findContent : findContentVal
+	        };
+	        return temp;
+	    },
+      	idField: "id",//指定主键列
+        columns: [
+            {
+                visible:false,
+                field: 'id'
+            },
+            {
+                title: '中文',
+                field: 'chinese',
+                align: 'left',
+                valign: 'middle'
+            },
+            {
+                title: '英文',
+                field: 'english',
+                align: 'left',
+                valign: 'middle'
+            }
+        ]
+    });
+    t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
+        console.log("load success");
+        $("#hotTermArea").hide();
+        $(".pull-right").css("display", "block");
+    });
 }
 
 /**
@@ -217,6 +181,45 @@ function showMoreHotTerms(obj){
 	});
 }
 
+/**
+ * 初始化饼图
+ */
+function init_pieChart(keyData, displayData) {
+	var pieChart = echarts.init(document.getElementById("echarts-pie-chart"));
+	var pieoption = {
+		title : {
+			text : '术语构成比例',
+			subtext : '数据统计',
+			x : 'center'
+		},
+		tooltip : {
+			trigger : 'item',
+			formatter : "{a} <br/>{b} : {c} ({d}%)"
+		},
+		legend : {
+			orient : 'vertical',
+			x : 'left',
+			data : keyData
+		},
+		calculable : true,
+		series : [ {
+			name : '比例',
+			type : 'pie',
+			radius : '55%',
+			center : [ '50%', '60%' ],
+			data : displayData
+		} ]
+	};
+	pieChart.setOption(pieoption);
+	$(window).resize(pieChart.resize);
+}
+
+/**
+ * 初始化漏斗图
+ * @param keyData
+ * @param displayData
+ * @returns
+ */
 function init_funnel(keyData, displayData){
 	var funnelChart = echarts.init(document.getElementById("echarts-funnel-chart"));
     var funneloption = {

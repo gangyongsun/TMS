@@ -2,8 +2,11 @@ package cn.com.goldwind.kis.service;
 
 import java.util.List;
 
+import org.springframework.ui.ModelMap;
+
 import cn.com.goldwind.kis.entity.AccessSummary;
 import cn.com.goldwind.kis.entity.KeyInfo;
+import cn.com.goldwind.kis.mybatis.page.TableSplitResult;
 
 public interface KeyInfoService {
 
@@ -28,4 +31,6 @@ public interface KeyInfoService {
 	public List<String> findHotTerms(Integer num);
 
 	public List<AccessSummary> findAccessSummary();
+
+	public TableSplitResult<KeyInfo> findPagedTermByKeyInfo(ModelMap map, Integer pageNumber, Integer pageSize);
 }

@@ -64,12 +64,25 @@
 		<where>
 			<if test="findContent != null and findContent !='' ">
 				and (
-				chinese like CONCAT("%",#{findContent,jdbcType=VARCHAR},"%") or
-				LOWER(english) like LOWER(CONCAT("%",#{findContent,jdbcType=VARCHAR},"%"))
+					chinese like CONCAT("%",#{findContent,jdbcType=VARCHAR},"%") or
+					LOWER(english) like LOWER(CONCAT("%",#{findContent,jdbcType=VARCHAR},"%"))
+				)
+			</if>
+			<if test="termType != null and termType !='' ">
+				and (
+					LOWER(classification2) like LOWER(CONCAT("%",#{termType,jdbcType=VARCHAR},"%"))
 				)
 			</if>
 		</where>
 	</sql>
+	
+	<select id="findAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_key_info
+		<include refid="where_all" />
+		<include refid="limit_sql" />
+	</select>
 
 	<select id="findCount" resultMap="BaseResultMap">
 		select count(1) from t_key_info

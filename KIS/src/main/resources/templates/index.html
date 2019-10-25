@@ -40,7 +40,7 @@
 					<div class="row d-flex align-items-center justify-content-between">
 						<nav id="nav-menu-container">
 							<ul class="nav-menu" th:each="keyInfoType:${keyInfoTypeList}">
-								<li><a th:text="${keyInfoType}" th:value="${keyInfoType}" onclick="javascript:searchTerminology(this);return false;"></a></li>
+								<!-- <li><a th:text="${keyInfoType}" th:value="${keyInfoType}" onclick="javascript:searchTerminology(this);return false;"></a></li> -->
 							</ul>
 						</nav>
 					</div>
@@ -89,14 +89,15 @@
 			            </div>
 			        </div>
 			    </div>
-				<table th:if="${keyInfoList !=null}" class="table" id="termTable">
+			    <table id="termTable" class="table table-bordered tab-content"></table>
+				<!-- <table th:if="${keyInfoList !=null}" class="table table-bordered tab-content" id="termTable">
 					<tbody>
 						<tr class="gradeA" th:each="keyInfo:${keyInfoList}">
 							<td data-toggle="modal"><a th:text="${keyInfo.chinese}" th:id="${keyInfo.id}" onclick="javascript:showDetail(this);return false;"></a></td>
 							<td th:text="${keyInfo.english}" th:id="${keyInfo.classification1}+'>'+${keyInfo.classification2}+'>'+${keyInfo.classification3}"></td>
 						</tr>
 					</tbody>
-				</table>
+				</table> -->
 			</div>
 		</div>
         <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
@@ -105,7 +106,7 @@
 	<footer>
 		<div class="container">
 			<div class="footer-bottom row align-items-center">
-				<p class="footer-text col-lg-12 col-md-12">
+				<p class="footer-text col-lg-12 col-xs-12 col-md-12 col-sm-12">
 					Copyright &copy;<label id="_datetime"></label>
 					- <a href="http://www.goldwind.com.cn" target="_blank" title="GoldWind">Goldwind</a> All rights reserved
 				</p>

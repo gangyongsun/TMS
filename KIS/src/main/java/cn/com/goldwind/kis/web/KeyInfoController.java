@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cn.com.goldwind.kis.entity.AccessSummary;
 import cn.com.goldwind.kis.entity.KeyInfo;
+import cn.com.goldwind.kis.mybatis.page.TableSplitResult;
 import cn.com.goldwind.kis.service.KeyInfoService;
 
 @Controller
@@ -26,40 +27,43 @@ public class KeyInfoController {
 	 * 初始页面
 	 * 
 	 * @param map
-	 * @param termType
-	 * @param findContent
 	 * @return
 	 */
 	@RequestMapping(value = "index")
-	public ModelAndView index(ModelMap map, String termType, String findContent) {
-//		System.out.println("findContent=" + findContent);
+	public ModelAndView index(ModelMap map) {
 		// 查询所有术语类型
-		List<String> keyInfoTypeList = keyInfoService.findTermTypes();
-
-		// 如果搜索内容不空，按照关键词查询术语
-		List<KeyInfo> keyInfoList = null;
-		if (null != findContent && !"".equalsIgnoreCase(findContent)) {
-			keyInfoList = keyInfoService.findByKeyInfo(findContent);
-		} else {
-			if (null != termType || !"".equalsIgnoreCase(termType)) {
-				// 按术语类型搜索关键词
-				keyInfoList = keyInfoService.findByTermType(termType);
-			}
-		}
+//		List<String> keyInfoTypeList = keyInfoService.findTermTypes();
+//		if (null != keyInfoTypeList && keyInfoTypeList.size() > 0) {
+//			map.put("keyInfoTypeList", keyInfoTypeList);
+//		}
 		
 		//热词展示
 		List<String> hotKeyInfoList =keyInfoService.findHotTerms(9);
-		
-		if (null != keyInfoTypeList && keyInfoTypeList.size() > 0) {
-			map.put("keyInfoTypeList", keyInfoTypeList);
-		}
-		if (null != keyInfoList && keyInfoList.size() > 0) {
-			map.put("keyInfoList", keyInfoList);
-		}
 		if (null != hotKeyInfoList && hotKeyInfoList.size() > 0) {
 			map.put("hotKeyInfoList", hotKeyInfoList);
 		}
 		return new ModelAndView("index");
+	}
+	
+	/**
+	 * bootstrap table分页查询
+	 * 
+	 * @param pageNumber 参数名必须为这个才能接收到bootstrap table传的参数
+	 * @param pageSize   参数名必须为这个才能接收到bootstrap table传的参数
+	 * @return
+	 */
+	@RequestMapping(value = "search")
+	@ResponseBody
+	public TableSplitResult<KeyInfo> search(ModelMap map, String termType, String findContent, Integer pageSize, Integer pageNumber) {
+		System.out.println("findContent=" + findContent);
+		System.out.println("termType=" + termType);
+		System.out.println("pageSize=" + pageSize);
+		System.out.println("pageNumber=" + pageNumber);
+
+		map.put("findContent", findContent);
+		map.put("termType", termType);
+		TableSplitResult<KeyInfo> page = keyInfoService.findPagedTermByKeyInfo(map, pageNumber, pageSize);
+		return page;
 	}
 
 	/**
@@ -72,7 +76,6 @@ public class KeyInfoController {
 	@RequestMapping(value = "showDetail")
 	public ModelAndView index(ModelMap map, Integer id) {
 		KeyInfo keyInfo = keyInfoService.findTermById(id);
-//		System.out.println(keyInfo.getTotalClick());
 		if (null != keyInfo) {
 			map.put("keyInfo", keyInfo);
 			keyInfo.setTotalClick(keyInfo.getTotalClick()+1);
@@ -129,16 +132,6 @@ public class KeyInfoController {
 	}
 
 	/**
-	 * 转到图表页面
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "echart")
-	public String gotoSummary() {
-		return "echarts";
-	}
-
-	/**
 	 * 查询术语类型对应的数量
 	 * 
 	 * @param map
@@ -162,7 +155,7 @@ public class KeyInfoController {
 	}
 	
 	/**
-	 * 查询术语类型对应的数量
+	 * 查询各术语类型对应的点击量
 	 * 
 	 * @param map
 	 * @return
@@ -187,7 +180,6 @@ public class KeyInfoController {
 	 */
 	@RequestMapping(value = "showMoreHotTerms")
 	public ModelAndView showMoreHotTerms(ModelMap map,Integer number) {
-		//热词展示
 		List<String> hotKeyInfoList =keyInfoService.findHotTerms(number);
 		if (null != hotKeyInfoList && hotKeyInfoList.size() > 0) {
 			map.put("hotKeyInfoList", hotKeyInfoList);
