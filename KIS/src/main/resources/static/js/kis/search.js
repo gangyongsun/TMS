@@ -130,6 +130,8 @@ function searchTerminology(obj) {
     t.on('load-success.bs.table', function (data) {//table加载成功后的监听函数
         console.log("load success");
         $("#hotTermArea").hide();
+        $("#echarts-pie-chart").hide();
+        $("#echarts-funnel-chart").hide();
         $(".pull-right").css("display", "block");
     });
 }
@@ -190,13 +192,13 @@ function init_pieChart(keyData, displayData) {
 	var pieChart = echarts.init(document.getElementById("echarts-pie-chart"));
 	var pieoption = {
 		title : {
-			text : '术语构成比例',
-			subtext : '数据统计',
+			text : '',
+			subtext : '术语比例',
 			x : 'center'
 		},
 		tooltip : {
 			trigger : 'item',
-			formatter : "{a} <br/>{b} : {c} ({d}%)"
+			formatter : "{b} : {c} ({d}%)"
 		},
 		legend : {
 			orient : 'vertical',
@@ -226,12 +228,12 @@ function init_funnel(keyData, displayData){
 	var funnelChart = echarts.init(document.getElementById("echarts-funnel-chart"));
     var funneloption = {
         title : {
-            text: '各类术语点击率',
-            subtext: '结果'
+            text: '',
+            subtext: '各类术语点击量'
         },
         tooltip : {
             trigger: 'item',
-            formatter: "{a} <br/>{b} : {c}%"
+            formatter: "{b} : {c}"
         },
         legend: {
             data : keyData
@@ -239,13 +241,13 @@ function init_funnel(keyData, displayData){
         calculable : true,
         series : [
             {
-                name:'漏斗图',
+                name:'点击量',
                 type:'funnel',
                 width: '40%',
                 data: displayData
             },
             {
-                name:'金字塔',
+                name:'点击量',
                 type:'funnel',
                 x : '50%',
                 sort : 'ascending',
@@ -253,7 +255,7 @@ function init_funnel(keyData, displayData){
                     normal: {
                         // color: 各异,
                         label: {
-                            position: 'left'
+                            position: 'right'
                         }
                     }
                 },
