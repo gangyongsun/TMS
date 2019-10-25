@@ -47,4 +47,4 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.domain
+  type-aliases-package: cn.com.uploadAndDownload.fileUploadDemo.shiro.domain
