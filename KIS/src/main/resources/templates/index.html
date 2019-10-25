@@ -66,7 +66,7 @@
 		                        <div class="col-sm-3" th:each="hotKeyInfo:${hotKeyInfoList}">
 		                            <div class="file-box ">
 			                            <div class="file">
-			                                <a th:id="${hotKeyInfo.id}" onclick="javascript:showDetail(this);return false;">
+			                                <a th:id="${hotKeyInfo.id}" onclick="javascript:showDetail(this.id);return false;">
 			                                    <span class="corner"></span>
 		                                        <img th:if="${hotKeyInfo.image !=''}" alt="image" class="img-responsive img-rounded" th:src="${'http://10.12.9.34:8010/'+hotKeyInfo.image}" width="198" height="138.27">
 		                                        <!-- <img th:unless="${hotKeyInfo.image !=''}" alt="image" class="img-rounded" src="http://10.12.9.34:8010/404.png" width="198" height="138.27"> -->
