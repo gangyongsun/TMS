@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
@@ -19,22 +18,15 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysUserRoleMapper;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysResources;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysRoleResources;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.ResourcesService;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.session.CustomSessionManager;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.SampleRealm;
+import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.manager.TokenManager;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;
 
 @Service
 public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> implements ResourcesService {
 
-	/***
-	 * 用户手动操作Session
-	 */
 	@Autowired
-	private CustomSessionManager customSessionManager;
-
-	@Autowired
-	private static SampleRealm sampleRealm;
+	private TokenManager tokenManager;
 	
 	@Autowired
 	private SysResourcesMapper resourcesMapper;
@@ -152,13 +144,8 @@ public class ResourcesServiceImpl extends BaseMybatisDao<SysResourcesMapper> imp
 			//清空拥有角色Id为：roleId 的用户权限已加载数据，让权限数据重新加载
 			List<Integer> userIds = userRoleMapper.findUserIdListByRoleId(roleId);
 
-//			TokenManager.clearUserAuthByUserId(userIds);
-			for (int userId : userIds) {
-				List<SimplePrincipalCollection> result = customSessionManager.getSimplePrincipalCollectionByUserId(userId);
-				for (SimplePrincipalCollection simplePrincipalCollection : result) {
-					sampleRealm.clearCachedAuthorizationInfo(simplePrincipalCollection);
-				}
-			}
+			tokenManager.clearUserAuthByUserId(userIds);
+			
 			resultMap.put("status", 200);
 			resultMap.put("message", "操作成功");
 			resultMap.put("count", count);

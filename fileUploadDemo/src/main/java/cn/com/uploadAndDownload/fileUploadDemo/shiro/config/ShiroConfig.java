@@ -15,16 +15,30 @@ import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.secutity.KickoutSessionControlFilter;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.secutity.MyShiroRealm;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
 public class ShiroConfig {
 
+	@Bean
+	public JedisPool redisPoolFactory() {
+		JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+		jedisPoolConfig.setMaxIdle(8);
+		jedisPoolConfig.setMaxWaitMillis(-1);
+		jedisPoolConfig.setMaxTotal(8);
+		jedisPoolConfig.setMinIdle(0);
+		JedisPool jedisPool = new JedisPool(jedisPoolConfig, "127.0.0.1", 6379, 0, null);
+		return jedisPool;
+	}
+	
 	@Bean(name = "shiroDialect")
 	public ShiroDialect shiroDialect() {
 		return new ShiroDialect();
@@ -87,6 +101,7 @@ public class ShiroConfig {
 	 *
 	 * @return
 	 */
+	@Bean
 	public RedisCacheManager cacheManager() {
 		RedisCacheManager redisCacheManager = new RedisCacheManager();
 		redisCacheManager.setRedisManager(redisManager());
@@ -98,9 +113,10 @@ public class ShiroConfig {
 	 *
 	 * @return
 	 */
+	@Bean
 	public RedisManager redisManager() {
 		RedisManager redisManager = new RedisManager();
-		redisManager.setHost("localhost");
+		redisManager.setHost("127.0.0.1");
 		redisManager.setPort(6379);
 		redisManager.setExpire(1800);// 配置缓存过期时间
 		redisManager.setTimeout(0);

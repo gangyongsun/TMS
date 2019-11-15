@@ -16,6 +16,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.ResourcesService;
@@ -29,6 +30,7 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.manager.TokenManager;
  * @author alvin
  *
  */
+@Component
 public class SampleRealm extends AuthorizingRealm {
 	@Autowired
 	UserService userService;

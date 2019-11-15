@@ -8,6 +8,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUser;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.session.CustomSessionManager;
@@ -20,19 +21,20 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.ShiroToken;
  * @author alvin
  *
  */
+@Component
 public class TokenManager {
 	/**
 	 * 用户登录管理
 	 */
 
 	@Autowired
-	public static SampleRealm sampleRealm;
+	public SampleRealm sampleRealm;
 
 	/**
 	 * 用户session管理
 	 */
 	@Autowired
-	public static CustomSessionManager customSessionManager;
+	public CustomSessionManager customSessionManager;
 
 	/**
 	 * 获取当前登录的用户User对象
@@ -153,7 +155,7 @@ public class TokenManager {
 	 * ps： 当然你可以手动调用 <code> doGetAuthorizationInfo(...)  </code>方法<br>
 	 * 这里只是说明下这个逻辑，当你清空了权限，<code> doGetAuthorizationInfo(...)  </code>就会被再次调用。
 	 */
-	public static void clearNowUserAuth() {
+	public void clearNowUserAuth() {
 		/**
 		 * 这里需要获取到shrio.xml 配置文件中，对Realm的实例化对象。才能调用到 Realm 父类的方法<br>
 		 * 获取当前系统的Realm的实例化对象<br>
@@ -173,7 +175,7 @@ public class TokenManager {
 	 * 
 	 * @param id 用户ID
 	 */
-	public static void clearUserAuthByUserId(Integer... userIds) {
+	public void clearUserAuthByUserId(Integer... userIds) {
 		if (null == userIds || userIds.length == 0) {
 			return;
 		}
@@ -188,7 +190,7 @@ public class TokenManager {
 	 * 
 	 * @param userIds
 	 */
-	public static void clearUserAuthByUserId(List<Integer> userIds) {
+	public void clearUserAuthByUserId(List<Integer> userIds) {
 		if (null == userIds || userIds.size() == 0) {
 			return;
 		}

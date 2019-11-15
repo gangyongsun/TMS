@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.shiro.session.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
@@ -28,6 +29,7 @@ public class JedisManager {
 	/**
 	 * 这个地方尝试让spring注入，但是spring要求在配置里配置jedisPool Bean
 	 */
+	@Autowired
 	private JedisPool jedisPool;
 
 	/**

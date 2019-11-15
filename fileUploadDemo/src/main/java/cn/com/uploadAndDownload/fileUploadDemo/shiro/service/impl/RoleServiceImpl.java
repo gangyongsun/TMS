@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
@@ -20,8 +19,6 @@ import cn.com.uploadAndDownload.fileUploadDemo.shiro.dao.SysUserRoleMapper;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysRole;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.domain.SysUserRole;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.service.RoleService;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.session.CustomSessionManager;
-import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.SampleRealm;
 import cn.com.uploadAndDownload.fileUploadDemo.shiro.token.manager.TokenManager;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.LoggerUtils;
 import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;
@@ -29,15 +26,9 @@ import cn.com.uploadAndDownload.fileUploadDemo.utils.StringUtils;
 @Service
 public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements RoleService {
 
-	/***
-	 * 用户手动操作Session
-	 */
 	@Autowired
-	private CustomSessionManager customSessionManager;
-
-	@Autowired
-	private static SampleRealm sampleRealm;
-
+	private TokenManager tokenManager;
+	
 	@Autowired
 	private SysRoleMapper roleMapper;
 
@@ -82,13 +73,8 @@ public class RoleServiceImpl extends BaseMybatisDao<SysRoleMapper> implements Ro
 					}
 				}
 			}
-//			 清空用户的权限，迫使再次获取权限的时候，得重新加载
-//			TokenManager.clearUserAuthByUserId(userId);
-
-			List<SimplePrincipalCollection> result = customSessionManager.getSimplePrincipalCollectionByUserId(userId);
-			for (SimplePrincipalCollection simplePrincipalCollection : result) {
-				sampleRealm.clearCachedAuthorizationInfo(simplePrincipalCollection);
-			}
+			//清空用户的权限，迫使再次获取权限的时候，得重新加载
+			tokenManager.clearUserAuthByUserId(userId);
 
 			resultMap.put("status", 200);
 			resultMap.put("message", "操作成功");
